@@ -32,7 +32,8 @@ All services operate within the **Cloudflare Free Tier** ($0/month operational b
 | **Blob / Snapshot Storage** | Cloudflare R2 | `schoolopedia-snapshots` | 10GB storage<br>1M Class B ops/month | Source snapshots, curriculum PDFs |
 | **API Edge Worker** | Cloudflare Workers + Hono | `schoolopedia-api` | 100k req/day | `https://schoolopedia-api.irphanahm.workers.dev`<br>`https://api.schoolopedia.com` |
 | **Web Frontend** | Next.js 15 (Static Export) + Vanilla CSS | `schoolopedia-web` | Unlimited asset bandwidth | `https://schoolopedia-web.irphanahm.workers.dev`<br>`https://schoolopedia.com` |
-| **CI / CD** | GitHub Actions | `.github/workflows/deploy.yml` | 2,000 min/month free | Auto-deploys Worker + Web on push to `main` |
+| **DNS & Registrar** | Bigrock Registrar → Cloudflare Nameservers | Zone: `schoolopedia.com` | Free DNS & SSL | Apex & `www` point to Workers Assets |
+| **CI / CD** | GitHub Actions | `.github/workflows/cloudflare-deploy.yml` | 2,000 min/month free | Auto-deploys Worker + Web on push to `main` |
 
 ---
 
