@@ -159,3 +159,14 @@ The Cloudflare Edge Worker (`workers/api/src/index.ts`) runs an automated schedu
 - Dispatches unhandled outbox events in table `outbox_events`.
 - Exposes secure administrative endpoints (`/api/v1/admin/overview`, `/api/v1/admin/sources/sweep`, `/api/v1/admin/reports/:id/resolve`) guarded by administrative token authentication.
 
+---
+
+## 11. Multi-Subject Course Syllabi & Topic-Level Verified Educational Videos
+
+Located across `/learn/[country]/[jurisdiction]/[grade]/[subject]` and `/learn/[country]/[jurisdiction]/[grade]/[subject]/[slug]`:
+- **Topic Video Alignment**: Verified, curriculum-aligned educational videos (Math Antics, Khan Academy, Crash Course Kids, Amoeba Sisters, Crash Course US Government, Programming with Mosh) mapped to **every individual syllabus topic**.
+- **One-Click Video Launch (`TopicVideoPlayButton.tsx`)**: Directly launches masterclasses in the global `VideoContext` player, with instant toggles for Picture-in-Picture (PiP), Container Fullscreen, and Draggable Floating Miniplayer.
+- **Universal Lesson Synthesis (`getLessonOrTopic()`)**: Synthesizes complete `LessonData` (videos, worked examples with verification checks, common misconceptions, interactive practice drills, and mastery quiz benchmarks) for every topic slug, completely eliminating any default fallbacks to fractions.
+- **Multi-Subject Coverage**: Exhaustive multi-unit syllabi with verified educational videos for Grade 4 Mathematics, Grade 4 Science, Grade 8 Civics, Grade 8 Computer Science, Grade 8 Mathematics, plus a deterministic fallback syllabus generator for all standard courses so no subject ever renders a single-topic skeleton.
+- **Static Export**: 3,843 static HTML pages pre-rendered and served from Cloudflare Edge (`schoolopedia.com` and `www.schoolopedia.com`).
+
