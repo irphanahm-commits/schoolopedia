@@ -36,7 +36,7 @@ jobs:
         run: pnpm build
 
       - name: Deploy Edge API Worker to Cloudflare
-        if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master'
+        if: (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master') && secrets.CLOUDFLARE_API_TOKEN != ''
         uses: cloudflare/wrangler-action@v3
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
@@ -44,10 +44,16 @@ jobs:
           command: deploy
 
       - name: Deploy Frontend Web Application to Cloudflare
-        if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master'
+        if: (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master') && secrets.CLOUDFLARE_API_TOKEN != ''
         uses: cloudflare/wrangler-action@v3
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
           workingDirectory: apps/web
           command: deploy
+
+      - name: Deployment Secret Notice
+        if: (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master') && secrets.CLOUDFLARE_API_TOKEN == ''
+        run: |
+          echo "::notice title=Cloudflare Edge Deployment Skipped::Automated tests, typecheck, and production builds all passed successfully. Direct CI deployment from GitHub is paused because CLOUDFLARE_API_TOKEN is not configured in GitHub Secrets. To enable automatic deployments from GitHub Actions, add CLOUDFLARE_API_TOKEN and CLOUDFLARE_ACCOUNT_ID in repository Settings > Secrets and variables > Actions."
+
