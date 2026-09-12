@@ -182,6 +182,77 @@ const INSTITUTIONS_INDEX = [
     url: '/explore',
     keywords: 'waterloo canada ontario coop tech math computer science',
   },
+  // India (Institutes of National Importance, Entrance Anchors & Premier Schools)
+  {
+    id: 'inst_iitb',
+    title: 'Indian Institute of Technology Bombay (IIT Bombay)',
+    subtitle: 'Mumbai, Maharashtra, India • NIRF Top 3 • Premier Engineering & JEE Advanced Gateway',
+    url: '/explore',
+    keywords: 'iit bombay iitb powai mumbai jee advanced jee main engineering computer science tech india',
+  },
+  {
+    id: 'inst_iitd',
+    title: 'Indian Institute of Technology Delhi (IIT Delhi)',
+    subtitle: 'New Delhi, India • Institute of Eminence • JEE Advanced Pioneer',
+    url: '/explore',
+    keywords: 'iit delhi iitd hauz khas jee advanced engineering computer science artificial intelligence india',
+  },
+  {
+    id: 'inst_aiims_delhi',
+    title: 'All India Institute of Medical Sciences (AIIMS New Delhi)',
+    subtitle: 'New Delhi, India • NIRF #1 Medical • Apex Healthcare & NEET-UG Destination',
+    url: '/explore',
+    keywords: 'aiims new delhi mbbs neet neet-ug medical doctor surgery clinical research india',
+  },
+  {
+    id: 'inst_iisc',
+    title: 'Indian Institute of Science (IISc Bangalore)',
+    subtitle: 'Bengaluru, Karnataka, India • NIRF #1 University • Apex Scientific Research',
+    url: '/explore',
+    keywords: 'iisc bangalore iisc bengaluru research science physics chemistry biology kvpy inspire india',
+  },
+  {
+    id: 'inst_du',
+    title: 'University of Delhi (St. Stephen’s & SRCC)',
+    subtitle: 'New Delhi, India • NAAC A++ • Premier Central University & CUET-UG Hub',
+    url: '/explore',
+    keywords: 'delhi university du srcc st stephens cuet cuet-ug economics commerce arts central university india',
+  },
+  {
+    id: 'inst_dps_rkpuram',
+    title: 'Delhi Public School, R.K. Puram',
+    subtitle: 'New Delhi, India • Top CBSE Day & Boarding School • Olympiad & STEM Titans',
+    url: '/explore',
+    keywords: 'dps rk puram delhi public school cbse ncert olympiads science math new delhi india',
+  },
+  {
+    id: 'inst_doon_school',
+    title: 'The Doon School',
+    subtitle: 'Dehradun, Uttarakhand, India • Historic All-Boys Residential Pioneer (Est. 1935)',
+    url: '/explore',
+    keywords: 'doon school dehradun boarding school eton of india cisce icse residential boys india',
+  },
+  {
+    id: 'inst_cathedral_mumbai',
+    title: 'The Cathedral and John Connon School',
+    subtitle: 'Mumbai, Maharashtra, India • CISCE / ICSE-ISC (Est. 1860) • Western India Leader',
+    url: '/explore',
+    keywords: 'cathedral and john connon school mumbai cisce icse isc independent day south mumbai india',
+  },
+  {
+    id: 'inst_kv_delhi',
+    title: 'Kendriya Vidyalaya (IIT Delhi Campus)',
+    subtitle: 'New Delhi, India • Model Central School • KVS CBSE Excellence',
+    url: '/explore',
+    keywords: 'kendriya vidyalaya kv kvs cbse ncert iit delhi campus central school india',
+  },
+  {
+    id: 'inst_jnv_delhi',
+    title: 'Jawaharlal Navodaya Vidyalaya (Jaffarpur Kalan)',
+    subtitle: 'New Delhi, India • NVS CBSE • 100% Free Rural Talent Residential School',
+    url: '/explore',
+    keywords: 'jawaharlal navodaya vidyalaya jnv nvs cbse residential free rural talent jee neet india',
+  },
 ];
 
 interface SearchModalProps {

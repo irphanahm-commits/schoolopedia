@@ -11,7 +11,7 @@
    - AI is NOT a source tier; AI output is computation only.
 4. Server Authority: Mastery evaluations, quiz scoring, and user state mutations are calculated server-side; client input is never trusted without validation.
 
-## Complete 78 Jurisdictions Registry
+## Complete 85 Jurisdictions Registry
 ### United States (51)
 - Alabama, Alaska, Arizona, Arkansas, California (CDE), Colorado, Connecticut, Delaware, Florida (FLDOE B.E.S.T.), Georgia, Hawaii, Idaho, Illinois, Indiana, Iowa, Kansas, Kentucky, Louisiana, Maine, Maryland, Massachusetts, Michigan, Minnesota, Mississippi, Missouri, Montana, Nebraska, Nevada, New Hampshire, New Jersey, New Mexico, New York (NYSED NextGen), North Carolina, North Dakota, Ohio, Oklahoma, Oregon, Pennsylvania, Rhode Island, South Carolina, South Dakota, Tennessee, Texas (TEA TEKS), Utah, Vermont, Virginia (VDOE SOL), Washington (OSPI), West Virginia, Wisconsin, Wyoming, Washington D.C.
 
@@ -20,6 +20,17 @@
 - Scotland: Education Scotland Curriculum for Excellence (CfE: Primary P1–P7, Broad General Education S1–S3, Senior Phase S4–S6) & Scottish Qualifications Authority (SQA National 4/5, Higher, Advanced Higher).
 - Wales: Welsh Government / Qualifications Wales Curriculum for Wales (Cwricwlwm i Gymru: Progression Steps 1–5, WJEC Made-for-Wales GCSEs & A-Levels).
 - Northern Ireland: Department of Education Northern Ireland & Council for the Curriculum, Examinations & Assessment (CCEA: P1–P7, Key Stages 1–4, GCSEs, and GCE A-Levels).
+
+### India (7 Core Boards)
+- National Framework: National Education Policy 2020 (NEP 2020 5+3+3+4 Stage Design: Foundational Classes 1-2, Preparatory Classes 3-5, Middle Classes 6-8, Secondary Classes 9-10, Senior Secondary Classes 11-12) & National Curriculum Framework (NCF).
+- Central Board of Secondary Education (CBSE / NCERT): AISSE Class 10 & AISSCE Class 12.
+- Council for the Indian School Certificate Examinations (CISCE): ICSE Class 10 & ISC Class 12.
+- National Institute of Open Schooling (NIOS): OBE, Secondary & Senior Secondary Open Flexible Pathways.
+- Maharashtra State Board of Secondary and Higher Secondary Education (MSBSHSE): SSC Class 10 & HSC Class 12.
+- Uttar Pradesh Madhyamik Shiksha Parishad (UPMSP): High School Class 10 & Intermediate Class 12.
+- Karnataka School Examination and Assessment Board (KSEAB): SSLC Class 10 & 2nd PUC Class 12.
+- Tamil Nadu State Board of School Examinations (TNBSE): SSLC Class 10 & HSC +2 Class 12.
+- National Competitive Entrance Alignment: Joint Entrance Examination (JEE Main & Advanced by NTA/IITs), National Eligibility cum Entrance Test (NEET-UG by NTA), Common University Entrance Test (CUET-UG by NTA for DU, JNU, BHU, AU), Common Law Admission Test (CLAT for NLUs).
 
 ### Canada (13)
 - Alberta Education, British Columbia Ministry of Education, Manitoba Education, New Brunswick Department of Education, Newfoundland & Labrador Department of Education, Northwest Territories Department of Education, Nova Scotia Department of Education, Nunavut Department of Education, Ontario Ministry of Education, Prince Edward Island Department of Education, Quebec Ministère de l'Éducation, Saskatchewan Ministry of Education, Yukon Department of Education.

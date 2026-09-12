@@ -169,6 +169,117 @@ const CAREERS: CareerProfile[] = [
         milestone: 'Patented Therapeutic Biomarker'
       }
     ]
+  },
+  {
+    id: 'jee',
+    title: 'IIT Engineer & Deep Tech Innovator (JEE Pathway)',
+    sector: 'Engineering & Advanced Technology',
+    medianSalary: '₹28,00,000 – ₹65,00,000 / yr',
+    growthRate: '+30% (Apex Demand)',
+    education: 'B.Tech / M.Tech from Indian Institutes of Technology (IITs)',
+    summary: 'Pioneers cutting-edge artificial intelligence architectures, semiconductor chips, aerospace propulsion, and scalable distributed systems.',
+    whyMathMatters: 'Advanced calculus, coordinate geometry, linear algebra, and complex numbers are the foundational pillars tested in JEE Advanced and applied in quantum algorithms and robotics.',
+    keySkills: ['Multi-Concept Calculus', 'Vector Algebra & 3D Geometry', 'Mechanics & Thermodynamics', 'Algorithmic Optimization'],
+    pathwaySteps: [
+      {
+        stage: 'Classes 8–9 Foundation',
+        title: 'NCERT Mastery & Conceptual Logic',
+        description: 'Build rigorous problem-solving habits in linear equations, exponents, coordinate geometry, and kinematics fundamentals.',
+        milestone: 'Top Scores in Class 9 Math & Science'
+      },
+      {
+        stage: 'Classes 10–12 Acceleration',
+        title: 'PCM Stream & JEE Main / Advanced Mastery',
+        description: 'Master Class 11 and 12 Physics, Chemistry, and Mathematics. Solve previous years’ JEE Advanced multi-concept problems and mock CBT drills.',
+        milestone: 'Top 1% Percentile in JEE Main & Top AIR in JEE Advanced'
+      },
+      {
+        stage: 'IIT Undergraduate Degree',
+        title: 'B.Tech at Premier IIT (Bombay, Delhi, Madras, etc.)',
+        description: 'Complete 4-year engineering curriculum with industry internships, open-source projects, and research publications.',
+        milestone: 'IIT Campus Placement / Graduate Fellowship'
+      },
+      {
+        stage: 'Industry Leadership',
+        title: 'Principal Systems Architect / Deep Tech Founder',
+        description: 'Direct core engineering teams, file international patents, and build high-impact technological innovations.',
+        milestone: 'Staff Architect / Technology Founder'
+      }
+    ]
+  },
+  {
+    id: 'neet',
+    title: 'Medical Doctor & Surgical Specialist (NEET Pathway)',
+    sector: 'Healthcare & Clinical Medicine',
+    medianSalary: '₹24,00,000 – ₹55,00,000 / yr',
+    growthRate: '+22% (Essential Lifespan Demand)',
+    education: 'MBBS + MD / MS from AIIMS or Top Government Medical Colleges',
+    summary: 'Diagnoses complex clinical pathologies, performs life-saving surgeries, and drives biomedical clinical research.',
+    whyMathMatters: 'Pharmacokinetic dosing, medical imaging physics, and biostatistics in clinical trials require precise mathematical and chemical proportion balances.',
+    keySkills: ['Human Anatomy & Physiology', 'Organic Chemistry Mechanisms', 'Biostatistics & Diagnostics', 'Clinical Pharmacology'],
+    pathwaySteps: [
+      {
+        stage: 'Classes 8–9 Foundation',
+        title: 'Cellular Biology & Chemical Reactions',
+        description: 'Master cell structures, plant and animal tissues, diversity in living organisms, and chemical classification.',
+        milestone: 'Foundation Science Distinction'
+      },
+      {
+        stage: 'Classes 10–12 Acceleration',
+        title: 'PCB Stream & 100% NCERT NEET Mastery',
+        description: 'Memorize and master every diagram and line in NCERT Biology Class 11 and 12. Master physical chemistry calculations and physics mechanics for NEET 720-mark speed.',
+        milestone: '680+ / 720 Score in NEET-UG (AIR Cutoff for AIIMS / GMCs)'
+      },
+      {
+        stage: 'Medical School & Residency',
+        title: 'MBBS Degree & Compulsory Rotatory Internship',
+        description: 'Complete 5.5-year MBBS curriculum including clinical rotations across surgery, internal medicine, pediatrics, and emergency care.',
+        milestone: 'National Exit Test (NExT) / Post-Graduate MD Entrance'
+      },
+      {
+        stage: 'Super-Specialty Practice',
+        title: 'Consultant Surgeon / Medical Super-Specialist',
+        description: 'Perform advanced microsurgical procedures, lead hospital departments, and publish clinical trials.',
+        milestone: 'Chief Medical Consultant Title'
+      }
+    ]
+  },
+  {
+    id: 'cuet',
+    title: 'Economist, Public Policy & Civil Services (CUET Pathway)',
+    sector: 'Economics, Governance & Finance',
+    medianSalary: '₹18,00,000 – ₹45,00,000 / yr',
+    growthRate: '+15% (High Impact)',
+    education: 'B.A. (Hons) from University of Delhi (SRCC/St. Stephen’s) / Central University',
+    summary: 'Formulates national fiscal policy, conducts macroeconomic forecasting, and advises international organizations or multinational corporations.',
+    whyMathMatters: 'Econometric models, game theory, and market equilibria depend directly on linear algebra, differential calculus, and statistical hypothesis testing.',
+    keySkills: ['Econometric Modeling', 'Public Policy Analysis', 'Statistical Inference', 'Financial Optimization'],
+    pathwaySteps: [
+      {
+        stage: 'Classes 8–9 Foundation',
+        title: 'Social Sciences & Quantitative Aptitude',
+        description: 'Develop strong critical reading, Indian and global history context, and foundational algebraic logic.',
+        milestone: 'Class 10 Board Distinction'
+      },
+      {
+        stage: 'Classes 10–12 Acceleration',
+        title: 'Commerce / Humanities Stream & CUET Preparation',
+        description: 'Study Microeconomics, Macroeconomics, Mathematics, and Political Science. Practice CUET domain tests and general aptitude speed drills.',
+        milestone: '99+ Percentile in CUET Domain Subjects'
+      },
+      {
+        stage: 'Central University Collegiate',
+        title: 'B.A. (Hons) Economics / B.Com at DU (SRCC/St. Stephen’s)',
+        description: 'Study advanced econometrics, monetary economics, and complete research internships with think tanks and investment banks.',
+        milestone: 'University Top Honours Graduate'
+      },
+      {
+        stage: 'Senior Governance / Finance',
+        title: 'Lead Policy Advisor / Investment Strategist / Civil Servant',
+        description: 'Lead national economic development initiatives, oversee sovereign wealth allocations, or serve in public administration.',
+        milestone: 'Chief Economist / Senior IAS Officer'
+      }
+    ]
   }
 ];
 

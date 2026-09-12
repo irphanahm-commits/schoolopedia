@@ -53,7 +53,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
   ];
 
   // 2. Tier 1 Countries
-  const countryCodes = ['us', 'gb', 'uk', 'ca', 'au', 'nz'];
+  const countryCodes = ['us', 'gb', 'uk', 'ca', 'au', 'nz', 'in'];
   const countryRoutes: MetadataRoute.Sitemap = countryCodes.map((code) => ({
     url: `${baseUrl}/learn/${code}`,
     lastModified,
@@ -75,44 +75,38 @@ export default function sitemap(): MetadataRoute.Sitemap {
   ];
 
   const ukNations = ['england', 'scotland', 'wales', 'northern-ireland'];
-  const caProvinces = [
-    'ontario', 'quebec', 'british-columbia', 'alberta', 'manitoba',
-    'saskatchewan', 'nova-scotia', 'new-brunswick', 'newfoundland-and-labrador',
-    'prince-edward-island', 'northwest-territories', 'yukon', 'nunavut',
-  ];
-  const auStates = [
-    'new-south-wales', 'victoria', 'queensland', 'western-australia',
-    'south-australia', 'tasmania', 'australian-capital-territory', 'northern-territory',
-  ];
-  const nzPathways = ['english-medium', 'maori-medium'];
+  const caProvinces = ['ontario', 'quebec', 'british-columbia', 'alberta', 'manitoba', 'saskatchewan'];
+  const auStates = ['nsw', 'victoria', 'queensland', 'western-australia', 'south-australia'];
+  const nzPathways = ['national', 'maori-medium'];
+  const inBoards = ['cbse', 'icse', 'nios', 'maharashtra', 'uttar-pradesh', 'karnataka', 'tamil-nadu'];
 
   const jurisdictionRoutes: MetadataRoute.Sitemap = [
-    ...usStates.map((s) => ({
-      url: `${baseUrl}/learn/us/${s}`,
+    ...usStates.map((state) => ({
+      url: `${baseUrl}/learn/us/${state}`,
       lastModified,
       changeFrequency: 'monthly' as const,
       priority: 0.8,
     })),
-    ...ukNations.map((n) => ({
-      url: `${baseUrl}/learn/gb/${n}`,
+    ...ukNations.map((nation) => ({
+      url: `${baseUrl}/learn/gb/${nation}`,
       lastModified,
       changeFrequency: 'monthly' as const,
       priority: 0.85,
     })),
-    ...ukNations.map((n) => ({
-      url: `${baseUrl}/learn/uk/${n}`,
+    ...ukNations.map((nation) => ({
+      url: `${baseUrl}/learn/uk/${nation}`,
+      lastModified,
+      changeFrequency: 'monthly' as const,
+      priority: 0.85,
+    })),
+    ...caProvinces.map((prov) => ({
+      url: `${baseUrl}/learn/ca/${prov}`,
       lastModified,
       changeFrequency: 'monthly' as const,
       priority: 0.8,
     })),
-    ...caProvinces.map((p) => ({
-      url: `${baseUrl}/learn/ca/${p}`,
-      lastModified,
-      changeFrequency: 'monthly' as const,
-      priority: 0.8,
-    })),
-    ...auStates.map((a) => ({
-      url: `${baseUrl}/learn/au/${a}`,
+    ...auStates.map((st) => ({
+      url: `${baseUrl}/learn/au/${st}`,
       lastModified,
       changeFrequency: 'monthly' as const,
       priority: 0.8,
@@ -122,6 +116,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
       lastModified,
       changeFrequency: 'monthly' as const,
       priority: 0.8,
+    })),
+    ...inBoards.map((board) => ({
+      url: `${baseUrl}/learn/in/${board}`,
+      lastModified,
+      changeFrequency: 'monthly' as const,
+      priority: 0.85,
     })),
   ];
 
@@ -138,6 +138,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
       lastModified,
       changeFrequency: 'weekly',
       priority: 0.95,
+    },
+    {
+      url: `${baseUrl}/learn/in/cbse/grade-8/mathematics`,
+      lastModified,
+      changeFrequency: 'weekly',
+      priority: 0.85,
     },
   ];
 
@@ -163,6 +169,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
     },
     {
       url: `${baseUrl}/blog/uk-school-system-key-stages-gcse-alevels-guide`,
+      lastModified,
+      changeFrequency: 'monthly',
+      priority: 0.85,
+    },
+    {
+      url: `${baseUrl}/blog/indian-schooling-system-cbse-icse-neet-jee-cuet-guide`,
       lastModified,
       changeFrequency: 'monthly',
       priority: 0.85,

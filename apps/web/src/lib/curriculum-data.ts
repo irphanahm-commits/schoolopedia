@@ -191,7 +191,16 @@ export const TIER1_JURISDICTIONS: JurisdictionInfo[] = [
 
   // --- New Zealand (2 Pathways) ---
   { slug: 'national', name: 'New Zealand (English-Medium)', countryCode: 'nz', countryName: 'New Zealand', flag: '🇳🇿', authority: 'Ministry of Education / NZQA', framework: 'The New Zealand Curriculum (NZC Levels 1–8)', portalUrl: 'https://nzcurriculum.tki.org.nz', grades: 'Curriculum Levels 1–8 (Years 1–13)' },
-  { slug: 'maori-medium', name: 'Te Marautanga o Aotearoa (Māori-Medium)', countryCode: 'nz', countryName: 'New Zealand', flag: '🇳🇿', authority: 'Ministry of Education / NZQA', framework: 'Te Marautanga o Aotearoa (TMoA)', portalUrl: 'https://tmoa.tki.org.nz', grades: 'Wāhanga Ako Levels 1–8' }
+  { slug: 'maori-medium', name: 'Te Marautanga o Aotearoa (Māori-Medium)', countryCode: 'nz', countryName: 'New Zealand', flag: '🇳🇿', authority: 'Ministry of Education / NZQA', framework: 'Te Marautanga o Aotearoa (TMoA)', portalUrl: 'https://tmoa.tki.org.nz', grades: 'Wāhanga Ako Levels 1–8' },
+
+  // --- India (National Boards & Flagship State Boards = 7) ---
+  { slug: 'cbse', name: 'Central Board of Secondary Education (CBSE)', countryCode: 'in', countryName: 'India', flag: '🇮🇳', authority: 'Ministry of Education / NCERT', framework: 'National Curriculum Framework (NCF / NEP 2020)', portalUrl: 'https://www.cbse.gov.in', grades: 'Classes 1–12 (AISSE & AISSCE)' },
+  { slug: 'icse', name: 'CISCE (ICSE & ISC Board)', countryCode: 'in', countryName: 'India', flag: '🇮🇳', authority: 'Council for the Indian School Certificate Examinations', framework: 'CISCE Curriculum Guidelines (ICSE Class 10 & ISC Class 12)', portalUrl: 'https://cisce.org', grades: 'Classes 1–12 (ICSE & ISC)' },
+  { slug: 'nios', name: 'National Institute of Open Schooling (NIOS)', countryCode: 'in', countryName: 'India', flag: '🇮🇳', authority: 'Ministry of Education (MoE)', framework: 'National Open Schooling Framework (OBE, Secondary & Sr. Secondary)', portalUrl: 'https://www.nios.ac.in', grades: 'OBE Levels A–C, Classes 10 & 12 (ODE)' },
+  { slug: 'maharashtra', name: 'Maharashtra State Board (MSBSHSE)', countryCode: 'in', countryName: 'India', flag: '🇮🇳', authority: 'Maharashtra State Board of Secondary & Higher Secondary Education', framework: 'Maharashtra State Curriculum (SSC & HSC)', portalUrl: 'https://mahahsscboard.in', grades: 'Classes 1–12 (SSC & HSC)' },
+  { slug: 'uttar-pradesh', name: 'Uttar Pradesh Board (UPMSP)', countryCode: 'in', countryName: 'India', flag: '🇮🇳', authority: 'UP Madhyamik Shiksha Parishad', framework: 'UP Board Curriculum (NCERT Aligned High School & Inter)', portalUrl: 'https://upmsp.edu.in', grades: 'Classes 9–12 (High School & Intermediate)' },
+  { slug: 'karnataka', name: 'Karnataka Board (KSEAB / PUC)', countryCode: 'in', countryName: 'India', flag: '🇮🇳', authority: 'Karnataka School Examination and Assessment Board', framework: 'Karnataka State Curriculum & Pre-University Board (SSLC & 2nd PUC)', portalUrl: 'https://kseab.karnataka.gov.in', grades: 'Classes 1–10 (SSLC) & Classes 11–12 (PUC)' },
+  { slug: 'tamil-nadu', name: 'Tamil Nadu State Board (TNBSE)', countryCode: 'in', countryName: 'India', flag: '🇮🇳', authority: 'Directorate of Government Examinations Tamil Nadu', framework: 'Tamil Nadu Samacheer Kalvi Curriculum', portalUrl: 'https://dge.tn.gov.in', grades: 'Classes 1–12 (SSLC & Higher Secondary)' }
 ];
 
 export const TIER1_COUNTRIES = [
@@ -199,7 +208,8 @@ export const TIER1_COUNTRIES = [
   { code: 'gb', name: 'United Kingdom', flag: '🇬🇧', jurisdictionCount: 4, defaultJurisdiction: 'england' },
   { code: 'ca', name: 'Canada', flag: '🇨🇦', jurisdictionCount: 13, defaultJurisdiction: 'ontario' },
   { code: 'au', name: 'Australia', flag: '🇦🇺', jurisdictionCount: 8, defaultJurisdiction: 'nsw' },
-  { code: 'nz', name: 'New Zealand', flag: '🇳🇿', jurisdictionCount: 2, defaultJurisdiction: 'national' }
+  { code: 'nz', name: 'New Zealand', flag: '🇳🇿', jurisdictionCount: 2, defaultJurisdiction: 'national' },
+  { code: 'in', name: 'India', flag: '🇮🇳', jurisdictionCount: 7, defaultJurisdiction: 'cbse' }
 ];
 
 // -----------------------------------------------------------------------------
@@ -2093,74 +2103,365 @@ const UK_COURSE_LOCALIZATION: Record<string, {
   },
 };
 
+// -----------------------------------------------------------------------------
+// Indian Schooling System & NEP 2020 Stages Localization Registry
+// -----------------------------------------------------------------------------
+
+export const IN_COURSE_LOCALIZATION: Record<string, { title: string; grade: string; standardCode: string }> = {
+  'math-grade-1': {
+    title: 'Class 1 Mathematics: Numbers 1 to 99, Spatial Sense & Jaadui Pitara Math-Magic',
+    grade: 'Class 1 (Foundational Stage)',
+    standardCode: 'NCERT / NEP 2020 / CBSE Math-Magic',
+  },
+  'science-grade-1': {
+    title: 'Class 1 Environmental Studies: Our Surroundings, Living Habits & Nature Exploration',
+    grade: 'Class 1 (Foundational Stage)',
+    standardCode: 'NCERT / NEP 2020 / EVS',
+  },
+  'english-grade-1': {
+    title: 'Class 1 English: Mridang Early Phonics, Sight Words, Rhymes & Storytelling',
+    grade: 'Class 1 (Foundational Stage)',
+    standardCode: 'NCERT Mridang / CBSE ELA',
+  },
+  'math-grade-2': {
+    title: 'Class 2 Mathematics: Two-Digit Addition, Subtraction, Patterns & Spatial Geometry',
+    grade: 'Class 2 (Foundational Stage)',
+    standardCode: 'NCERT / NEP 2020 / CBSE Math-Magic',
+  },
+  'science-grade-2': {
+    title: 'Class 2 Environmental Studies: Seasons, Water Cycles, Plant Life & Animal Habitats',
+    grade: 'Class 2 (Foundational Stage)',
+    standardCode: 'NCERT / NEP 2020 / EVS',
+  },
+  'english-grade-2': {
+    title: 'Class 2 English: Joyful Sentences, Vocabulary Building, Comprehension & Moral Tales',
+    grade: 'Class 2 (Foundational Stage)',
+    standardCode: 'NCERT Mridang / CBSE',
+  },
+  'math-grade-3': {
+    title: 'Class 3 Mathematics: Multiplication Foundations, Division Readiness & Symmetry',
+    grade: 'Class 3 (Preparatory Stage)',
+    standardCode: 'NCERT Math-Magic / NEP 2020',
+  },
+  'science-grade-3': {
+    title: 'Class 3 Environmental Studies: Biodiversity, Animal Shelters, Food Paths & Community',
+    grade: 'Class 3 (Preparatory Stage)',
+    standardCode: 'NCERT Looking Around / EVS',
+  },
+  'english-grade-3': {
+    title: 'Class 3 English: Santoor Grammar Essentials, Creative Sentences & Story Interpretation',
+    grade: 'Class 3 (Preparatory Stage)',
+    standardCode: 'NCERT Santoor / CBSE ELA',
+  },
+  'math-grade-4': {
+    title: 'Class 4 Mathematics: Fractions, Multi-Digit Operations, Perimeter & Measurement',
+    grade: 'Class 4 (Preparatory Stage)',
+    standardCode: 'NCERT Math-Magic / NEP 2020',
+  },
+  'science-grade-4': {
+    title: 'Class 4 Environmental Studies: Plant Roots, Ecosystem Cycles, Water Wonders & Adaptations',
+    grade: 'Class 4 (Preparatory Stage)',
+    standardCode: 'NCERT Looking Around / EVS',
+  },
+  'english-grade-4': {
+    title: 'Class 4 English: Marigold Narrative Writing, Tenses, Parts of Speech & Comprehension',
+    grade: 'Class 4 (Preparatory Stage)',
+    standardCode: 'NCERT Marigold / CBSE',
+  },
+  'history-grade-4': {
+    title: 'Class 4 Social Studies: Our India – Physical Features, States, Heritage & Climate',
+    grade: 'Class 4 (Preparatory Stage)',
+    standardCode: 'NCERT / State SCERT Social Science',
+  },
+  'math-grade-5': {
+    title: 'Class 5 Mathematics: Large Numbers, Multiples & Factors, Decimals & Fractional Reasoning',
+    grade: 'Class 5 (Preparatory Stage)',
+    standardCode: 'NCERT Math-Magic / NEP 2020',
+  },
+  'science-grade-5': {
+    title: 'Class 5 Environmental Studies: Human Digestion, Forests, Natural Disasters & Space Exploration',
+    grade: 'Class 5 (Preparatory Stage)',
+    standardCode: 'NCERT Looking Around / EVS',
+  },
+  'english-grade-5': {
+    title: 'Class 5 English: Advanced Grammar, Formal Letter Writing, Poems & Reading Analysis',
+    grade: 'Class 5 (Preparatory Stage)',
+    standardCode: 'NCERT Marigold / CBSE',
+  },
+  'history-grade-5': {
+    title: 'Class 5 Social Studies: Indian Freedom Struggle, Democratic Values & Cultural Unity',
+    grade: 'Class 5 (Preparatory Stage)',
+    standardCode: 'NCERT / CBSE Social Studies',
+  },
+  'math-grade-6': {
+    title: 'Class 6 Mathematics: Integers, Fractions, Decimals, Ratios & Practical Geometry',
+    grade: 'Class 6 (Middle Stage)',
+    standardCode: 'NCERT Ganita Prakash / NEP 2020',
+  },
+  'science-grade-6': {
+    title: 'Class 6 Science: Components of Food, Separation of Substances, Light & Electricity',
+    grade: 'Class 6 (Middle Stage)',
+    standardCode: 'NCERT Curiosity / NEP 2020',
+  },
+  'english-grade-6': {
+    title: 'Class 6 English: Poorvi Literary Appreciation, Grammar Mechanics & Analytical Prose',
+    grade: 'Class 6 (Middle Stage)',
+    standardCode: 'NCERT Poorvi / CBSE ELA',
+  },
+  'history-grade-6': {
+    title: 'Class 6 Social Science: Exploring Society – Harappan Civilization, Vedic Traditions & Ashoka',
+    grade: 'Class 6 (Middle Stage)',
+    standardCode: 'NCERT Exploring Society: India & Beyond',
+  },
+  'math-grade-7': {
+    title: 'Class 7 Mathematics: Algebraic Expressions, Simple Equations, Rational Numbers & Triangle Properties',
+    grade: 'Class 7 (Middle Stage)',
+    standardCode: 'NCERT Mathematics Class 7',
+  },
+  'science-grade-7': {
+    title: 'Class 7 Science: Nutrition in Living Organisms, Heat, Chemical Changes, Motion & Time',
+    grade: 'Class 7 (Middle Stage)',
+    standardCode: 'NCERT Science Class 7',
+  },
+  'english-grade-7': {
+    title: 'Class 7 English: Honeycomb Poetry, Comprehension, Debates & Syntactical Fluency',
+    grade: 'Class 7 (Middle Stage)',
+    standardCode: 'NCERT Honeycomb / An Alien Hand',
+  },
+  'history-grade-7': {
+    title: 'Class 7 Social Science: Our Pasts II – Regional Kingdoms, Delhi Sultans, Mughals & Tribal Societies',
+    grade: 'Class 7 (Middle Stage)',
+    standardCode: 'NCERT Our Pasts II',
+  },
+  'math-grade-8': {
+    title: 'Class 8 Mathematics: Linear Equations in One Variable, Quadrilaterals, Mensuration & Factorisation',
+    grade: 'Class 8 (Middle Stage)',
+    standardCode: 'NCERT Math Class 8 / CBSE Chapter 2',
+  },
+  'science-grade-8': {
+    title: 'Class 8 Science: Cell Structure, Microorganisms, Force, Pressure, Sound & Combustion',
+    grade: 'Class 8 (Middle Stage)',
+    standardCode: 'NCERT Science Class 8 / Foundation',
+  },
+  'english-grade-8': {
+    title: 'Class 8 English: Honeydew Literary Themes, Persuasive Essays & Grammar Mastery',
+    grade: 'Class 8 (Middle Stage)',
+    standardCode: 'NCERT Honeydew / It So Happened',
+  },
+  'history-grade-8': {
+    title: 'Class 8 Social Science: Our Pasts III & Civics – British Conquest, 1857 Revolt & Indian Constitution',
+    grade: 'Class 8 (Middle Stage)',
+    standardCode: 'NCERT Our Pasts III & Social & Political Life',
+  },
+  'cs-grade-8': {
+    title: 'Class 8 Computer Science & AI: Python Programming, Control Flow, Logic & Data Ethics',
+    grade: 'Class 8 (Middle Stage)',
+    standardCode: 'CBSE Skill Subject / AI & Coding',
+  },
+  'math-grade-9': {
+    title: 'Class 9 Mathematics: Number Systems, Polynomials, Coordinate Geometry, Surface Areas & Volumes',
+    grade: 'Class 9 (Secondary Stage)',
+    standardCode: 'NCERT Class 9 / CBSE AISSE Foundation',
+  },
+  'science-grade-9': {
+    title: 'Class 9 Science: Matter, Fundamental Unit of Life, Tissues, Motion, Force & Gravitation',
+    grade: 'Class 9 (Secondary Stage)',
+    standardCode: 'NCERT Class 9 / JEE-NEET Foundation',
+  },
+  'english-grade-9': {
+    title: 'Class 9 English: Beehive & Moments – World Literature, Critical Essays & Speaking Competence',
+    grade: 'Class 9 (Secondary Stage)',
+    standardCode: 'NCERT Beehive / Moments (CBSE Code 184)',
+  },
+  'history-grade-9': {
+    title: 'Class 9 Social Science: French Revolution, Nazism, Electoral Politics & Democratic Rights',
+    grade: 'Class 9 (Secondary Stage)',
+    standardCode: 'NCERT India and the Contemporary World I',
+  },
+  'math-grade-10': {
+    title: 'Class 10 Mathematics: Real Numbers, Quadratic Equations, Arithmetic Progressions & Trigonometry',
+    grade: 'Class 10 (Secondary Board Year)',
+    standardCode: 'CBSE AISSE (Code 041) / ICSE Class 10 / State SSC',
+  },
+  'science-grade-10': {
+    title: 'Class 10 Science: Chemical Reactions, Acids-Bases, Life Processes, Electricity & Light',
+    grade: 'Class 10 (Secondary Board Year)',
+    standardCode: 'CBSE AISSE (Code 086) / ICSE / NTSE Foundation',
+  },
+  'english-grade-10': {
+    title: 'Class 10 English: First Flight & Footprints without Feet – Literary Critique & Argumentative Prose',
+    grade: 'Class 10 (Secondary Board Year)',
+    standardCode: 'CBSE AISSE (Code 184) / ICSE English Language',
+  },
+  'history-grade-10': {
+    title: 'Class 10 Social Science: Nationalism in Europe & India, Sectors of Economy, Federalism & Resources',
+    grade: 'Class 10 (Secondary Board Year)',
+    standardCode: 'CBSE AISSE (Code 087) / ICSE History-Civics',
+  },
+  'math-grade-11': {
+    title: 'Class 11 Mathematics: Sets, Trigonometric Functions, Permutations, Conic Sections & Calculus Intro',
+    grade: 'Class 11 (Senior Secondary Stage)',
+    standardCode: 'CBSE AISSCE (Code 041) / ISC / JEE Main Foundation',
+  },
+  'science-grade-11': {
+    title: 'Class 11 Physics & Chemistry: Mechanics, Thermodynamics, Atomic Structure & Chemical Bonding',
+    grade: 'Class 11 (Senior Secondary Stage)',
+    standardCode: 'CBSE AISSCE / ISC / JEE Main & NEET-UG Foundation',
+  },
+  'english-grade-11': {
+    title: 'Class 11 English: Hornbill & Snapshots – Thematic Rhetoric, Note Making & Formal Discourse',
+    grade: 'Class 11 (Senior Secondary Stage)',
+    standardCode: 'CBSE AISSCE (Code 301) / ISC English',
+  },
+  'history-grade-11': {
+    title: 'Class 11 History & Political Science: Themes in World History, Indian Constitution & Political Theory',
+    grade: 'Class 11 (Senior Secondary Stage)',
+    standardCode: 'CBSE AISSCE / CUET Domain Preparation',
+  },
+  'math-grade-12': {
+    title: 'Class 12 Mathematics: Relations & Functions, Matrices, Calculus, Vectors & 3D Geometry',
+    grade: 'Class 12 (Senior Secondary / Entrance)',
+    standardCode: 'CBSE AISSCE / ISC / JEE Advanced & CUET Domain',
+  },
+  'science-grade-12': {
+    title: 'Class 12 Physics & Chemistry: Electrostatics, Optics, Organic Reaction Mechanisms & Biomolecules',
+    grade: 'Class 12 (Senior Secondary / Entrance)',
+    standardCode: 'CBSE AISSCE / ISC / JEE Advanced & NEET-UG Core',
+  },
+  'english-grade-12': {
+    title: 'Class 12 English: Flamingo & Vistas – Modern Critical Discourse & Advanced Essay Composition',
+    grade: 'Class 12 (Senior Secondary / Entrance)',
+    standardCode: 'CBSE AISSCE (Code 301) / CUET Section 1A',
+  },
+  'history-grade-12': {
+    title: 'Class 12 History & Political Science: Themes in Indian History (Harappa to Partition) & World Politics',
+    grade: 'Class 12 (Senior Secondary / Entrance)',
+    standardCode: 'CBSE AISSCE / CUET Domain Preparation',
+  },
+  'cs-grade-12': {
+    title: 'Class 12 Computer Science: Python Stacks, SQL Relational Databases, Computer Networks & Cyber Law',
+    grade: 'Class 12 (Senior Secondary / Entrance)',
+    standardCode: 'CBSE AISSCE (Code 083) / CUET CS Domain',
+  },
+};
+
 export function getCoursesForJurisdiction(jurisdictionSlugOrCountry: string, jurisdictionSlug?: string): CourseCardData[] {
   const normCountry = jurisdictionSlugOrCountry.toLowerCase();
   const normJur = (jurisdictionSlug || jurisdictionSlugOrCountry).toLowerCase();
 
   const isUK = normCountry === 'gb' || ['england', 'scotland', 'wales', 'northern-ireland'].includes(normJur);
+  const isIndia = normCountry === 'in' || ['cbse', 'icse', 'nios', 'maharashtra', 'uttar-pradesh', 'karnataka', 'tamil-nadu'].includes(normJur);
 
-  if (!isUK) {
-    return STANDARD_COURSES;
+  // ---------------------------------------------------------------------------
+  // India (National Boards & Flagship State Boards)
+  // ---------------------------------------------------------------------------
+  if (isIndia) {
+    return STANDARD_COURSES.map(course => {
+      const loc = IN_COURSE_LOCALIZATION[course.slug];
+      if (!loc) {
+        return course;
+      }
+
+      // Board-specific tailoring
+      let boardTitle = loc.title;
+      let boardGrade = loc.grade;
+      let boardStandard = loc.standardCode;
+
+      if (normJur === 'icse') {
+        boardStandard = loc.standardCode.replace('CBSE AISSE', 'ICSE Class 10').replace('CBSE AISSCE', 'ISC Class 12').replace('CBSE', 'CISCE');
+        boardTitle = loc.title.replace('CBSE AISSE', 'ICSE').replace('CBSE', 'CISCE / ICSE');
+      } else if (normJur === 'nios') {
+        boardStandard = loc.standardCode.replace('CBSE AISSE', 'NIOS Secondary (Class 10)').replace('CBSE AISSCE', 'NIOS Sr. Secondary (Class 12)').replace('CBSE', 'NIOS ODE');
+        boardTitle = loc.title.replace('CBSE', 'NIOS Open Schooling');
+      } else if (normJur === 'maharashtra') {
+        boardStandard = loc.standardCode.replace('CBSE AISSE', 'MSBSHSE SSC (Class 10)').replace('CBSE AISSCE', 'MSBSHSE HSC (Class 12)').replace('CBSE', 'Maharashtra State Board');
+        boardTitle = loc.title.replace('CBSE', 'MSBSHSE');
+      } else if (normJur === 'uttar-pradesh') {
+        boardStandard = loc.standardCode.replace('CBSE AISSE', 'UPMSP High School (Class 10)').replace('CBSE AISSCE', 'UPMSP Intermediate (Class 12)').replace('CBSE', 'UP Board');
+        boardTitle = loc.title.replace('CBSE', 'UPMSP Board');
+      } else if (normJur === 'karnataka') {
+        boardStandard = loc.standardCode.replace('CBSE AISSE', 'KSEAB SSLC (Class 10)').replace('CBSE AISSCE', 'KSEAB 2nd PUC (Class 12)').replace('CBSE', 'Karnataka State Board');
+        boardTitle = loc.title.replace('CBSE', 'Karnataka KSEAB');
+      } else if (normJur === 'tamil-nadu') {
+        boardStandard = loc.standardCode.replace('CBSE AISSE', 'TNBSE SSLC (Class 10)').replace('CBSE AISSCE', 'TNBSE Higher Secondary (+2)').replace('CBSE', 'TN Samacheer Kalvi');
+        boardTitle = loc.title.replace('CBSE', 'TNBSE Board');
+      }
+
+      return {
+        ...course,
+        title: boardTitle,
+        grade: boardGrade,
+        standardCode: boardStandard,
+      };
+    });
   }
 
-  // Localize for UK Home Nations
-  return STANDARD_COURSES.map(course => {
-    const loc = UK_COURSE_LOCALIZATION[course.slug];
-    if (!loc) {
-      return course;
-    }
+  // ---------------------------------------------------------------------------
+  // United Kingdom (4 Home Nations)
+  // ---------------------------------------------------------------------------
+  if (isUK) {
+    return STANDARD_COURSES.map(course => {
+      const loc = UK_COURSE_LOCALIZATION[course.slug];
+      if (!loc) {
+        return course;
+      }
 
-    // Special Scottish adaptations
-    if (normJur === 'scotland') {
-      let scotGrade = loc.grade;
-      let scotStandard = loc.standardCode.replace('DfE', 'Education Scotland').replace('Ofqual', 'SQA');
-      if (course.gradeSlug === 'grade-1') scotGrade = 'Primary 1 (CfE Early/First)';
-      else if (course.gradeSlug === 'grade-2') scotGrade = 'Primary 2 (CfE First)';
-      else if (course.gradeSlug === 'grade-3') scotGrade = 'Primary 3 (CfE First)';
-      else if (course.gradeSlug === 'grade-4') scotGrade = 'Primary 4 (CfE Second)';
-      else if (course.gradeSlug === 'grade-5') scotGrade = 'Primary 5 (CfE Second)';
-      else if (course.gradeSlug === 'grade-6') scotGrade = 'S1 (CfE Third Level)';
-      else if (course.gradeSlug === 'grade-7') scotGrade = 'S2 (CfE Third Level)';
-      else if (course.gradeSlug === 'grade-8') scotGrade = 'S3 (CfE Fourth Level)';
-      else if (course.gradeSlug === 'grade-9') scotGrade = 'S4 (National 4/5)';
-      else if (course.gradeSlug === 'grade-10') scotGrade = 'S4 (National 5)';
-      else if (course.gradeSlug === 'grade-11') scotGrade = 'S5 (Higher)';
-      else if (course.gradeSlug === 'grade-12') scotGrade = 'S6 (Advanced Higher)';
+      // Special Scottish adaptations
+      if (normJur === 'scotland') {
+        let scotGrade = loc.grade;
+        let scotStandard = loc.standardCode.replace('DfE', 'Education Scotland').replace('Ofqual', 'SQA');
+        if (course.gradeSlug === 'grade-1') scotGrade = 'Primary 1 (CfE Early/First)';
+        else if (course.gradeSlug === 'grade-2') scotGrade = 'Primary 2 (CfE First)';
+        else if (course.gradeSlug === 'grade-3') scotGrade = 'Primary 3 (CfE First)';
+        else if (course.gradeSlug === 'grade-4') scotGrade = 'Primary 4 (CfE Second)';
+        else if (course.gradeSlug === 'grade-5') scotGrade = 'Primary 5 (CfE Second)';
+        else if (course.gradeSlug === 'grade-6') scotGrade = 'S1 (CfE Third Level)';
+        else if (course.gradeSlug === 'grade-7') scotGrade = 'S2 (CfE Third Level)';
+        else if (course.gradeSlug === 'grade-8') scotGrade = 'S3 (CfE Fourth Level)';
+        else if (course.gradeSlug === 'grade-9') scotGrade = 'S4 (National 4/5)';
+        else if (course.gradeSlug === 'grade-10') scotGrade = 'S4 (National 5)';
+        else if (course.gradeSlug === 'grade-11') scotGrade = 'S5 (Higher)';
+        else if (course.gradeSlug === 'grade-12') scotGrade = 'S6 (Advanced Higher)';
 
+        return {
+          ...course,
+          title: loc.title.replace('Key Stage 1', 'Primary').replace('Key Stage 2', 'Primary').replace('Key Stage 3', 'Broad General Education (S1–S3)').replace('GCSE', 'National 5').replace('A-Level', 'Higher / Advanced Higher'),
+          grade: scotGrade,
+          standardCode: scotStandard,
+        };
+      }
+
+      // Special Welsh adaptations
+      if (normJur === 'wales') {
+        let welshStandard = loc.standardCode.replace('DfE', 'Curriculum for Wales / Llywodraeth Cymru').replace('Ofqual', 'Qualifications Wales / WJEC');
+        return {
+          ...course,
+          grade: loc.grade.replace('Key Stage 1', 'Progression Step 1/2').replace('Key Stage 2', 'Progression Step 2/3').replace('Key Stage 3', 'Progression Step 4').replace('Key Stage 4', 'Progression Step 5 / WJEC GCSE').replace('Key Stage 5', 'WJEC A-Level'),
+          standardCode: welshStandard,
+        };
+      }
+
+      // Special Northern Ireland adaptations
+      if (normJur === 'northern-ireland') {
+        let niStandard = loc.standardCode.replace('DfE', 'CCEA NI Curriculum').replace('Ofqual', 'CCEA Qualifications');
+        return {
+          ...course,
+          grade: loc.grade.replace('Key Stage 1', 'P1–P3').replace('Key Stage 2', 'P4–P7').replace('Key Stage 3', 'Years 8–10 (CCEA KS3)').replace('Key Stage 4', 'Years 11–12 (CCEA GCSE)').replace('Key Stage 5', 'Years 13–14 (CCEA A-Level)'),
+          standardCode: niStandard,
+        };
+      }
+
+      // England (Default UK)
       return {
         ...course,
-        title: loc.title.replace('Key Stage 1', 'Primary').replace('Key Stage 2', 'Primary').replace('Key Stage 3', 'Broad General Education (S1–S3)').replace('GCSE', 'National 5').replace('A-Level', 'Higher / Advanced Higher'),
-        grade: scotGrade,
-        standardCode: scotStandard,
+        title: loc.title,
+        grade: loc.grade,
+        standardCode: loc.standardCode,
       };
-    }
+    });
+  }
 
-    // Special Welsh adaptations
-    if (normJur === 'wales') {
-      let welshStandard = loc.standardCode.replace('DfE', 'Curriculum for Wales / Llywodraeth Cymru').replace('Ofqual', 'Qualifications Wales / WJEC');
-      return {
-        ...course,
-        grade: loc.grade.replace('Key Stage 1', 'Progression Step 1/2').replace('Key Stage 2', 'Progression Step 2/3').replace('Key Stage 3', 'Progression Step 4').replace('Key Stage 4', 'Progression Step 5 / WJEC GCSE').replace('Key Stage 5', 'WJEC A-Level'),
-        standardCode: welshStandard,
-      };
-    }
-
-    // Special Northern Ireland adaptations
-    if (normJur === 'northern-ireland') {
-      let niStandard = loc.standardCode.replace('DfE', 'CCEA NI Curriculum').replace('Ofqual', 'CCEA Qualifications');
-      return {
-        ...course,
-        grade: loc.grade.replace('Key Stage 1', 'P1–P3').replace('Key Stage 2', 'P4–P7').replace('Key Stage 3', 'Years 8–10 (CCEA KS3)').replace('Key Stage 4', 'Years 11–12 (CCEA GCSE)').replace('Key Stage 5', 'Years 13–14 (CCEA A-Level)'),
-        standardCode: niStandard,
-      };
-    }
-
-    // England (Default UK)
-    return {
-      ...course,
-      title: loc.title,
-      grade: loc.grade,
-      standardCode: loc.standardCode,
-    };
-  });
+  // Default Standard (USA, Canada, Australia, NZ)
+  return STANDARD_COURSES;
 }
+

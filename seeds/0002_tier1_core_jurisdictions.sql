@@ -1,13 +1,14 @@
 -- Seeds: 0002_tier1_core_jurisdictions.sql
 -- Description: Core Tier 1 Countries, Jurisdictions, Frameworks, Institutions, Careers, and Pathways
 
--- 1. COUNTRIES (Tier 1: US, GB, CA, AU, NZ)
+-- 1. COUNTRIES (Tier 1: US, GB, CA, AU, NZ, IN)
 INSERT OR IGNORE INTO countries (id, code, name, created_at, updated_at) VALUES
   ('country_us', 'US', 'United States of America', '2026-09-12T00:00:00Z', '2026-09-12T00:00:00Z'),
   ('country_gb', 'GB', 'United Kingdom', '2026-09-12T00:00:00Z', '2026-09-12T00:00:00Z'),
   ('country_ca', 'CA', 'Canada', '2026-09-12T00:00:00Z', '2026-09-12T00:00:00Z'),
   ('country_au', 'AU', 'Australia', '2026-09-12T00:00:00Z', '2026-09-12T00:00:00Z'),
-  ('country_nz', 'NZ', 'New Zealand', '2026-09-12T00:00:00Z', '2026-09-12T00:00:00Z');
+  ('country_nz', 'NZ', 'New Zealand', '2026-09-12T00:00:00Z', '2026-09-12T00:00:00Z'),
+  ('country_in', 'IN', 'India', '2026-09-12T00:00:00Z', '2026-09-12T00:00:00Z');
 
 -- 2. JURISDICTIONS
 INSERT OR IGNORE INTO jurisdictions (id, country_id, code, name, slug, authority_name, created_at, updated_at) VALUES
@@ -26,7 +27,15 @@ INSERT OR IGNORE INTO jurisdictions (id, country_id, code, name, slug, authority
   ('jur_au_nsw', 'country_au', 'NSW', 'New South Wales', 'nsw', 'NSW Education Standards Authority (NESA) / ACARA', '2026-09-12T00:00:00Z', '2026-09-12T00:00:00Z'),
   ('jur_au_vic', 'country_au', 'VIC', 'Victoria', 'victoria', 'Victorian Curriculum and Assessment Authority (VCAA)', '2026-09-12T00:00:00Z', '2026-09-12T00:00:00Z'),
   -- New Zealand
-  ('jur_nz_nat', 'country_nz', 'NZL', 'National Curriculum', 'national', 'Ministry of Education (Te Tāhuhu o te Mātauranga)', '2026-09-12T00:00:00Z', '2026-09-12T00:00:00Z');
+  ('jur_nz_nat', 'country_nz', 'NZL', 'National Curriculum', 'national', 'Ministry of Education (Te Tāhuhu o te Mātauranga)', '2026-09-12T00:00:00Z', '2026-09-12T00:00:00Z'),
+  -- India (National Boards & Flagship State Boards)
+  ('jur_in_cbse', 'country_in', 'CBSE', 'Central Board of Secondary Education (CBSE)', 'cbse', 'Ministry of Education (MoE) / NCERT', '2026-09-12T00:00:00Z', '2026-09-12T00:00:00Z'),
+  ('jur_in_icse', 'country_in', 'CISCE', 'Council for the Indian School Certificate Examinations (ICSE/ISC)', 'icse', 'CISCE New Delhi', '2026-09-12T00:00:00Z', '2026-09-12T00:00:00Z'),
+  ('jur_in_nios', 'country_in', 'NIOS', 'National Institute of Open Schooling', 'nios', 'Ministry of Education (MoE)', '2026-09-12T00:00:00Z', '2026-09-12T00:00:00Z'),
+  ('jur_in_mah', 'country_in', 'MH', 'Maharashtra State Board (MSBSHSE)', 'maharashtra', 'Maharashtra State Board of Secondary and Higher Secondary Education', '2026-09-12T00:00:00Z', '2026-09-12T00:00:00Z'),
+  ('jur_in_up', 'country_in', 'UP', 'Uttar Pradesh Board (UPMSP)', 'uttar-pradesh', 'Uttar Pradesh Madhyamik Shiksha Parishad', '2026-09-12T00:00:00Z', '2026-09-12T00:00:00Z'),
+  ('jur_in_kar', 'country_in', 'KA', 'Karnataka Board (KSEAB / PUC)', 'karnataka', 'Karnataka School Examination and Assessment Board', '2026-09-12T00:00:00Z', '2026-09-12T00:00:00Z'),
+  ('jur_in_tn', 'country_in', 'TN', 'Tamil Nadu State Board (TNBSE)', 'tamil-nadu', 'Directorate of Government Examinations Tamil Nadu', '2026-09-12T00:00:00Z', '2026-09-12T00:00:00Z');
 
 -- 3. EDUCATION SYSTEMS
 INSERT OR IGNORE INTO education_systems (id, jurisdiction_id, name, slug, created_at, updated_at) VALUES
@@ -112,7 +121,22 @@ INSERT OR IGNORE INTO institutions (id, jurisdiction_id, name, slug, type, websi
   ('inst_sydney', 'jur_au_nsw', 'University of Sydney', 'u-sydney', 'UNIVERSITY', 'https://sydney.edu.au', 'Sydney', 'New South Wales', 'AU', 'TEQSA', 2, 1, '2026-09-12T00:00:00Z', '2026-09-12T00:00:00Z'),
   ('inst_unsw', 'jur_au_nsw', 'UNSW Sydney', 'unsw', 'UNIVERSITY', 'https://unsw.edu.au', 'Sydney', 'New South Wales', 'AU', 'TEQSA', 3, 1, '2026-09-12T00:00:00Z', '2026-09-12T00:00:00Z'),
   -- New Zealand
-  ('inst_auckland', 'jur_nz_nat', 'University of Auckland', 'u-auckland', 'UNIVERSITY', 'https://auckland.ac.nz', 'Auckland', 'Auckland', 'NZ', 'NZQA', 1, 1, '2026-09-12T00:00:00Z', '2026-09-12T00:00:00Z');
+  ('inst_auckland', 'jur_nz_nat', 'University of Auckland', 'u-auckland', 'UNIVERSITY', 'https://auckland.ac.nz', 'Auckland', 'Auckland', 'NZ', 'NZQA', 1, 1, '2026-09-12T00:00:00Z', '2026-09-12T00:00:00Z'),
+  -- India (Institutes of National Importance & Apex Universities)
+  ('inst_iitb', 'jur_in_cbse', 'Indian Institute of Technology Bombay (IIT Bombay)', 'iit-bombay', 'INSTITUTE_OF_NATIONAL_IMPORTANCE', 'https://iitb.ac.in', 'Mumbai', 'Maharashtra', 'IN', 'NIRF Rank 3 Overall / Rank 1 Engineering Choice', 1, 1, '2026-09-12T00:00:00Z', '2026-09-12T00:00:00Z'),
+  ('inst_iitd', 'jur_in_cbse', 'Indian Institute of Technology Delhi (IIT Delhi)', 'iit-delhi', 'INSTITUTE_OF_NATIONAL_IMPORTANCE', 'https://iitd.ac.in', 'New Delhi', 'Delhi', 'IN', 'NIRF Rank 2 Engineering', 2, 1, '2026-09-12T00:00:00Z', '2026-09-12T00:00:00Z'),
+  ('inst_iitm', 'jur_in_cbse', 'Indian Institute of Technology Madras (IIT Madras)', 'iit-madras', 'INSTITUTE_OF_NATIONAL_IMPORTANCE', 'https://iitm.ac.in', 'Chennai', 'Tamil Nadu', 'IN', 'NIRF Rank 1 Overall in India', 3, 1, '2026-09-12T00:00:00Z', '2026-09-12T00:00:00Z'),
+  ('inst_aiims_delhi', 'jur_in_cbse', 'All India Institute of Medical Sciences (AIIMS New Delhi)', 'aiims-new-delhi', 'INSTITUTE_OF_NATIONAL_IMPORTANCE', 'https://aiims.edu', 'New Delhi', 'Delhi', 'IN', 'NIRF Rank 1 Medical / Apex Health Institute', 1, 1, '2026-09-12T00:00:00Z', '2026-09-12T00:00:00Z'),
+  ('inst_iisc', 'jur_in_cbse', 'Indian Institute of Science (IISc Bangalore)', 'iisc-bangalore', 'INSTITUTE_OF_NATIONAL_IMPORTANCE', 'https://iisc.ac.in', 'Bengaluru', 'Karnataka', 'IN', 'NIRF Rank 1 University / Apex Science Research', 1, 1, '2026-09-12T00:00:00Z', '2026-09-12T00:00:00Z'),
+  ('inst_du', 'jur_in_cbse', 'University of Delhi (St. Stephen''s & SRCC)', 'university-of-delhi', 'UNIVERSITY', 'https://du.ac.in', 'New Delhi', 'Delhi', 'IN', 'NAAC A++ / Premier Central University', 1, 1, '2026-09-12T00:00:00Z', '2026-09-12T00:00:00Z'),
+  -- India (Exemplar Central Systems & Boarding Schools)
+  ('inst_kv_delhi', 'jur_in_cbse', 'Kendriya Vidyalaya (IIT Delhi Campus)', 'kv-iit-delhi', 'CENTRAL_SCHOOL', 'https://iitdelhi.kvs.ac.in', 'New Delhi', 'Delhi', 'IN', 'Kendriya Vidyalaya Sangathan (CBSE)', 1, 1, '2026-09-12T00:00:00Z', '2026-09-12T00:00:00Z'),
+  ('inst_jnv_delhi', 'jur_in_cbse', 'Jawaharlal Navodaya Vidyalaya (Jaffarpur Kalan)', 'jnv-jaffarpur', 'CENTRAL_SCHOOL', 'https://navodaya.gov.in', 'New Delhi', 'Delhi', 'IN', 'Navodaya Vidyalaya Samiti (NVS CBSE)', 2, 1, '2026-09-12T00:00:00Z', '2026-09-12T00:00:00Z'),
+  ('inst_dps_rkpuram', 'jur_in_cbse', 'Delhi Public School, R.K. Puram', 'dps-rk-puram', 'PUBLIC_HIGH_SCHOOL', 'https://dpsrkp.net', 'New Delhi', 'Delhi', 'IN', 'CBSE Affiliation #2730017', 1, 1, '2026-09-12T00:00:00Z', '2026-09-12T00:00:00Z'),
+  ('inst_cathedral_mumbai', 'jur_in_icse', 'The Cathedral and John Connon School', 'cathedral-and-john-connon', 'INDEPENDENT', 'https://cathedral-school.com', 'Mumbai', 'Maharashtra', 'IN', 'CISCE / ICSE-ISC (Est. 1860)', 1, 1, '2026-09-12T00:00:00Z', '2026-09-12T00:00:00Z'),
+  ('inst_doon_school', 'jur_in_cbse', 'The Doon School', 'the-doon-school', 'BOARDING_SCHOOL', 'https://doonschool.com', 'Dehradun', 'Uttarakhand', 'IN', 'All-India Boarding Pioneer (Est. 1935)', 1, 1, '2026-09-12T00:00:00Z', '2026-09-12T00:00:00Z'),
+  ('inst_mayo_college', 'jur_in_cbse', 'Mayo College', 'mayo-college', 'BOARDING_SCHOOL', 'https://mayocollege.com', 'Ajmer', 'Rajasthan', 'IN', 'Historic Residential Foundation (Est. 1875)', 2, 1, '2026-09-12T00:00:00Z', '2026-09-12T00:00:00Z'),
+  ('inst_modern_school', 'jur_in_cbse', 'Modern School, Barakhamba Road', 'modern-school-barakhamba', 'INDEPENDENT', 'https://modernschool.net', 'New Delhi', 'Delhi', 'IN', 'CBSE National Legacy (Est. 1920)', 2, 1, '2026-09-12T00:00:00Z', '2026-09-12T00:00:00Z');
 
 -- 8. CAREERS & GUIDANCE (Why Study This Subject?)
 INSERT OR IGNORE INTO careers (id, title, slug, sector, median_annual_salary, salary_currency, growth_rate_pct, entry_education_level, summary, day_in_the_life, created_at, updated_at) VALUES
@@ -162,4 +186,7 @@ INSERT OR IGNORE INTO opportunities (id, title, slug, type, provider_name, award
   ('opp_ca_schulich', 'Schulich Leader Scholarships (STEM)', 'schulich-leader-stem', 'SCHOLARSHIP', 'Schulich Foundation', 120000, 'CAD', 'January annually', 'Graduating high school/CEGEP students in Canada pursuing STEM degrees at 20 partner universities.', 'https://schulichleaders.com', 1, '2026-09-12T00:00:00Z', '2026-09-12T00:00:00Z'),
   ('opp_gb_ukmt', 'UKMT Junior & Intermediate Mathematical Challenges', 'ukmt-math-challenge', 'COMPETITION', 'United Kingdom Mathematics Trust', 0, 'GBP', 'April annually', 'Secondary school students in England, Scotland, Wales, and Northern Ireland across Years 7-11.', 'https://ukmt.org.uk', 1, '2026-09-12T00:00:00Z', '2026-09-12T00:00:00Z'),
   ('opp_au_westpac', 'Westpac Young Technologists Scholarship', 'westpac-young-technologists', 'SCHOLARSHIP', 'Westpac Scholars Trust', 20000, 'AUD', 'December annually', 'Australian citizens/permanent residents entering technology-related undergraduate degrees.', 'https://scholars.westpacgroup.com.au', 1, '2026-09-12T00:00:00Z', '2026-09-12T00:00:00Z'),
-  ('opp_nz_pm_science', 'Prime Minister''s Future Scientist Prize', 'nz-pm-future-scientist', 'COMPETITION', 'Royal Society Te Apārangi', 50000, 'NZD', 'September annually', 'Year 12 or 13 students in New Zealand undertaking nominated science, math, or technology research.', 'https://pmscienceprizes.org.nz', 1, '2026-09-12T00:00:00Z', '2026-09-12T00:00:00Z');
+  ('opp_nz_pm_science', 'Prime Minister''s Future Scientist Prize', 'nz-pm-future-scientist', 'COMPETITION', 'Royal Society Te Apārangi', 50000, 'NZD', 'September annually', 'Year 12 or 13 students in New Zealand undertaking nominated science, math, or technology research.', 'https://pmscienceprizes.org.nz', 1, '2026-09-12T00:00:00Z', '2026-09-12T00:00:00Z'),
+  ('opp_in_inspire', 'INSPIRE Scholarship for Higher Education (SHE)', 'inspire-she-scholarship', 'SCHOLARSHIP', 'Department of Science & Technology (DST), Govt of India', 80000, 'INR', 'November annually', 'Top 1% students in Class 12 board examinations (CBSE, CISCE, State Boards) pursuing Basic & Natural Sciences at university.', 'https://online-inspire.gov.in', 1, '2026-09-12T00:00:00Z', '2026-09-12T00:00:00Z'),
+  ('opp_in_olympiad', 'HBCSE Indian National Olympiads (INMO / INPhO / INChO)', 'hbcse-olympiad-programme', 'COMPETITION', 'Homi Bhabha Centre for Science Education (TIFR)', 0, 'INR', 'November annually', 'School students across India (Classes 8–12) competing through NSE stages for International Olympiad team selection.', 'https://olympiads.hbcse.tifr.res.in', 1, '2026-09-12T00:00:00Z', '2026-09-12T00:00:00Z'),
+  ('opp_in_pmyasasvi', 'PM Young Achievers Scholarship Scheme (PM-YASASVI)', 'pm-yasasvi-scholarship', 'SCHOLARSHIP', 'Ministry of Social Justice & Empowerment / NTA', 125000, 'INR', 'August annually', 'Meritorious students studying in Class 9 and Class 11 in identified Top Class Schools across India.', 'https://yet.nta.ac.in', 1, '2026-09-12T00:00:00Z', '2026-09-12T00:00:00Z');

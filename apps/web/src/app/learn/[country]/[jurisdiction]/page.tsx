@@ -46,6 +46,7 @@ export default async function JurisdictionOverviewPage({ params }: JurisdictionO
   };
 
   const isUK = jurisdiction.countryCode.toLowerCase() === 'gb';
+  const isIndia = jurisdiction.countryCode.toLowerCase() === 'in';
   const isScotland = isUK && jurisdiction.slug.toLowerCase() === 'scotland';
   const isWales = isUK && jurisdiction.slug.toLowerCase() === 'wales';
   const isNI = isUK && jurisdiction.slug.toLowerCase() === 'northern-ireland';
@@ -101,47 +102,63 @@ export default async function JurisdictionOverviewPage({ params }: JurisdictionO
                   <span style={{
                     display: 'inline-flex',
                     alignItems: 'center',
-                    gap: '0.25rem',
-                    padding: '0.2rem 0.5rem',
-                    borderRadius: '6px',
+                    gap: '0.375rem',
+                    padding: '0.25rem 0.625rem',
+                    borderRadius: '8px',
                     backgroundColor: badge.bg,
                     color: badge.text,
                     fontSize: '0.75rem',
-                    fontWeight: 700
+                    fontWeight: 700,
+                    textTransform: 'uppercase',
+                    letterSpacing: '0.05em'
                   }}>
                     <span>{badge.icon}</span>
                     <span>{c.subject}</span>
                   </span>
-                  <span style={{ fontSize: '0.75rem', color: '#64748B', fontWeight: 600 }}>
-                    {c.grade}
+                  <span style={{ fontSize: '0.8125rem', fontWeight: 600, color: '#64748B' }}>
+                    {c.lessonCount} Lessons
                   </span>
                 </div>
 
-                <h4 style={{ fontSize: '1rem', fontWeight: 800, color: '#0F172A', marginBottom: '0.5rem', lineHeight: 1.4 }}>
+                <h4 style={{ fontSize: '1.05rem', fontWeight: 700, color: '#0F172A', margin: '0 0 0.5rem 0', lineHeight: 1.4 }}>
                   {c.title}
                 </h4>
 
-                <div style={{
-                  fontSize: '0.75rem',
-                  fontFamily: 'monospace',
-                  color: '#4F46E5',
-                  backgroundColor: '#EEF2FF',
-                  padding: '0.15rem 0.4rem',
-                  borderRadius: '4px',
-                  display: 'inline-block',
-                  marginBottom: '1rem'
-                }}>
-                  {c.standardCode}
+                <div style={{ display: 'flex', gap: '0.5rem', alignItems: 'center', marginBottom: '1rem', flexWrap: 'wrap' }}>
+                  <span style={{ fontSize: '0.75rem', fontWeight: 700, padding: '2px 6px', borderRadius: '4px', backgroundColor: '#F1F5F9', color: '#475569' }}>
+                    {c.grade}
+                  </span>
+                  <span style={{ fontSize: '0.75rem', color: '#94A3B8' }}>•</span>
+                  <span style={{ fontSize: '0.75rem', color: '#64748B', fontFamily: 'monospace' }}>
+                    {c.standardCode}
+                  </span>
                 </div>
               </div>
 
-              <div style={{ display: 'flex', gap: '0.5rem', paddingTop: '1rem', borderTop: '1px solid #F1F5F9' }}>
+              <div style={{ display: 'flex', gap: '0.5rem', marginTop: '1rem' }}>
+                <Link
+                  href={syllabusUrl}
+                  style={{
+                    flex: 1,
+                    textAlign: 'center',
+                    padding: '0.55rem',
+                    borderRadius: '8px',
+                    backgroundColor: '#F8FAFC',
+                    border: '1px solid #E2E8F0',
+                    color: '#334155',
+                    fontSize: '0.8125rem',
+                    fontWeight: 700,
+                    textDecoration: 'none'
+                  }}
+                >
+                  Full Syllabus
+                </Link>
                 <Link
                   href={lessonUrl}
                   style={{
                     flex: 1,
                     textAlign: 'center',
-                    padding: '0.5rem 0.75rem',
+                    padding: '0.55rem',
                     borderRadius: '8px',
                     backgroundColor: '#4F46E5',
                     color: '#FFFFFF',
@@ -150,22 +167,7 @@ export default async function JurisdictionOverviewPage({ params }: JurisdictionO
                     textDecoration: 'none'
                   }}
                 >
-                  Start Lesson →
-                </Link>
-                <Link
-                  href={syllabusUrl}
-                  style={{
-                    padding: '0.5rem 0.75rem',
-                    borderRadius: '8px',
-                    backgroundColor: '#F8FAFC',
-                    border: '1px solid #CBD5E1',
-                    color: '#475569',
-                    fontSize: '0.8125rem',
-                    fontWeight: 600,
-                    textDecoration: 'none'
-                  }}
-                >
-                  Syllabus
+                  Open Lesson →
                 </Link>
               </div>
             </div>
@@ -176,17 +178,15 @@ export default async function JurisdictionOverviewPage({ params }: JurisdictionO
   );
 
   return (
-    <div style={{ minHeight: '100vh', backgroundColor: '#F8FAFC' }}>
-      <div style={{ maxWidth: '1100px', margin: '0 auto', padding: '2.5rem 1.5rem', width: '100%' }}>
+    <div style={{ backgroundColor: '#F8FAFC', minHeight: '100vh', padding: '2.5rem 1.5rem' }}>
+      <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
         {/* Breadcrumb Navigation */}
-        <nav style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', fontSize: '0.875rem', color: '#64748B', marginBottom: '1.5rem' }}>
-          <Link href="/learn" style={{ color: '#475569', textDecoration: 'none', fontWeight: 600 }}>
-            Curriculum Directory
-          </Link>
+        <nav style={{ display: 'flex', gap: '0.5rem', alignItems: 'center', fontSize: '0.875rem', color: '#64748B', marginBottom: '1.5rem' }}>
+          <Link href="/" style={{ color: '#64748B', textDecoration: 'none' }}>Home</Link>
           <span>/</span>
-          <span>{jurisdiction.countryName}</span>
+          <Link href="/learn" style={{ color: '#64748B', textDecoration: 'none' }}>Learn</Link>
           <span>/</span>
-          <span style={{ fontWeight: 700, color: '#4F46E5' }}>{jurisdiction.name}</span>
+          <span style={{ color: '#0F172A', fontWeight: 600 }}>{jurisdiction.name}</span>
         </nav>
 
         {/* Hero Header */}
@@ -255,10 +255,14 @@ export default async function JurisdictionOverviewPage({ params }: JurisdictionO
           </div>
         </div>
 
-        {/* Grade-Level / Key Stage Quick Filter Pills */}
+        {/* Grade-Level / Key Stage / NEP Stage Quick Filter Pills */}
         <div style={{ display: 'flex', gap: '10px', marginBottom: '2rem', flexWrap: 'wrap', alignItems: 'center' }}>
           <span style={{ fontSize: '0.85rem', fontWeight: 700, color: '#64748B' }}>
-            {isUK ? 'Jump to Key Stage / Phase:' : 'Jump to Grade Band:'}
+            {isIndia
+              ? 'Jump to NEP 2020 Stage / Class:'
+              : isUK
+              ? 'Jump to Key Stage / Phase:'
+              : 'Jump to Grade Band:'}
           </span>
           <a
             href="#elementary"
@@ -278,7 +282,9 @@ export default async function JurisdictionOverviewPage({ params }: JurisdictionO
             }}
           >
             <span>
-              {isScotland
+              {isIndia
+                ? '🎒 Primary (Classes 1–5: Foundational & Preparatory)'
+                : isScotland
                 ? '🎒 Primary (P1–P5)'
                 : isWales
                 ? '🎒 Progression Steps 1–3 (Primary)'
@@ -308,7 +314,9 @@ export default async function JurisdictionOverviewPage({ params }: JurisdictionO
             }}
           >
             <span>
-              {isScotland
+              {isIndia
+                ? '🏫 Middle Stage (Classes 6–8: NEP Core & Coding)'
+                : isScotland
                 ? '🏫 Broad General Education (S1–S3)'
                 : isWales
                 ? '🏫 Progression Step 4 (Years 7–9)'
@@ -338,7 +346,9 @@ export default async function JurisdictionOverviewPage({ params }: JurisdictionO
             }}
           >
             <span>
-              {isScotland
+              {isIndia
+                ? '📝 Secondary & Senior Secondary (Classes 9–12: Board Exams & JEE/NEET/CUET)'
+                : isScotland
                 ? '🎓 Senior Phase (S4–S6 / Nationals & Highers)'
                 : isWales
                 ? '📝 Progression Step 5 (WJEC GCSEs & A-Levels)'
@@ -352,10 +362,12 @@ export default async function JurisdictionOverviewPage({ params }: JurisdictionO
           </a>
         </div>
 
-        {/* Multi-Grade / Key Stage Progression Sections */}
+        {/* Multi-Grade / Key Stage / NEP Stage Progression Sections */}
         {renderCourseSection(
           'elementary',
-          isScotland
+          isIndia
+            ? 'Primary School Education (Classes 1–5: Foundational & Preparatory Stages)'
+            : isScotland
             ? 'Primary School Education (P1–P5)'
             : isWales
             ? 'Curriculum for Wales: Progression Steps 1–3 (Primary)'
@@ -364,7 +376,9 @@ export default async function JurisdictionOverviewPage({ params }: JurisdictionO
             : isUK
             ? 'Primary Education: Key Stage 1 & 2 (Years 1–5)'
             : 'Elementary Education (Grades 1–5)',
-          isScotland
+          isIndia
+            ? 'NCERT & NEP 2020 5+3+3+4 framework: Jaadui Pitara activity learning, foundational literacy, numeracy, and Environmental Studies (EVS).'
+            : isScotland
             ? 'Curriculum for Excellence (CfE) Early, First, and Second Level literacy, numeracy, and environmental inquiry.'
             : isWales
             ? 'Foundational development across the 6 Areas of Learning & Experience (AoLE) in bilingual Wales.'
@@ -378,7 +392,9 @@ export default async function JurisdictionOverviewPage({ params }: JurisdictionO
 
         {renderCourseSection(
           'middle-school',
-          isScotland
+          isIndia
+            ? 'Middle Stage Education (Classes 6–8: NEP Experiential Core & Coding)'
+            : isScotland
             ? 'Broad General Education (S1–S3 BGE)'
             : isWales
             ? 'Curriculum for Wales: Progression Step 4 (Lower Secondary)'
@@ -387,38 +403,42 @@ export default async function JurisdictionOverviewPage({ params }: JurisdictionO
             : isUK
             ? 'Secondary Education: Key Stage 3 (Years 7–9)'
             : 'Middle School Education (Grades 6–8 / Junior Secondary)',
-          isScotland
-            ? 'Third and Fourth Level CfE progression in mathematics, sciences, technologies, and social studies.'
+          isIndia
+            ? 'NCERT curriculum emphasizing rational numbers, linear algebra, experimental science, Indian society & history, and Python coding & AI foundations.'
+            : isScotland
+            ? 'CfE Third and Fourth Levels with interdisciplinary coursework, science experimentation, and mathematics consolidation.'
             : isWales
-            ? 'Deepening conceptual inquiry across AoLE disciplines preparing students for Made-for-Wales qualifications.'
+            ? 'Deeper subject exploration preparing learners for formal GCSE qualifications and vocational pathways.'
             : isNI
-            ? 'Secondary and grammar school foundations across Mathematics, Science, English, and Citizenship.'
+            ? 'Consolidation of Key Stage 3 cross-curricular skills and critical thinking before GCSE pathways.'
             : isUK
-            ? 'DfE statutory secondary curriculum in Algebraic Equations, Cell Biology, Python Computing, and British History/Citizenship.'
-            : 'Rigorous algebraic reasoning, cellular biology, computational thinking, and democratic governance.',
+            ? 'Key Stage 3 Core Knowledge (Years 7–9) bridging foundational concepts to GCSE readiness.'
+            : 'Core academic subjects preparing students for high school graduation and college readiness pathways.',
           middleCourses
         )}
 
         {renderCourseSection(
           'high-school',
-          isScotland
-            ? 'Senior Phase (S4–S6 / Nationals, Highers & Advanced Highers)'
+          isIndia
+            ? 'Secondary & Senior Secondary Education (Classes 9–12: Board Exams & Entrance Pathways)'
+            : isScotland
+            ? 'Senior Phase (S4–S6 Senior Secondary)'
             : isWales
-            ? 'Senior Secondary & Sixth Form (WJEC GCSEs & A-Levels)'
+            ? 'Progression Step 5: Upper Secondary & Sixth Form'
             : isNI
-            ? 'Key Stage 4 & Post-16 (GCSEs & GCE A-Levels)'
+            ? 'Post-Primary Senior: Key Stage 4 & Sixth Form'
             : isUK
-            ? 'Upper Secondary & Sixth Form: GCSE & A-Levels (Years 10–13)'
-            : 'High School Education (Grades 9–12 / GCSE / A-Levels / AP)',
-          isScotland
-            ? 'SQA certified National 5, Higher, and Advanced Higher qualifications leading to Scottish and global university admissions.'
+            ? 'Secondary & Sixth Form: Key Stage 4 (GCSE) & Key Stage 5 (A-Levels)'
+            : 'High School Academic Curriculum (Grades 9–12 / College Prep)',
+          isIndia
+            ? 'Class 10 All India Secondary School Examination (AISSE / ICSE / SSC) and Classes 11–12 Senior Secondary (AISSCE / ISC / HSC) forming the direct foundation for JEE Main/Advanced, NEET-UG, and CUET-UG.'
+            : isScotland
+            ? 'SQA Qualifications: National 5s (S4), Highers (S5 for university entrance), and Advanced Highers (S6).'
             : isWales
-            ? 'Qualifications Wales approved GCSEs and GCE AS/A-Levels administered by WJEC / CBAC.'
+            ? 'WJEC GCSEs, Welsh Baccalaureate (Skills Challenge Certificate), and GCE A-Levels.'
             : isNI
-            ? 'CCEA examinations and GCE Advanced Levels preparing students for university entrance.'
-            : isUK
-            ? 'Ofqual-regulated GCSEs (Grades 9–1) and GCE A-Levels across major awarding bodies (AQA, Pearson Edexcel, OCR).'
-            : 'College-preparatory coursework in Algebra 1, Biology, Chemistry, Physics, Rhetoric, and AI.',
+            ? 'CCEA GCSEs and GCE A-Levels preparing students for UCAS university admission across the UK.'
+            : 'Ofqual Regulated GCSEs (Grades 9–1) and Advanced Level (A-Level) qualifications recognized globally by Russell Group universities.',
           highCourses
         )}
       </div>

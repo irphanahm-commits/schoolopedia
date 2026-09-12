@@ -1,13 +1,13 @@
 # Schoolopedia — The Curriculum-Aware Education Encyclopedia
 
-> Schoolopedia is a free, curriculum-aware living education encyclopedia built for all 78 Tier 1 education jurisdictions across the USA, United Kingdom, Canada, Australia, and New Zealand. It guides learners along official national and state frameworks through verified lesson sequences, curated video masterclasses, interactive practice, and server-validated mastery.
+> Schoolopedia is a free, curriculum-aware living education encyclopedia built for 85 Tier 1 education jurisdictions across the USA, United Kingdom, India, Canada, Australia, and New Zealand. It guides learners along official national and state frameworks through verified lesson sequences, curated video masterclasses, interactive practice, and server-validated mastery.
 
 ## Core Pillars
-- [Curriculum Hub](https://schoolopedia.com/learn): K–12 standards-aligned learning pathways for 78 jurisdictions across 5 core subjects: Mathematics, Science, English Language Arts, Social Studies & Civics, and Computer Science & AI.
-- [Institution & School Directory](https://schoolopedia.com/explore): Official profiles for Tier 1 universities (Oxford, Cambridge, Imperial, UC Berkeley, Toronto) and premier UK schools (State Grammar Schools like Queen Elizabeth's Barnet, top Academies like Brampton Manor, and historic Independent Schools like Westminster and Eton).
-- [Career Pathways & Skills](https://schoolopedia.com/guidance): Non-deterministic education-to-career navigation connecting concepts to technical and cognitive skills.
-- [Verified Opportunities](https://schoolopedia.com/opportunities): Source-backed scholarships, apprenticeships, and summer programs with time-aware deadlines.
-- [Living Curriculum Updates & UK Guide](https://schoolopedia.com/blog): Track state/national curriculum framework revisions, standards alignment notes, and the comprehensive UK School System Guide (Key Stages, GCSEs, A-Levels).
+- [Curriculum Hub](https://schoolopedia.com/learn): K–12 standards-aligned learning pathways for 85 jurisdictions across 5 core subjects: Mathematics, Science, English Language Arts, Social Studies & Civics, and Computer Science & AI.
+- [Institution & School Directory](https://schoolopedia.com/explore): Official profiles for Tier 1 universities (Oxford, Cambridge, Imperial, UC Berkeley, Toronto, IIT Bombay, IIT Delhi, AIIMS New Delhi, IISc Bangalore, Delhi University), premier UK schools (Grammar Schools, Brampton Manor, Westminster), and premier Indian institutions (Kendriya Vidyalayas, Navodaya Vidyalayas, DPS R.K. Puram, The Doon School).
+- [Career Pathways & Skills](https://schoolopedia.com/guidance): Non-deterministic education-to-career navigation connecting concepts to technical and cognitive skills, including national entrance examination roadmaps (JEE Main & Advanced, NEET-UG, CUET-UG).
+- [Verified Opportunities](https://schoolopedia.com/opportunities): Source-backed scholarships, apprenticeships, Olympiads, and summer programs with time-aware deadlines (e.g. DST INSPIRE SHE, HBCSE Science Olympiads, PM-YASASVI).
+- [Living Curriculum Updates & Guides](https://schoolopedia.com/blog): Track state/national curriculum framework revisions, standards alignment notes, the comprehensive UK School System Guide, and the Indian Schooling System & Competitive Exams (CBSE, ICSE, State Boards, NIOS, NEET, JEE & CUET) Guide.
 
 ## Canonical First Vertical Slice
 - Target: United States → California → Public School System → 2026–27 Academic Year → Grade 8 → Mathematics → Linear Equations in One Variable
@@ -15,16 +15,20 @@
 - Standard Code: CCSS.MATH.CONTENT.8.EE.C.7 / TEKS 8.8.C / AC9M8A03
 - URL: https://schoolopedia.com/learn/us/california/grade-8/mathematics/linear-equations
 
-## 78 Tier 1 Jurisdictions Covered
+## 85 Tier 1 Jurisdictions Covered
 1. United States (51): All 50 states + Washington D.C. (CCSS, Texas TEKS, Florida B.E.S.T., Virginia SOL, NY NextGen, etc.)
 2. United Kingdom (4):
    - England: Department for Education (DfE) National Curriculum (Key Stages 1–5, GCSE 9–1, GCE A-Levels / AQA, Edexcel, OCR)
    - Scotland: Curriculum for Excellence (CfE / SQA Nationals 4/5, Highers, Advanced Highers)
    - Wales: Curriculum for Wales / Cwricwlwm i Gymru (Progression Steps 1–5 / WJEC GCSEs & A-Levels)
    - Northern Ireland: The Northern Ireland Curriculum (CCEA / Key Stages 1–4 & A-Levels)
-3. Canada (13): 10 Provinces (Ontario MoE, British Columbia MoE, Alberta Education, Quebec MEQ, etc.) + 3 Territories
-4. Australia (8): 6 States (NSW NESA, Victoria VCAA, Queensland QCAA, WA SCSA, SA SACE, Tasmania TASC) + 2 Mainland Territories (ACARA v9.0)
-5. New Zealand (2 Pathways): English-Medium (The New Zealand Curriculum - NZC) and Māori-Medium (Te Marautanga o Aotearoa - TMoA)
+3. India (7 Core Boards):
+   - National Boards: Central Board of Secondary Education (CBSE / NCERT), Council for the Indian School Certificate Examinations (CISCE: ICSE Class 10 & ISC Class 12), National Institute of Open Schooling (NIOS)
+   - Major State Boards: Maharashtra State Board (MSBSHSE / SSC & HSC), Uttar Pradesh Board (UPMSP / High School & Intermediate), Karnataka School Examination & Assessment Board (KSEAB / SSLC & 2nd PUC), Tamil Nadu State Board (TNBSE / SSLC & HSC +2)
+   - National Competitive Entrance Alignment: Joint Entrance Examination (JEE Main & Advanced) for IITs/NITs, National Eligibility cum Entrance Test (NEET-UG) for AIIMS/MBBS, and Common University Entrance Test (CUET-UG) for Central Universities (DU, JNU, BHU).
+4. Canada (13): 10 Provinces (Ontario MoE, British Columbia MoE, Alberta Education, Quebec MEQ, etc.) + 3 Territories
+5. Australia (8): 6 States (NSW NESA, Victoria VCAA, Queensland QCAA, WA SCSA, SA SACE, Tasmania TASC) + 2 Mainland Territories (ACARA v9.0)
+6. New Zealand (2 Pathways): English-Medium (The New Zealand Curriculum - NZC) and Māori-Medium (Te Marautanga o Aotearoa - TMoA)
 
 ## Provenance & Trust Principles
 - Trust is demonstrated, not claimed.
@@ -34,4 +38,4 @@
 - 100% Free Forever: Built on zero-cost edge infrastructure ($0/month budget).
 
 ## Optional Extended Documentation
-- [Full Curriculum & LLM Reference](https://schoolopedia.com/llms-full.txt): Detailed breakdown of all 78 jurisdictions, standards mappings, and entity schemas.
+- [Full Curriculum & LLM Reference](https://schoolopedia.com/llms-full.txt): Detailed breakdown of all 85 jurisdictions, standards mappings, and entity schemas.

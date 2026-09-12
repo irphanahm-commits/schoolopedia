@@ -261,4 +261,86 @@ export const BLOG_POSTS: BlogPost[] = [
       },
     },
   },
+  {
+    slug: 'indian-schooling-system-cbse-icse-neet-jee-cuet-guide',
+    title: 'The Indian Schooling System & National Competitive Exams: CBSE, ICSE, State Boards, NIOS, NEET, JEE & CUET Explained',
+    summary: 'A definitive guide to India’s schooling architecture under NEP 2020: contrasting CBSE, ICSE/ISC, NIOS, and State Boards, alongside the mechanics of national competitive gateways (JEE Main/Advanced, NEET-UG, and CUET).',
+    category: 'Pedagogy & Standards',
+    author: {
+      name: 'Schoolopedia Academic Insights',
+      role: 'Global Educational Systems Research Lead',
+      avatar: '🇮🇳',
+    },
+    publishedAt: 'September 13, 2026',
+    lastVerifiedAt: 'September 13, 2026',
+    readTime: '10 min read',
+    tags: ['India Education', 'CBSE', 'ICSE', 'NIOS', 'NEET', 'JEE Advanced', 'CUET', 'NEP 2020', 'NCERT'],
+    content: {
+      introduction:
+        'India operates one of the largest, most dynamic education ecosystems in the world, with over 250 million school students navigating national and state curricula. Under the landmark National Education Policy (NEP 2020), the country is undergoing an epochal transformation from the traditional 10+2 rote-learning structure to a flexible, experiential 5+3+3+4 continuum. Simultaneously, national competitive admissions—spearheaded by the National Testing Agency (NTA)—have centralized university admissions through JEE Main, NEET-UG, and CUET-UG. This guide demystifies the boards, the stages, and the competitive pipelines powering modern Indian schooling.',
+      keyTakeaways: [
+        'NEP 2020 restructures schooling into 5+3+3+4 stages: Foundational (Ages 3–8), Preparatory (Ages 8–11), Middle (Ages 11–14), and Secondary (Ages 14–18 / Classes 9–12).',
+        'CBSE (aligned with NCERT) is the national standard for STEM and the primary benchmark for JEE, NEET, and CUET competitive entrances.',
+        'CISCE (ICSE Class 10 & ISC Class 12) is renowned for deep English literature, balanced humanities, and rigorous lab-oriented sciences.',
+        'NIOS (National Institute of Open Schooling) is the world’s largest open school, offering On-Demand Examinations (ODE) with full equivalence to CBSE/ICSE.',
+        'JEE (Joint Entrance Examination) branches into JEE Main (NITs/IIITs) and JEE Advanced (23 IITs), testing multi-concept analytical synthesis.',
+        'NEET-UG is the sole gateway for all medical colleges across India (AIIMS, JIPMER, GMCs), requiring near-total recall of NCERT Class 11 and 12 Biology, Physics, and Chemistry.',
+        'CUET-UG eliminates the 100% Class 12 board cutoff barrier, centralizing admissions for Delhi University, JNU, BHU, and 45+ Central Universities through normalized percentiles.',
+      ],
+      sections: [
+        {
+          heading: '1. From 10+2 to NEP 2020: The 5+3+3+4 Pedagogical Architecture',
+          body: [
+            'For over three decades, Indian schooling was defined by the rigid 10+2 framework (Classes 1 to 10 general education followed by Classes 11 and 12 specialization in Science, Commerce, or Arts). NEP 2020 replaced this with an internationally aligned 5+3+3+4 structure grounded in child developmental psychology:',
+            '• Foundational Stage (5 Years, Ages 3–8): Covers 3 years of early childhood education (Balvatika / Anganwadi) plus Classes 1 and 2. Emphasizes play-based learning, spatial intuition, and foundational literacy and numeracy (FLN) supported by NCERT’s Jaadui Pitara initiative.',
+            '• Preparatory Stage (3 Years, Ages 8–11): Spans Classes 3, 4, and 5. Introduces formal classroom reading, writing, mathematical operations, and discovery-based Environmental Studies (EVS).',
+            '• Middle Stage (3 Years, Ages 11–14): Spans Classes 6, 7, and 8. Transitions students into discrete subject disciplines (Mathematics, Science, Social Sciences, Languages) with hands-on experimentation, coding, and vocational exposure.',
+            '• Secondary Stage (4 Years, Ages 14–18): Encompasses Classes 9, 10, 11, and 12 in two distinct phases. Phase 1 (Classes 9–10) concludes with All India Secondary School Examinations (AISSE / ICSE / State Board SSC). Phase 2 (Classes 11–12) offers multidisciplinary stream flexibility, preparing students for board certification and national entrance examinations.',
+          ],
+          highlightBox: {
+            title: 'End of Rote Learning',
+            text: 'NEP 2020 explicitly shifts the assessment paradigm from summative memorization to PARAKH (Performance Assessment, Review, and Analysis of Knowledge for Holistic Development)—testing conceptual clarity, critical thinking, and real-world application.',
+          },
+        },
+        {
+          heading: '2. National Boards vs. State-Driven Boards: CBSE, ICSE, NIOS & SCERTs',
+          body: [
+            'Parents and students in India typically choose among three primary national boards alongside their regional state board:',
+            '• CBSE (Central Board of Secondary Education): The apex national board under the Ministry of Education, affiliating over 28,000 schools including Kendriya Vidyalayas (KVs), Jawaharlal Navodaya Vidyalayas (JNVs), and top private schools (such as Delhi Public School and Modern School). Because CBSE follows the NCERT syllabus verbatim, it is the most popular choice for students targeting JEE, NEET, and CUET.',
+            '• CISCE / ICSE & ISC: Established in 1958, the Council for the Indian School Certificate Examinations conducts the ICSE (Class 10) and ISC (Class 12) examinations. Renowned for rigorous English language standards, rich humanities analysis, and detailed laboratory practicals, it is favored by students seeking comprehensive liberal arts preparation and global university transitions.',
+            '• NIOS (National Institute of Open Schooling): An autonomous institution under the Ministry of Education, NIOS is the world’s largest open schooling network with over 3 million learners. Offering Open Basic Education (OBE) and secondary/senior secondary certifications with On-Demand Examinations (ODE), it provides unmatched flexibility for competitive aspirants, athletes, and non-traditional students.',
+            '• State Boards (MSBSHSE, UPMSP, KSEAB, TNBSE): Each Indian state administers its own secondary (SSC) and higher secondary (HSC / PUC) board. Boards like Uttar Pradesh (UPMSP) and Maharashtra (MSBSHSE) examine millions of students annually, offering instruction in regional languages while progressively aligning core STEM curricula with NCERT benchmarks.',
+          ],
+        },
+        {
+          heading: '3. The National Competitive Entrances: JEE, NEET-UG, and CUET-UG',
+          body: [
+            'In India, undergraduate admissions to top universities and professional degree programs do not depend primarily on high school transcripts or subjective essays; they are governed by nationwide standardized entrance examinations administered by the National Testing Agency (NTA):',
+            '• JEE Main & JEE Advanced (Engineering & Technology): Gateway to the Indian Institutes of Technology (IITs), National Institutes of Technology (NITs), and IIITs. Over 1.2 million aspirants write JEE Main (Computer-Based Test in Physics, Chemistry, and Math). The top ~250,000 scorers qualify to sit JEE Advanced—a grueling multi-concept examination conducted by rotating IITs for admission to the 23 premier IIT campuses.',
+            '• NEET-UG (Medicine & Surgery): The single national examination for admission to MBBS, BDS, and AYUSH programs across all medical institutions, including the apex All India Institute of Medical Sciences (AIIMS New Delhi) and JIPMER. Scored out of 720 marks (180 questions: 360 Biology, 180 Physics, 180 Chemistry), NEET requires 100% textbook mastery and rapid-fire problem-solving precision under extreme time pressure.',
+            '• CUET-UG (Central Universities Admissions): Introduced to eliminate unrealistic Class 12 board cutoffs (such as Delhi University’s historic 100% requirements), CUET-UG standardizes admissions across 45+ Central Universities (including DU, JNU, BHU, Jamia Millia Islamia, and Hyderabad). Students test in languages (Section 1), domain-specific NCERT Class 12 subjects (Section 2), and a general aptitude test (Section 3).',
+          ],
+          highlightBox: {
+            title: 'The Central Role of NCERT',
+            text: 'Across JEE Main, NEET-UG, and CUET-UG, the statutory NCERT textbooks published by the Government of India serve as the definitive syllabus authority. Every lesson in Schoolopedia’s India curriculum is directly mapped to NCERT chapter standards and core concepts.',
+          },
+        },
+        {
+          heading: '4. Exemplar Public Institutions & National Scholarships',
+          body: [
+            'India’s educational landscape includes world-leading public school systems that foster social mobility and academic merit:',
+            '• Kendriya Vidyalayas (KVs): Over 1,250 central government schools offering uniform, high-quality CBSE education across all military bases, research campuses, and urban centers.',
+            '• Jawaharlal Navodaya Vidyalayas (JNVs): Fully residential, government-funded co-educational schools in rural districts that identify and nurture exceptional rural talent through JNVST, consistently producing remarkable JEE and NEET qualification rates.',
+            '• Historic Residential Institutions: Schools such as The Doon School (Dehradun), Mayo College (Ajmer), Bishop Cotton (Shimla), and Welham Girls’ School have set centuries of excellence in leadership, character, and holistic development.',
+            '• National Talent & Research Programs: Programs such as the INSPIRE Fellowship (Department of Science & Technology) and the Homi Bhabha Centre for Science Education (HBCSE) National Olympiads (INMO, INPhO, INChO) offer prestigious pathways directly into scientific research institutions like IISc Bangalore and IISERs.',
+          ],
+        },
+      ],
+      relatedCurriculumLink: {
+        title: 'Explore India Curriculum & National Boards in Schoolopedia',
+        url: '/learn/in/cbse',
+      },
+    },
+  },
 ];
+
