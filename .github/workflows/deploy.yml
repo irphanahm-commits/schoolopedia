@@ -9,9 +9,6 @@ on:
 jobs:
   test-and-build:
     runs-on: ubuntu-latest
-    env:
-      CF_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-      CF_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
     steps:
       - name: Checkout Code
         uses: actions/checkout@v4
@@ -38,25 +35,31 @@ jobs:
       - name: Build Packages & Web Application
         run: pnpm build
 
+      - name: Check Cloudflare Deployment Credentials
+        id: cf_check
+        run: |
+          if [ -n "${{ secrets.CLOUDFLARE_API_TOKEN }}" ]; then
+            echo "Cloudflare deployment token detected. Edge deployment will proceed."
+            echo "deploy=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "Cloudflare deployment token not configured in repository secrets."
+            echo "Automated CI tests and builds passed with 100% success. Edge deployment skipped."
+            echo "deploy=false" >> "$GITHUB_OUTPUT"
+          fi
+
       - name: Deploy Edge API Worker to Cloudflare
-        if: (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master') && env.CF_API_TOKEN != ''
+        if: (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master') && steps.cf_check.outputs.deploy == 'true'
         uses: cloudflare/wrangler-action@v3
         with:
-          apiToken: ${{ env.CF_API_TOKEN }}
-          accountId: ${{ env.CF_ACCOUNT_ID }}
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
           command: deploy
 
       - name: Deploy Frontend Web Application to Cloudflare
-        if: (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master') && env.CF_API_TOKEN != ''
+        if: (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master') && steps.cf_check.outputs.deploy == 'true'
         uses: cloudflare/wrangler-action@v3
         with:
-          apiToken: ${{ env.CF_API_TOKEN }}
-          accountId: ${{ env.CF_ACCOUNT_ID }}
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
           workingDirectory: apps/web
           command: deploy
-
-      - name: Deployment Notice
-        if: (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master') && env.CF_API_TOKEN == ''
-        run: |
-          echo "Automated tests, typecheck, and production builds all passed successfully."
-          echo "Cloudflare edge deployment via GitHub Actions is skipped because CLOUDFLARE_API_TOKEN secret is not set in GitHub repository settings."
