@@ -1,0 +1,44 @@
+name: Schoolopedia CI & Edge Deployment
+
+on:
+  push:
+    branches: [main, master]
+  pull_request:
+    branches: [main, master]
+
+jobs:
+  test-and-build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 12.4.1
+
+      - name: Install Dependencies
+        run: pnpm install
+
+      - name: Run Automated Test Suite
+        run: pnpm test
+
+      - name: Typecheck Workspace
+        run: pnpm typecheck
+
+      - name: Build Packages & Web Application
+        run: pnpm build
+
+      - name: Deploy Edge API Worker to Cloudflare
+        if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master'
+        uses: cloudflare/wrangler-action@v3
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          command: deploy
