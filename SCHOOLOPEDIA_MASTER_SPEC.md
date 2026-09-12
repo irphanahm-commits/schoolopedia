@@ -131,10 +131,18 @@ territories
 Two major national pathways: - New Zealand Curriculum (English-medium) -
 Te Marautanga o Aotearoa (Māori-medium)
 
-Initial planning count is approximately **77 first-level
-jurisdiction/system targets**, not 77 complete curricula.
+Canonical Tier 1 coverage comprises **78 first-level
+jurisdiction targets**:
+- 51 in the USA (all 50 states + District of Columbia)
+- 4 in the United Kingdom (England, Scotland, Wales, Northern Ireland)
+- 13 in Canada (10 provinces + 3 territories)
+- 8 in Australia (6 states + 2 mainland territories)
+- 2 national pathways in New Zealand (NZC and TMoA)
 
-Do NOT build all of them initially.
+The complete canonical matrix of authorities, standards frameworks, K–12
+grade equivalencies, and 5-subject progressions (Mathematics, Science,
+ELA, Social Studies, Computer Science) is maintained in:
+`docs/TIER1_CURRICULUM_MATRIX.md`.
 
 ------------------------------------------------------------------------
 

@@ -12,7 +12,7 @@
 
 ## 1. Executive Summary for Future AI Agents & Developers
 
-Schoolopedia is a **curriculum-aware living education encyclopedia** built for **Tier 1 countries** (USA, Canada, United Kingdom, Australia, New Zealand).
+Schoolopedia is a **curriculum-aware living education encyclopedia** built for **all 78 Tier 1 education jurisdictions** across the USA, United Kingdom, Canada, Australia, and New Zealand.
 
 It solves the primary learner question:  
 > **What do I need to learn? → How do I learn it? → What can I do next?**
@@ -27,7 +27,7 @@ All services operate within the **Cloudflare Free Tier** ($0/month operational b
 
 | Component | Technology | Binding / Resource ID | Free Tier Limits | Production URL |
 | :--- | :--- | :--- | :--- | :--- |
-| **Relational Database** | Cloudflare D1 (SQLite) | `schoolopedia-db`<br>`6741d7ad-17d9-4142-a02a-9e77b33f0ad3` (APAC / Singapore) | 5M read rows/day<br>100k write rows/day | Direct binding in Worker |
+| **Relational Database** | Cloudflare D1 (SQLite) | `schoolopedia-db`<br>`6741d7ad-17d9-4142-a02a-9e77b33f0ad3` (APAC / Singapore) | 5M read rows/day<br>100k write rows/day | Direct binding in Worker (52 tables active) |
 | **KV Edge Cache** | Cloudflare KV | `schoolopedia-cache`<br>`4970ba5253824a28895b5f2467eca85f` | 100k read ops/day<br>1k write ops/day | Cache-first for curriculum trees |
 | **Blob / Snapshot Storage** | Cloudflare R2 | `schoolopedia-snapshots` | 10GB storage<br>1M Class B ops/month | Source snapshots, curriculum PDFs |
 | **API Edge Worker** | Cloudflare Workers + Hono | `schoolopedia-api` | 100k req/day | `https://schoolopedia-api.irphanahm.workers.dev`<br>`https://api.schoolopedia.com` |
@@ -36,42 +36,26 @@ All services operate within the **Cloudflare Free Tier** ($0/month operational b
 
 ---
 
-## 3. Monorepo Structure
+## 3. Tier 1 Jurisdictional Scope & Curriculum Model
 
-```text
-schoolopedia/
-├── apps/
-│   └── web/                     # Next.js 15 web app (StudentClass light-theme edtech UI)
-│       ├── src/
-│       │   ├── app/             # App router (/learn, /explore, /guidance, /opportunities)
-│       │   ├── components/      # Header, Footer, VideoPlayer, ContentBlocks, PracticeRunner, QuizRunner
-│       │   └── styles/          # globals.css (light theme tokens, pastel utility classes)
-│       ├── wrangler.toml        # Cloudflare Pages / Static Assets deployment config
-│       └── out/                 # Static HTML/JS/CSS exported bundle
-├── workers/
-│   └── api/                     # Cloudflare Worker API router (Hono v4)
-│       ├── src/                 # Endpoints, cron jobs (video health), middleware
-│       └── wrangler.toml        # D1, KV, R2 bindings & scheduled crons
-├── packages/
-│   ├── types/                   # Canonical domain interfaces (Curriculum, Assessments, Learner, Careers)
-│   ├── config/                  # Quota thresholds, TTLs, scoring weights
-│   ├── validation/              # Runtime Zod schemas for submissions and requests
-│   ├── observability/           # Structured JSON logger & audit telemetry
-│   └── database/                # D1 query repositories & SQLite FTS5 search
-├── migrations/                  # Canonical SQL D1 schema migrations
-│   ├── 0001_initial_schema.sql  # 38 tables: Curriculum, Lessons, Videos, Assessments, FTS5
-│   └── 0002_tier1_pathways_institutions_opportunities.sql # Institutions, Careers, Pathways, Opportunities
-├── seeds/                       # Canonical SQL seed datasets
-│   ├── 0001_california_grade8_math_linear_equations.sql # Full vertical slice
-│   └── 0002_tier1_core_jurisdictions.sql # USA, UK, Canada, Australia, New Zealand
-├── docs/                        # In-repository continuity records
-│   ├── PROJECT_STATE.md         # This living file
-│   ├── TIER1_CURRICULUM_MATRIX.md # Multi-country curriculum authority & grade mappings
-│   └── AGENT_PLAYBOOK.md        # AI agent instructions & command cheat-sheet
-├── tests/                       # Unit and deterministic grading tests
-├── SCHOOLOPEDIA_MASTER_SPEC.md  # Original master specification document
-└── pnpm-workspace.yaml          # Monorepo package bindings
-```
+Schoolopedia systematically covers **78 primary jurisdictions** across Tier 1 countries:
+1. **United States (51 jurisdictions)**: All 50 states + Washington D.C., supporting state frameworks (CCSS, Texas TEKS, Florida B.E.S.T., Virginia SOL, NY NextGen, etc.).
+2. **United Kingdom (4 nations)**: England (DfE / KS1–4 & GCSE), Scotland (CfE / Nationals & Highers), Wales (Curriculum for Wales), Northern Ireland (CCEA).
+3. **Canada (13 jurisdictions)**: 10 Provinces (Ontario MoE, BC MoE, Alberta Education, Quebec MEQ, etc.) + 3 Territories (Yukon, NWT, Nunavut).
+4. **Australia (8 jurisdictions)**: 6 States (NSW NESA, Victoria VCAA, Queensland QCAA, WA SCSA, SA SACE, Tasmania TASC) + 2 Mainland Territories (ACT BSSS, NT) aligned with ACARA v9.0.
+5. **New Zealand (2 Pathways)**: English-Medium (The New Zealand Curriculum - NZC) and Māori-Medium (Te Marautanga o Aotearoa - TMoA) across all regions.
+
+### Grade Band Architecture:
+- **Elementary / Primary**: Grades K–5 / Years 1–6 / NZC Levels 1–3
+- **Middle / Junior High**: Grades 6–8 / Key Stage 3 / Years 7–9 / NZC Levels 4–5
+- **High School / Senior Secondary**: Grades 9–12 / Key Stage 4 & Sixth Form / GCSE & A-Levels / Years 10–12 / NCEA Levels 1–3
+
+### 5 Core Subject Pillars:
+1. **Mathematics**: Arithmetic, Pre-Algebra, Algebra 1, Geometry, Algebra 2, Pre-Calculus, AP/Calculus, Statistics
+2. **Science**: Elementary Science, Life Science / Biology, Chemistry, Physics, Earth & Space Science
+3. **English Language Arts**: Foundational Literacy, Reading Comprehension, Literary Analysis, Rhetoric & Argumentative Writing
+4. **Social Studies & Civics**: Communities, Civics & Government, US/World History, Economics, Human Geography
+5. **Computer Science & AI**: Computational Thinking, Python Programming, Algorithms & Data Structures, Web Development, Cyber Ethics
 
 ---
 
@@ -87,7 +71,8 @@ All user interfaces strictly follow the **StudentClass EdTech Light-Theme**:
   - Mathematics: `#EEF2FF`
   - Science: `#E0F2FE`
   - Language Arts: `#ECFDF5`
-  - Social Studies: `#FEF3C7`
+  - Social Studies & Civics: `#FEF3C7`
+  - Computer Science: `#F3E8FF`
 - **Typography**: Dark charcoal `#0F172A` for titles and readable slate `#334155` for body text.
 
 ---
@@ -106,7 +91,17 @@ All user interfaces strictly follow the **StudentClass EdTech Light-Theme**:
 ## 6. Video Recommendation Policy & Health Checks
 
 - **Every lesson has a Primary Video and at least 1 Backup Video.**
-- Primary videos MUST have active YouTube embeds.
-- Current active Grade 8 Linear Equations primary: `f15zA0PhSek` (*Introduction to solving an equation with variables on both sides* — Khan Academy).
-- Current backup 1: `Qyd_v3DGzTM` (*Algebra Basics: Solving Basic Equations Part 2* — Math Antics).
+- Primary videos MUST have active YouTube embeds verified via oEmbed.
 - Automated cron job runs every 6 hours (`0 */6 * * *`) to query YouTube oEmbed and promote Backup to Primary if a video is unavailable.
+
+### Active Verified Video ID Register:
+| Topic & Subject | Grade | Channel | Primary ID | Backup ID |
+| :--- | :--- | :--- | :--- | :--- |
+| **Linear Equations (Math)** | Grade 8 | Khan Academy / Math Antics | `f15zA0PhSek` | `Qyd_v3DGzTM` |
+| **Quadratic Equations (Math)** | Grade 9 | Math Meeting / Khan Academy | `3ayhvAI3IeY` | `f15zA0PhSek` |
+| **Cell Biology (Science)** | Grade 9 | Amoeba Sisters / CrashCourse | `8IlzKri08kk` | `0RRVV4Diomg` |
+| **Chemical Bonds (Science)** | Grade 10 | CrashCourse Chemistry | `0RRVV4Diomg` | `8IlzKri08kk` |
+| **Newton's Laws of Motion (Science)** | Grade 11 | CrashCourse Physics | `kKKM8Y-u7ds` | `8IlzKri08kk` |
+| **Constitutional Civics (Civics)** | Grade 8 | CrashCourse US Government | `0bf3CwYCxXw` | `bO7FQsCcbD8` |
+| **Python Programming (CS)** | Grade 8/9 | Programming with Mosh | `kqtD5dpn9C8` | `f15zA0PhSek` |
+| **Rhetoric & Writing (ELA)** | Grade 10 | Stanford GSB / CrashCourse | `HAnw168huqA` | `0bf3CwYCxXw` |
