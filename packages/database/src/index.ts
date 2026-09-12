@@ -5,6 +5,7 @@ import { AssessmentRepository } from './repositories/assessment';
 import { LearnerRepository } from './repositories/learner';
 import { SearchRepository } from './repositories/search';
 import { JobsRepository } from './repositories/jobs';
+import { PathwaysRepository } from './repositories/pathways';
 
 export * from './repositories/curriculum';
 export * from './repositories/lesson';
@@ -12,6 +13,7 @@ export * from './repositories/assessment';
 export * from './repositories/learner';
 export * from './repositories/search';
 export * from './repositories/jobs';
+export * from './repositories/pathways';
 
 export interface DatabaseContext {
   curriculum: CurriculumRepository;
@@ -20,6 +22,7 @@ export interface DatabaseContext {
   learners: LearnerRepository;
   search: SearchRepository;
   jobs: JobsRepository;
+  pathways: PathwaysRepository;
 }
 
 export function createDatabaseContext(db: D1Database): DatabaseContext {
@@ -30,5 +33,7 @@ export function createDatabaseContext(db: D1Database): DatabaseContext {
     learners: new LearnerRepository(db),
     search: new SearchRepository(db),
     jobs: new JobsRepository(db),
+    pathways: new PathwaysRepository(db),
   };
 }
+

@@ -5,3 +5,4 @@ export * from './assessment';
 export * from './learner';
 export * from './provenance';
 export * from './jobs';
+export * from './pathways';

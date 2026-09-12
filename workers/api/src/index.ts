@@ -84,6 +84,50 @@ app.get('/api/v1/jurisdictions', async (c) => {
   return c.json({ data: jurisdictions });
 });
 
+// GET /api/v1/institutions
+app.get('/api/v1/institutions', async (c) => {
+  const country = c.req.query('country');
+  const ctx = createDatabaseContext(c.env.DB);
+  const institutions = await ctx.pathways.listInstitutions(country);
+  return c.json({ data: institutions });
+});
+
+// GET /api/v1/careers
+app.get('/api/v1/careers', async (c) => {
+  const ctx = createDatabaseContext(c.env.DB);
+  const careers = await ctx.pathways.listCareers();
+  return c.json({ data: careers });
+});
+
+// GET /api/v1/careers/:slug
+app.get('/api/v1/careers/:slug', async (c) => {
+  const slug = c.req.param('slug');
+  const ctx = createDatabaseContext(c.env.DB);
+  const careerData = await ctx.pathways.getCareerWithPathway(slug);
+  if (!careerData) {
+    return c.json(
+      {
+        error: {
+          code: 'NOT_FOUND',
+          message: `Career not found: ${slug}`,
+          request_id: c.get('requestId'),
+        },
+      },
+      404
+    );
+  }
+  return c.json({ data: careerData });
+});
+
+// GET /api/v1/opportunities
+app.get('/api/v1/opportunities', async (c) => {
+  const type = c.req.query('type');
+  const ctx = createDatabaseContext(c.env.DB);
+  const opportunities = await ctx.pathways.listOpportunities(type);
+  return c.json({ data: opportunities });
+});
+
+
 // GET /api/v1/curriculum/tree
 app.get('/api/v1/curriculum/tree', async (c) => {
   const jurisdiction = c.req.query('jurisdiction') || 'california';
@@ -431,6 +475,7 @@ export default {
     const dbCtx = createDatabaseContext(env.DB);
     const jobs = await dbCtx.jobs.acquireNextJobs(PLATFORM_CONFIG.freeTierSafety.jobBatchSize);
 
+    // 1. Process Outbox Jobs
     for (const job of jobs) {
       try {
         logger.info(`Processing job ${job.id} (${job.type})`);
@@ -440,6 +485,33 @@ export default {
         logger.error(`Job ${job.id} failed`, err);
         await dbCtx.jobs.failJob(job.id, err instanceof Error ? err.message : 'Unknown error', job.attempts, job.max_attempts);
       }
+    }
+
+    // 2. Automated Video Availability & Multi-Source Failover Engine
+    try {
+      const { results: videos } = await env.DB.prepare(
+        `SELECT id, youtube_video_id, title FROM videos WHERE state = 'AVAILABLE' LIMIT 10`
+      ).all<{ id: string; youtube_video_id: string; title: string }>();
+
+      for (const v of videos || []) {
+        try {
+          const res = await fetch(`https://www.youtube.com/oembed?url=https://www.youtube.com/watch?v=${v.youtube_video_id}&format=json`);
+          if (!res.ok) {
+            logger.warn(`Video ${v.id} (${v.youtube_video_id}) unavailable on YouTube (${res.status}). Executing automated failover.`);
+            await env.DB.prepare(`UPDATE videos SET state = 'UNAVAILABLE' WHERE id = ?`).bind(v.id).run();
+            // Auto-promote backup to primary
+            await env.DB.prepare(
+              `UPDATE video_mappings SET role = 'PRIMARY' WHERE role = 'BACKUP_1' AND lesson_version_id IN (
+                SELECT lesson_version_id FROM video_mappings WHERE video_id = ?
+              )`
+            ).bind(v.id).run();
+          }
+        } catch (e) {
+          logger.error(`Video health probe error for ${v.id}`, e);
+        }
+      }
+    } catch (e) {
+      logger.error('Video health check sweep failed', e);
     }
   },
 };
