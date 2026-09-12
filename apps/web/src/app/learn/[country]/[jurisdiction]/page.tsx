@@ -126,7 +126,7 @@ export default async function JurisdictionOverviewPage({ params }: JurisdictionO
 
                 <div style={{ display: 'flex', gap: '0.5rem', alignItems: 'center', marginBottom: '1rem', flexWrap: 'wrap' }}>
                   <span style={{ fontSize: '0.75rem', fontWeight: 700, padding: '2px 6px', borderRadius: '4px', backgroundColor: '#F1F5F9', color: '#475569' }}>
-                    {c.grade}
+                    {isIndia ? c.grade.replace(/Grade\s*(\d+)/gi, 'Class $1') : c.grade}
                   </span>
                   <span style={{ fontSize: '0.75rem', color: '#94A3B8' }}>•</span>
                   <span style={{ fontSize: '0.75rem', color: '#64748B', fontFamily: 'monospace' }}>

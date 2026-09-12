@@ -6,7 +6,9 @@ import { getCourseSyllabus } from '@/lib/syllabus-data';
 import { TopicVideoPlayButton } from '@/components/TopicVideoPlayButton';
 import { IndianMarathonShowcase } from '@/components/IndianMarathonShowcase';
 import { IndianTopicVideoPlayButton } from '@/components/IndianTopicVideoPlayButton';
+import { IndianNCERTSyllabusView } from '@/components/IndianNCERTSyllabusView';
 import { getIndianMarathonsForCourse, getIndianAlternativeForTopic } from '@/lib/indian-syllabus-data';
+import { getIndianNCERTSubjectCurriculum } from '@/lib/indian-ncert-curriculum';
 
 interface CourseSyllabusProps {
   params: Promise<{
@@ -68,10 +70,30 @@ export default async function CourseSyllabusPage({ params }: CourseSyllabusProps
 
   const isIndia = resolvedParams.country.toLowerCase() === 'in' || ['cbse', 'icse', 'nios', 'maharashtra', 'uttar-pradesh', 'karnataka', 'tamil-nadu'].includes(resolvedParams.jurisdiction.toLowerCase());
   const indianMarathons = isIndia ? getIndianMarathonsForCourse(resolvedParams.grade, resolvedParams.subject, resolvedParams.jurisdiction) : [];
+  const indianCurriculum = isIndia ? getIndianNCERTSubjectCurriculum(resolvedParams.grade, resolvedParams.subject) : undefined;
 
-  const displayGradeName = matchedCourse ? matchedCourse.grade : (syllabus ? syllabus.gradeName : currentLesson.gradeName);
-  const displayTitle = matchedCourse ? matchedCourse.title : (syllabus ? syllabus.title : `${currentLesson.gradeName} ${currentLesson.subjectName} Syllabus`);
-  const displayStandard = matchedCourse ? matchedCourse.standardCode : (syllabus ? syllabus.frameworkStandard : currentLesson.standardCode);
+  let displayGradeName = matchedCourse ? matchedCourse.grade : (syllabus ? syllabus.gradeName : currentLesson.gradeName);
+  if (isIndia) {
+    if (indianCurriculum) {
+      displayGradeName = indianCurriculum.classLabel;
+    } else {
+      displayGradeName = displayGradeName.replace(/Grade\s*(\d+)/gi, 'Class $1');
+    }
+  }
+
+  let displayTitle = matchedCourse ? matchedCourse.title : (syllabus ? syllabus.title : `${currentLesson.gradeName} ${currentLesson.subjectName} Syllabus`);
+  if (isIndia) {
+    if (indianCurriculum) {
+      displayTitle = `${indianCurriculum.classLabel} ${indianCurriculum.subjectNameEnglish} (${indianCurriculum.subjectNameHindi}) - NCERT & ${jurisdictionName} Official Curriculum`;
+    } else {
+      displayTitle = displayTitle.replace(/Grade\s*(\d+)/gi, 'Class $1');
+    }
+  }
+
+  let displayStandard = matchedCourse ? matchedCourse.standardCode : (syllabus ? syllabus.frameworkStandard : currentLesson.standardCode);
+  if (isIndia && indianCurriculum) {
+    displayStandard = `NCERT / CBSE Prescribed • ${indianCurriculum.totalChapters} Chapters`;
+  }
 
   return (
     <div style={{ minHeight: '100vh', backgroundColor: 'var(--bg-canvas)' }}>
@@ -90,10 +112,10 @@ export default async function CourseSyllabusPage({ params }: CourseSyllabusProps
             {displayGradeName}
           </span>
           <span>/</span>
-          <span>{syllabus ? syllabus.subjectName : currentLesson.subjectName}</span>
+          <span>{indianCurriculum ? indianCurriculum.subjectNameEnglish : (syllabus ? syllabus.subjectName : currentLesson.subjectName)}</span>
         </nav>
 
-        {/* Grade-Level Subject Switcher */}
+        {/* Grade/Class-Level Subject Switcher */}
         <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '24px', overflowX: 'auto', paddingBottom: '4px' }}>
           <span style={{ fontSize: '0.8rem', fontWeight: 700, color: 'var(--text-muted)', whiteSpace: 'nowrap' }}>
             {displayGradeName} Subjects:
@@ -166,7 +188,9 @@ export default async function CourseSyllabusPage({ params }: CourseSyllabusProps
               border: '1px solid #e2e8f0',
               color: '#475569',
             }}>
-              📚 {syllabus ? `${syllabus.units.length} Units • ${totalTopics} Sequenced Topics` : `${totalTopics} Topics`}
+              📚 {isIndia && indianCurriculum
+                ? `${indianCurriculum.totalChapters} Prescribed Chapters • English & Hindi Medium Videos`
+                : (syllabus ? `${syllabus.units.length} Units • ${totalTopics} Sequenced Topics` : `${totalTopics} Topics`)}
             </span>
           </div>
 
@@ -174,7 +198,9 @@ export default async function CourseSyllabusPage({ params }: CourseSyllabusProps
             {displayTitle}
           </h1>
           <p style={{ fontSize: '1rem', color: '#475569', margin: '0 0 20px', maxWidth: '800px', lineHeight: 1.6 }}>
-            {syllabus ? syllabus.overview : 'Sequential, competency-aligned curriculum modules designed to guide learners toward complete conceptual mastery and real-world application.'}
+            {isIndia && indianCurriculum
+              ? `Official syllabus prescribed by NCERT and followed across CBSE, CISCE, NIOS, and State Boards. Explore all ${indianCurriculum.totalChapters} chapters in English Medium or Hindi Medium (हिंदी माध्यम) with dedicated video masterclasses.`
+              : (syllabus ? syllabus.overview : 'Sequential, competency-aligned curriculum modules designed to guide learners toward complete conceptual mastery and real-world application.')}
           </p>
 
           <div style={{ display: 'flex', gap: '16px', alignItems: 'center', flexWrap: 'wrap' }}>
@@ -202,19 +228,29 @@ export default async function CourseSyllabusPage({ params }: CourseSyllabusProps
           </div>
         </div>
 
+        {/* Official Indian NCERT Chapter Syllabus with Dual Medium (English & Hindi) and Chapter-Wise Videos */}
+        {isIndia && indianCurriculum && (
+          <IndianNCERTSyllabusView
+            curriculum={indianCurriculum}
+            jurisdictionName={jurisdictionName}
+            jurisdictionSlug={resolvedParams.jurisdiction}
+          />
+        )}
+
         {/* Indian Board Exam Marathon & One-Shot Showcase */}
         {isIndia && indianMarathons.length > 0 && (
           <IndianMarathonShowcase
             marathons={indianMarathons}
             courseTitle={displayTitle}
             gradeLabel={displayGradeName}
-            subjectLabel={syllabus ? syllabus.subjectName : currentLesson.subjectName}
+            subjectLabel={indianCurriculum ? indianCurriculum.subjectNameEnglish : (syllabus ? syllabus.subjectName : currentLesson.subjectName)}
             boardName={jurisdictionName}
           />
         )}
 
-        {/* Units & Topics Outline */}
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '32px' }}>
+        {/* Standard Units & Topics Outline (for international frameworks or when NCERT is not applicable) */}
+        {(!isIndia || !indianCurriculum) && (
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '32px' }}>
           {syllabus ? (
             syllabus.units.map(unit => (
               <div
@@ -472,6 +508,7 @@ export default async function CourseSyllabusPage({ params }: CourseSyllabusProps
             </div>
           )}
         </div>
+        )}
       </div>
     </div>
   );

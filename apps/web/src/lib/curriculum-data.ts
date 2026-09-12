@@ -2359,7 +2359,11 @@ export function getCoursesForJurisdiction(jurisdictionSlugOrCountry: string, jur
     return STANDARD_COURSES.map(course => {
       const loc = IN_COURSE_LOCALIZATION[course.slug];
       if (!loc) {
-        return course;
+        return {
+          ...course,
+          grade: course.grade.replace(/Grade\s*(\d+)/gi, 'Class $1'),
+          title: course.title.replace(/Grade\s*(\d+)/gi, 'Class $1'),
+        };
       }
 
       // Board-specific tailoring

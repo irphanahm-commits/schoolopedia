@@ -39,3 +39,5 @@ coverage/
 # Cache
 .turbo/
 .eslintcache
+*.tsbuildinfo
+__pycache__/
