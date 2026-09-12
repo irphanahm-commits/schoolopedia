@@ -26,6 +26,7 @@
    - National Boards: Central Board of Secondary Education (CBSE / NCERT), Council for the Indian School Certificate Examinations (CISCE: ICSE Class 10 & ISC Class 12), National Institute of Open Schooling (NIOS)
    - Major State Boards: Maharashtra State Board (MSBSHSE / SSC & HSC), Uttar Pradesh Board (UPMSP / High School & Intermediate), Karnataka School Examination & Assessment Board (KSEAB / SSLC & 2nd PUC), Tamil Nadu State Board (TNBSE / SSLC & HSC +2)
    - National Competitive Entrance Alignment: Joint Entrance Examination (JEE Main & Advanced) for IITs/NITs, National Eligibility cum Entrance Test (NEET-UG) for AIIMS/MBBS, and Common University Entrance Test (CUET-UG) for Central Universities (DU, JNU, BHU).
+   - Masterclass Video Ecosystem: Verified full-syllabus marathons and chapter-wise masterclasses in Hindi, Hinglish, and English from premier educators (Physics Wallah, Dear Sir, Vedantu, Magnet Brains, NCERT Wallah).
 4. Canada (13): 10 Provinces (Ontario MoE, British Columbia MoE, Alberta Education, Quebec MEQ, etc.) + 3 Territories
 5. Australia (8): 6 States (NSW NESA, Victoria VCAA, Queensland QCAA, WA SCSA, SA SACE, Tasmania TASC) + 2 Mainland Territories (ACARA v9.0)
 6. New Zealand (2 Pathways): English-Medium (The New Zealand Curriculum - NZC) and Māori-Medium (Te Marautanga o Aotearoa - TMoA)

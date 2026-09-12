@@ -4,6 +4,9 @@ import { notFound } from 'next/navigation';
 import { LESSONS_CATALOGUE, STANDARD_COURSES, getCoursesForJurisdiction, getJurisdiction, TIER1_JURISDICTIONS } from '@/lib/curriculum-data';
 import { getCourseSyllabus } from '@/lib/syllabus-data';
 import { TopicVideoPlayButton } from '@/components/TopicVideoPlayButton';
+import { IndianMarathonShowcase } from '@/components/IndianMarathonShowcase';
+import { IndianTopicVideoPlayButton } from '@/components/IndianTopicVideoPlayButton';
+import { getIndianMarathonsForCourse, getIndianAlternativeForTopic } from '@/lib/indian-syllabus-data';
 
 interface CourseSyllabusProps {
   params: Promise<{
@@ -62,6 +65,9 @@ export default async function CourseSyllabusPage({ params }: CourseSyllabusProps
   const totalTopics = syllabus
     ? syllabus.units.reduce((acc, u) => acc + u.topics.length, 0)
     : matchingLessons.length;
+
+  const isIndia = resolvedParams.country.toLowerCase() === 'in' || ['cbse', 'icse', 'nios', 'maharashtra', 'uttar-pradesh', 'karnataka', 'tamil-nadu'].includes(resolvedParams.jurisdiction.toLowerCase());
+  const indianMarathons = isIndia ? getIndianMarathonsForCourse(resolvedParams.grade, resolvedParams.subject, resolvedParams.jurisdiction) : [];
 
   const displayGradeName = matchedCourse ? matchedCourse.grade : (syllabus ? syllabus.gradeName : currentLesson.gradeName);
   const displayTitle = matchedCourse ? matchedCourse.title : (syllabus ? syllabus.title : `${currentLesson.gradeName} ${currentLesson.subjectName} Syllabus`);
@@ -196,6 +202,17 @@ export default async function CourseSyllabusPage({ params }: CourseSyllabusProps
           </div>
         </div>
 
+        {/* Indian Board Exam Marathon & One-Shot Showcase */}
+        {isIndia && indianMarathons.length > 0 && (
+          <IndianMarathonShowcase
+            marathons={indianMarathons}
+            courseTitle={displayTitle}
+            gradeLabel={displayGradeName}
+            subjectLabel={syllabus ? syllabus.subjectName : currentLesson.subjectName}
+            boardName={jurisdictionName}
+          />
+        )}
+
         {/* Units & Topics Outline */}
         <div style={{ display: 'flex', flexDirection: 'column', gap: '32px' }}>
           {syllabus ? (
@@ -254,6 +271,7 @@ export default async function CourseSyllabusPage({ params }: CourseSyllabusProps
                   {unit.topics.map(topic => {
                     const topicSlug = topic.slug;
                     const lessonUrl = `/learn/${resolvedParams.country}/${resolvedParams.jurisdiction}/${resolvedParams.grade}/${resolvedParams.subject}/${topicSlug}`;
+                    const indianAlternative = isIndia ? getIndianAlternativeForTopic(topic.slug, topic.title) : undefined;
 
                     return (
                       <div
@@ -335,10 +353,23 @@ export default async function CourseSyllabusPage({ params }: CourseSyllabusProps
                                 title: topic.title,
                                 topicNumber: topic.topicNumber,
                                 standardCode: topic.standardCode,
-                                gradeLabel: syllabus ? syllabus.gradeName : currentLesson.gradeName,
+                                gradeLabel: displayGradeName,
                                 subjectLabel: syllabus ? syllabus.subjectName : currentLesson.subjectName,
                                 lessonUrl: lessonUrl,
                                 summary: topic.summary,
+                              }}
+                            />
+                          )}
+                          {indianAlternative && (
+                            <IndianTopicVideoPlayButton
+                              alternative={indianAlternative}
+                              topic={{
+                                title: topic.title,
+                                topicNumber: topic.topicNumber,
+                                standardCode: topic.standardCode,
+                                gradeLabel: displayGradeName,
+                                subjectLabel: syllabus ? syllabus.subjectName : currentLesson.subjectName,
+                                lessonUrl: lessonUrl,
                               }}
                             />
                           )}

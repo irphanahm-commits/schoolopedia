@@ -190,7 +190,7 @@ const CAREERS: CareerProfile[] = [
       {
         stage: 'Classes 10–12 Acceleration',
         title: 'PCM Stream & JEE Main / Advanced Mastery',
-        description: 'Master Class 11 and 12 Physics, Chemistry, and Mathematics. Solve previous years’ JEE Advanced multi-concept problems and mock CBT drills.',
+        description: 'Master Class 11 and 12 Physics, Chemistry, and Mathematics utilizing comprehensive marathon one-shots (Physics Wallah, NCERT Wallah). Solve previous years’ JEE Advanced multi-concept problems and mock CBT drills.',
         milestone: 'Top 1% Percentile in JEE Main & Top AIR in JEE Advanced'
       },
       {
@@ -227,7 +227,7 @@ const CAREERS: CareerProfile[] = [
       {
         stage: 'Classes 10–12 Acceleration',
         title: 'PCB Stream & 100% NCERT NEET Mastery',
-        description: 'Memorize and master every diagram and line in NCERT Biology Class 11 and 12. Master physical chemistry calculations and physics mechanics for NEET 720-mark speed.',
+        description: 'Memorize and master every diagram and line in NCERT Biology Class 11 and 12 with full botany/zoology marathons (Competition Wallah, Vedantu). Master physical chemistry calculations and physics mechanics for NEET 720-mark speed.',
         milestone: '680+ / 720 Score in NEET-UG (AIR Cutoff for AIIMS / GMCs)'
       },
       {

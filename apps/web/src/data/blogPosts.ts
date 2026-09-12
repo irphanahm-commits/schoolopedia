@@ -335,6 +335,19 @@ export const BLOG_POSTS: BlogPost[] = [
             '• National Talent & Research Programs: Programs such as the INSPIRE Fellowship (Department of Science & Technology) and the Homi Bhabha Centre for Science Education (HBCSE) National Olympiads (INMO, INPhO, INChO) offer prestigious pathways directly into scientific research institutions like IISc Bangalore and IISERs.',
           ],
         },
+        {
+          heading: '5. The Phenomenon of Board Marathons & One-Shot Video Masterclasses (Hindi & English)',
+          body: [
+            'A distinctive hallmark of contemporary Indian board and entrance exam preparation is the widespread adoption of comprehensive Marathon and One-Shot masterclass video sessions on YouTube, delivered in accessible bilingual Hindi/Hinglish and English:',
+            '• Full-Syllabus Marathons (Maha-Marathons): Ranging from 6 to 12 hours, marathon streams (such as Vedantu’s 12-hour Class 10 Maths marathon and NCERT Wallah’s Class 12 Physics marathons) consolidate entire yearly syllabi, formulas, theorems, and previous years’ board questions (PYQs) into a continuous revision experience for pre-board and final examination sprints.',
+            '• Chapter-Wise One-Shots: Pioneered by visionary educators like Alakh Pandey (Physics Wallah), Dear Sir (Md. Kashif / Aadil Khan), Magnet Brains, and Shobhit Nirwan, these 1-to-3 hour single-sitting videos systematically deconstruct individual NCERT chapters (e.g. Real Numbers, Quadratic Equations, Chemical Reactions, Electricity, and Light) from foundational first principles to advanced numerical problem-solving.',
+            '• Native Integration in Schoolopedia: Rather than searching across scattered playlists, Schoolopedia curates and verifies these top educator masterclasses directly inside each course syllabus and topic row—allowing students to toggle between English conceptual walk-throughs and signature Hindi/Hinglish masterclasses with zero ads, verified active playback, and synchronized practice drills.',
+          ],
+          highlightBox: {
+            title: 'Verified Embeds & Board Blueprint Alignment',
+            text: 'Every marathon and chapter masterclass featured in Schoolopedia is verified against official board blueprints and tested via continuous automated health checks to guarantee 100% active, uninterrupted video playback without broken links.',
+          },
+        },
       ],
       relatedCurriculumLink: {
         title: 'Explore India Curriculum & National Boards in Schoolopedia',
