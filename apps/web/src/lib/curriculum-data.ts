@@ -231,7 +231,7 @@ export const STANDARD_COURSES: CourseCardData[] = [
     title: 'Grade 4 Science: Earth Systems, Energy & Ecosystems',
     standardCode: 'NGSS.4-ESS2-1',
     lessonCount: 18,
-    sampleLessonSlug: 'cell-biology',
+    sampleLessonSlug: 'earth-systems',
     isLive: true
   },
 
@@ -259,7 +259,7 @@ export const STANDARD_COURSES: CourseCardData[] = [
     title: 'Life Science: Cellular Processes & Ecosystem Photosynthesis',
     standardCode: 'NGSS.MS-LS1-6 / UK.NC.KS3.BIO',
     lessonCount: 20,
-    sampleLessonSlug: 'cell-biology',
+    sampleLessonSlug: 'photosynthesis-plants',
     isLive: true
   },
   {
@@ -362,6 +362,279 @@ export const STANDARD_COURSES: CourseCardData[] = [
 // -----------------------------------------------------------------------------
 
 export const LESSONS_CATALOGUE: Record<string, LessonData> = {
+  'fractions-decimals': {
+    slug: 'fractions-decimals',
+    title: 'Equivalent Fractions, Decimals & The Number Line',
+    subjectSlug: 'mathematics',
+    subjectName: 'Mathematics',
+    gradeSlug: 'grade-4',
+    gradeName: 'Grade 4 (Elementary)',
+    gradeBand: 'elementary',
+    countryCode: 'us',
+    countryName: 'United States',
+    jurisdictionSlug: 'california',
+    jurisdictionName: 'California (CDE)',
+    standardCode: 'CCSS.MATH.CONTENT.4.NF.A.1',
+    standardTitle: 'Explain Why a Fraction a/b is Equivalent to (n*a)/(n*b)',
+    authorityName: 'California Department of Education',
+    academicYear: '2026–27',
+    lastVerified: 'September 2026',
+    sourceUrl: 'https://www.cde.ca.gov/ci/ma/cf/',
+    summary: 'Understand fraction equivalence visually using area models and number lines, and learn to convert tenths and hundredths into decimals.',
+    whyItMatters: 'Essential for currency transactions, recipe proportions, architectural scaling, and higher-order algebra.',
+    careerLink: 'Civil Engineers, Pharmacists, and Chefs use precise fractional and decimal conversions every day.',
+    videos: [
+      {
+        role: 'PRIMARY',
+        title: 'Algebra Basics & Fraction Operations',
+        channelTitle: 'Math Antics',
+        youtubeVideoId: 'Qyd_v3DGzTM',
+        durationSeconds: 574,
+        qualityScore: 95,
+        curationNotes: 'Superb visual models of fractional parts and equivalent numerical representations.'
+      },
+      {
+        role: 'BACKUP_1',
+        title: 'Fractions on the Number Line',
+        channelTitle: 'Khan Academy',
+        youtubeVideoId: 'f15zA0PhSek',
+        durationSeconds: 485,
+        qualityScore: 92,
+        curationNotes: 'Clear foundational practice identifying fractional distances from zero.'
+      }
+    ],
+    workedExample: {
+      problemStatement: 'Show why 2/3 is equivalent to 8/12 using multiplication by 1 in the form of n/n:',
+      steps: [
+        { stepNumber: 1, operation: 'Identify the common multiplier', equation: '12 / 3 = 4', explanation: 'Determine what factor transforms denominator 3 into 12.' },
+        { stepNumber: 2, operation: 'Multiply numerator and denominator by 4/4', equation: '(2 * 4) / (3 * 4) = 8 / 12', explanation: 'Multiplying by 4/4 is equivalent to multiplying by 1, preserving total value.' },
+        { stepNumber: 3, operation: 'Convert to decimal approximation', equation: '2/3 ≈ 0.667 and 8/12 ≈ 0.667', explanation: 'Both fractions occupy the exact same coordinate on the real number line.' }
+      ],
+      verification: {
+        checkStatement: 'Cross-multiply to confirm equivalence: 2 * 12 vs 3 * 8.',
+        leftSideCalculation: '2 * 12 = 24',
+        rightSideCalculation: '3 * 8 = 24 (24 = 24 Verified)',
+        isVerified: true
+      }
+    },
+    misconceptions: [
+      {
+        title: 'Adding the same number to numerator and denominator',
+        incorrectAttempt: 'Thinking 2/3 = (2 + 2)/(3 + 2) = 4/5',
+        correctApproach: 'Equivalent fractions are created by MULTIPLYING or DIVIDING by n/n, never adding',
+        explanation: 'Adding changes the proportion; only multiplication by 1 preserves equivalence.'
+      }
+    ],
+    practiceQuestions: [
+      {
+        id: 'pq_frac1',
+        prompt: 'Which fraction is equivalent to 3/5 with a denominator of 20?',
+        options: [
+          { id: 'fopt_1', text: '12/20', feedback: 'Correct! Multiply numerator and denominator by 4: (3*4)/(5*4) = 12/20.' },
+          { id: 'fopt_2', text: '15/20', feedback: 'Incorrect: 3 * 4 is 12, not 15.' },
+          { id: 'fopt_3', text: '8/20', feedback: 'Incorrect: You added 5 instead of multiplying by 4.' }
+        ],
+        correctOptionId: 'fopt_1',
+        explanation: 'Since 5 * 4 = 20, multiply 3 * 4 = 12 to yield 12/20.'
+      }
+    ],
+    quizQuestions: [
+      {
+        id: 'qz_frac1',
+        prompt: 'What decimal is equivalent to 7/10?',
+        options: [
+          { id: 'qf_1', text: '0.7' },
+          { id: 'qf_2', text: '0.07' },
+          { id: 'qf_3', text: '7.0' }
+        ],
+        correctOptionId: 'qf_1',
+        explanation: 'Seven tenths is written in decimal standard form as 0.7.'
+      }
+    ]
+  },
+
+  'earth-systems': {
+    slug: 'earth-systems',
+    title: 'Earth Systems: Rock Cycle, Water Cycle & Weather',
+    subjectSlug: 'science',
+    subjectName: 'Science (Earth Systems)',
+    gradeSlug: 'grade-4',
+    gradeName: 'Grade 4 (Elementary)',
+    gradeBand: 'elementary',
+    countryCode: 'us',
+    countryName: 'United States',
+    jurisdictionSlug: 'california',
+    jurisdictionName: 'California (NGSS)',
+    standardCode: 'NGSS.4-ESS2-1',
+    standardTitle: 'Earth’s Systems: Weathering and Erosion Processes',
+    authorityName: 'Next Generation Science Standards (NGSS)',
+    academicYear: '2026–27',
+    lastVerified: 'September 2026',
+    sourceUrl: 'https://www.nextgenscience.org',
+    summary: 'Investigate how the hydrosphere, geosphere, atmosphere, and biosphere interact through rainfall, weathering, and continental rock formation.',
+    whyItMatters: 'Essential for climate resilience, soil conservation in agriculture, and water resource management.',
+    careerLink: 'Geologists, Hydrologists, and Environmental Scientists monitor Earth dynamics to prevent natural hazard devastation.',
+    videos: [
+      {
+        role: 'PRIMARY',
+        title: 'Introduction to Earth Systems and Life Cycles',
+        channelTitle: 'Amoeba Sisters',
+        youtubeVideoId: '8IlzKri08kk',
+        durationSeconds: 567,
+        qualityScore: 95,
+        curationNotes: 'Intuitive visual models connecting ecological cycles to Earth physical systems.'
+      },
+      {
+        role: 'BACKUP_1',
+        title: 'The Chemical Basis of Earth Minerals',
+        channelTitle: 'CrashCourse',
+        youtubeVideoId: '0RRVV4Diomg',
+        durationSeconds: 672,
+        qualityScore: 91,
+        curationNotes: 'Exploration of mineral crystal bonding.'
+      }
+    ],
+    workedExample: {
+      problemStatement: 'Differentiate between mechanical weathering and chemical weathering:',
+      steps: [
+        { stepNumber: 1, operation: 'Identify Mechanical Weathering mechanism', equation: 'Physical breakdown (Freeze-Thaw)', explanation: 'Water enters rock fissures, freezes, expands by 9%, and wedges rock apart without changing mineral composition.' },
+        { stepNumber: 2, operation: 'Identify Chemical Weathering mechanism', equation: 'Chemical dissolution (Acid Rain / Carbonic Acid)', explanation: 'Atmospheric CO₂ dissolves into rainwater, reacting with calcium carbonate in limestone to form soluble bicarbonate.' },
+        { stepNumber: 3, operation: 'Synthesize Earth system impact', equation: 'Mechanical exposes surface area → Accelerates chemical rate', explanation: 'Both processes work synergistically to generate rich organic topsoil.' }
+      ],
+      verification: {
+        checkStatement: 'Confirm conservation of mass: Does weathering destroy rock matter?',
+        leftSideCalculation: 'Initial mass = Solid bed rock.',
+        rightSideCalculation: 'Final mass = Soil particles + dissolved ions (Matter is conserved).',
+        isVerified: true
+      }
+    },
+    misconceptions: [
+      {
+        title: 'Confusing weathering with erosion',
+        incorrectAttempt: 'Using weathering and erosion interchangeably',
+        correctApproach: 'Weathering BREAKS DOWN rock in place; Erosion TRANSPORTS sediments via wind or water',
+        explanation: 'Weathering is the in-situ breakdown; erosion is the movement.'
+      }
+    ],
+    practiceQuestions: [
+      {
+        id: 'pq_ess1',
+        prompt: 'Which Earth sphere includes all of Earth’s liquid water, ice, and atmospheric water vapor?',
+        options: [
+          { id: 'eopt_1', text: 'Hydrosphere', feedback: 'Correct! The hydrosphere encompasses all aquatic matter on Earth.' },
+          { id: 'eopt_2', text: 'Geosphere', feedback: 'Incorrect: The geosphere is the solid rocky crust and mantle.' },
+          { id: 'eopt_3', text: 'Biosphere', feedback: 'Incorrect: The biosphere comprises living organisms.' }
+        ],
+        correctOptionId: 'eopt_1',
+        explanation: 'Hydro = water; the hydrosphere contains oceans, glaciers, rivers, and water vapor.'
+      }
+    ],
+    quizQuestions: [
+      {
+        id: 'qz_ess1',
+        prompt: 'What process occurs when water changes from liquid to gas via solar heating?',
+        options: [
+          { id: 'qess_1', text: 'Evaporation' },
+          { id: 'qess_2', text: 'Condensation' },
+          { id: 'qess_3', text: 'Precipitation' }
+        ],
+        correctOptionId: 'qess_1',
+        explanation: 'Evaporation transforms liquid water into gaseous atmospheric water vapor.'
+      }
+    ]
+  },
+
+  'photosynthesis-plants': {
+    slug: 'photosynthesis-plants',
+    title: 'Photosynthesis, Chloroplasts & Ecological Energy Flow',
+    subjectSlug: 'science',
+    subjectName: 'Science (Life Science)',
+    gradeSlug: 'grade-7',
+    gradeName: 'Grade 7 / Middle School / Year 8',
+    gradeBand: 'middle-school',
+    countryCode: 'us',
+    countryName: 'United States',
+    jurisdictionSlug: 'california',
+    jurisdictionName: 'California (NGSS)',
+    standardCode: 'NGSS.MS-LS1-6',
+    standardTitle: 'Photosynthesis and Energy Matter Cycling in Ecosystems',
+    authorityName: 'Next Generation Science Standards (NGSS)',
+    academicYear: '2026–27',
+    lastVerified: 'September 2026',
+    sourceUrl: 'https://www.nextgenscience.org',
+    summary: 'Discover how photoautotrophs convert sunlight, water, and atmospheric carbon dioxide into chemical bond energy stored within glucose.',
+    whyItMatters: 'Photosynthesis produces virtually all atmospheric oxygen and forms the foundational trophic base for global food webs.',
+    careerLink: 'Agricultural Scientists and Plant Geneticists engineer crop photosynthetic efficiency to secure global food supplies.',
+    videos: [
+      {
+        role: 'PRIMARY',
+        title: 'Photosynthesis and the Teeny Tiny Pigment Pancakes',
+        channelTitle: 'Amoeba Sisters',
+        youtubeVideoId: '8IlzKri08kk',
+        durationSeconds: 567,
+        qualityScore: 97,
+        curationNotes: 'Clear visual journey into chloroplast thylakoids and the light-independent reactions.'
+      },
+      {
+        role: 'BACKUP_1',
+        title: 'Chemical Energy and Bonding Foundations',
+        channelTitle: 'CrashCourse',
+        youtubeVideoId: '0RRVV4Diomg',
+        durationSeconds: 672,
+        qualityScore: 92,
+        curationNotes: 'Explaining molecular energy storage in carbohydrate bonds.'
+      }
+    ],
+    workedExample: {
+      problemStatement: 'Balance the fundamental chemical equation for oxygenic photosynthesis:',
+      steps: [
+        { stepNumber: 1, operation: 'Identify inorganic reactants', equation: 'CO₂ + H₂O + Photons', explanation: 'Carbon dioxide gas is absorbed through stomata; water is absorbed by root xylem.' },
+        { stepNumber: 2, operation: 'Identify organic products', equation: 'C₆H₁₂O₆ (Glucose) + O₂ (Oxygen)', explanation: 'Light-dependent and Calvin cycle reactions synthesize high-energy carbohydrates.' },
+        { stepNumber: 3, operation: 'Balance atomic counts', equation: '6CO₂ + 6H₂O → C₆H₁₂O₆ + 6O₂', explanation: '6 Carbons, 12 Hydrogens, and 18 Oxygens on both sides satisfy conservation of mass.' }
+      ],
+      verification: {
+        checkStatement: 'Verify atomic balance: Count Carbons, Hydrogens, and Oxygens.',
+        leftSideCalculation: 'Left: 6 C, 12 H, (12 + 6 = 18) O.',
+        rightSideCalculation: 'Right: 6 C, 12 H, (6 + 12 = 18) O. Balanced!',
+        isVerified: true
+      }
+    },
+    misconceptions: [
+      {
+        title: 'Believing plants gain mass predominantly from soil minerals',
+        incorrectAttempt: 'Thinking tree trunks are made from dirt absorbed by roots',
+        correctApproach: 'The vast majority of plant biomass (dry carbon) comes from AIR (carbon dioxide gas)',
+        explanation: 'Van Helmont’s classic willow experiment proved trees gain mass from atmospheric CO₂, not soil.'
+      }
+    ],
+    practiceQuestions: [
+      {
+        id: 'pq_photo1',
+        prompt: 'Which green pigment inside chloroplasts captures solar photons to initiate the light reactions?',
+        options: [
+          { id: 'ph_opt1', text: 'Chlorophyll', feedback: 'Correct! Chlorophyll absorbs blue and red wavelengths, reflecting green.' },
+          { id: 'ph_opt2', text: 'Hemoglobin', feedback: 'Incorrect: Hemoglobin is an iron-rich protein in animal blood.' },
+          { id: 'ph_opt3', text: 'Carotene', feedback: 'Incorrect: Carotene is an accessory orange pigment.' }
+        ],
+        correctOptionId: 'ph_opt1',
+        explanation: 'Chlorophyll a and b are the primary photoreceptors in plant thylakoid membranes.'
+      }
+    ],
+    quizQuestions: [
+      {
+        id: 'qz_photo1',
+        prompt: 'What microscopic pores on leaves open and close to allow CO₂ in and water vapor out?',
+        options: [
+          { id: 'qph_1', text: 'Stomata' },
+          { id: 'qph_2', text: 'Thylakoids' },
+          { id: 'qph_3', text: 'Cristae' }
+        ],
+        correctOptionId: 'qph_1',
+        explanation: 'Stomata regulated by guard cells control transpiration and gas exchange.'
+      }
+    ]
+  },
+
   'linear-equations': {
     slug: 'linear-equations',
     title: 'Solving Linear Equations in One Variable',

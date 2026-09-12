@@ -6,7 +6,7 @@ import { Footer } from '@/components/Footer';
 import { VideoPlayer } from '@/components/VideoPlayer';
 import { PracticeRunner } from '@/components/PracticeRunner';
 import { QuizRunner } from '@/components/QuizRunner';
-import { LESSONS_CATALOGUE, LessonData, getJurisdiction } from '@/lib/curriculum-data';
+import { LESSONS_CATALOGUE, LessonData, getJurisdiction, TIER1_JURISDICTIONS } from '@/lib/curriculum-data';
 
 interface DynamicLessonPageProps {
   params: Promise<{
@@ -19,17 +19,6 @@ interface DynamicLessonPageProps {
 }
 
 export async function generateStaticParams() {
-  const keyJurisdictions = [
-    { country: 'us', jurisdiction: 'california' },
-    { country: 'us', jurisdiction: 'texas' },
-    { country: 'us', jurisdiction: 'new-york' },
-    { country: 'us', jurisdiction: 'florida' },
-    { country: 'gb', jurisdiction: 'england' },
-    { country: 'ca', jurisdiction: 'ontario' },
-    { country: 'au', jurisdiction: 'nsw' },
-    { country: 'nz', jurisdiction: 'national' },
-  ];
-
   const lessons = Object.values(LESSONS_CATALOGUE);
   const paramsList: Array<{
     country: string;
@@ -39,11 +28,11 @@ export async function generateStaticParams() {
     slug: string;
   }> = [];
 
-  for (const j of keyJurisdictions) {
+  for (const j of TIER1_JURISDICTIONS) {
     for (const l of lessons) {
       paramsList.push({
-        country: j.country,
-        jurisdiction: j.jurisdiction,
+        country: j.countryCode,
+        jurisdiction: j.slug,
         grade: l.gradeSlug,
         subject: l.subjectSlug,
         slug: l.slug,
@@ -120,6 +109,8 @@ export default async function UniversalLessonPage({ params }: DynamicLessonPageP
     id: qq.id,
     type: 'MULTIPLE_CHOICE',
     prompt: qq.prompt,
+    correctOptionId: qq.correctOptionId,
+    explanation: qq.explanation,
     options: qq.options.map((opt, idx) => ({
       id: opt.id,
       question_id: qq.id,

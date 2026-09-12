@@ -3,7 +3,7 @@ import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { Header } from '@/components/Header';
 import { Footer } from '@/components/Footer';
-import { LESSONS_CATALOGUE, STANDARD_COURSES, getJurisdiction } from '@/lib/curriculum-data';
+import { LESSONS_CATALOGUE, STANDARD_COURSES, getJurisdiction, TIER1_JURISDICTIONS } from '@/lib/curriculum-data';
 
 interface CourseSyllabusProps {
   params: Promise<{
@@ -15,17 +15,6 @@ interface CourseSyllabusProps {
 }
 
 export async function generateStaticParams() {
-  const keyJurisdictions = [
-    { country: 'us', jurisdiction: 'california' },
-    { country: 'us', jurisdiction: 'texas' },
-    { country: 'us', jurisdiction: 'new-york' },
-    { country: 'us', jurisdiction: 'florida' },
-    { country: 'gb', jurisdiction: 'england' },
-    { country: 'ca', jurisdiction: 'ontario' },
-    { country: 'au', jurisdiction: 'nsw' },
-    { country: 'nz', jurisdiction: 'national' },
-  ];
-
   const paramsList: Array<{
     country: string;
     jurisdiction: string;
@@ -33,11 +22,11 @@ export async function generateStaticParams() {
     subject: string;
   }> = [];
 
-  for (const j of keyJurisdictions) {
+  for (const j of TIER1_JURISDICTIONS) {
     for (const c of STANDARD_COURSES) {
       paramsList.push({
-        country: j.country,
-        jurisdiction: j.jurisdiction,
+        country: j.countryCode,
+        jurisdiction: j.slug,
         grade: c.gradeSlug,
         subject: c.subjectSlug,
       });
