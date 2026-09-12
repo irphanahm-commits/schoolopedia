@@ -37,7 +37,7 @@ export const TIER1_OPTIONS: CurriculumOption[] = [
     jurisdictionName: 'Texas (TEA / TEKS)',
     gradeLabel: 'Grade 8',
     standardCode: 'TEKS.MATH.8.8.C',
-    defaultUrl: '/learn/us/california/grade-8/mathematics/linear-equations'
+    defaultUrl: '/learn/us/texas/grade-8/mathematics/linear-equations'
   },
   {
     countryCode: 'GB',
@@ -47,7 +47,7 @@ export const TIER1_OPTIONS: CurriculumOption[] = [
     jurisdictionName: 'England (DfE / KS3)',
     gradeLabel: 'Year 8',
     standardCode: 'UK.NC.KS3.ALG',
-    defaultUrl: '/learn/us/california/grade-8/mathematics/linear-equations'
+    defaultUrl: '/learn/gb/england/grade-8/mathematics/linear-equations'
   },
   {
     countryCode: 'CA',
@@ -57,7 +57,7 @@ export const TIER1_OPTIONS: CurriculumOption[] = [
     jurisdictionName: 'Ontario (MoE)',
     gradeLabel: 'Grade 8',
     standardCode: 'ON.CURR.MATH.GR8',
-    defaultUrl: '/learn/us/california/grade-8/mathematics/linear-equations'
+    defaultUrl: '/learn/ca/ontario/grade-8/mathematics/linear-equations'
   },
   {
     countryCode: 'AU',
@@ -67,7 +67,7 @@ export const TIER1_OPTIONS: CurriculumOption[] = [
     jurisdictionName: 'NSW / ACARA v9',
     gradeLabel: 'Year 8',
     standardCode: 'AC9M8A03',
-    defaultUrl: '/learn/us/california/grade-8/mathematics/linear-equations'
+    defaultUrl: '/learn/au/nsw/grade-8/mathematics/linear-equations'
   },
   {
     countryCode: 'NZ',
@@ -77,7 +77,7 @@ export const TIER1_OPTIONS: CurriculumOption[] = [
     jurisdictionName: 'New Zealand Curriculum',
     gradeLabel: 'Level 4/5',
     standardCode: 'NZC.MATH.L5',
-    defaultUrl: '/learn/us/california/grade-8/mathematics/linear-equations'
+    defaultUrl: '/learn/nz/national/grade-8/mathematics/linear-equations'
   }
 ];
 
