@@ -2,9 +2,6 @@
 
 import React, { useState } from 'react';
 import Link from 'next/link';
-import { Header } from '@/components/Header';
-import { Footer } from '@/components/Footer';
-import { SearchModal } from '@/components/SearchModal';
 
 interface CareerProfile {
   id: string;
@@ -176,16 +173,13 @@ const CAREERS: CareerProfile[] = [
 ];
 
 export default function GuidancePage() {
-  const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [activeCareerId, setActiveCareerId] = useState<string>('swe');
 
   const selectedCareer = CAREERS.find(c => c.id === activeCareerId) || CAREERS[0];
 
   return (
-    <div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column', backgroundColor: 'var(--bg-canvas)' }}>
-      <Header onOpenSearch={() => setIsSearchOpen(true)} />
-
-      <main style={{ flex: 1, padding: '40px 24px', maxWidth: '1200px', margin: '0 auto', width: '100%' }}>
+    <div style={{ minHeight: '100vh', backgroundColor: 'var(--bg-canvas)' }}>
+      <div style={{ padding: '40px 24px', maxWidth: '1200px', margin: '0 auto', width: '100%' }}>
         {/* Header Hero */}
         <div style={{ marginBottom: '32px' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '8px' }}>
@@ -391,10 +385,7 @@ export default function GuidancePage() {
             </div>
           </div>
         </div>
-      </main>
-
-      <Footer />
-      <SearchModal isOpen={isSearchOpen} onClose={() => setIsSearchOpen(false)} />
+      </div>
     </div>
   );
 }

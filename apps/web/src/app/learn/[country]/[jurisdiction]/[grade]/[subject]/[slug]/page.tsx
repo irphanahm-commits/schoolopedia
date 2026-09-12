@@ -1,8 +1,6 @@
 import React from 'react';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
-import { Header } from '@/components/Header';
-import { Footer } from '@/components/Footer';
 import { VideoPlayer } from '@/components/VideoPlayer';
 import { PracticeRunner } from '@/components/PracticeRunner';
 import { QuizRunner } from '@/components/QuizRunner';
@@ -120,10 +118,8 @@ export default async function UniversalLessonPage({ params }: DynamicLessonPageP
   }));
 
   return (
-    <div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column', backgroundColor: 'var(--bg-canvas)' }}>
-      <Header />
-
-      <main style={{ flex: 1, padding: '32px 24px 64px', maxWidth: '1100px', margin: '0 auto', width: '100%' }}>
+    <div style={{ minHeight: '100vh', backgroundColor: 'var(--bg-canvas)' }}>
+      <div style={{ padding: '32px 24px 64px', maxWidth: '1100px', margin: '0 auto', width: '100%' }}>
         {/* Breadcrumb Navigation */}
         <nav style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '0.85rem', color: 'var(--text-muted)', marginBottom: '20px' }}>
           <Link href="/learn" style={{ color: 'var(--text-secondary)', textDecoration: 'none', fontWeight: 600 }}>
@@ -475,9 +471,7 @@ export default async function UniversalLessonPage({ params }: DynamicLessonPageP
             </Link>
           </div>
         </section>
-      </main>
-
-      <Footer />
+      </div>
     </div>
   );
 }

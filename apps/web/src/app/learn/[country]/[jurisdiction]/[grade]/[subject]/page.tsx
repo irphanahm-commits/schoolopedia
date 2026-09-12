@@ -1,8 +1,6 @@
 import React from 'react';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
-import { Header } from '@/components/Header';
-import { Footer } from '@/components/Footer';
 import { LESSONS_CATALOGUE, STANDARD_COURSES, getJurisdiction, TIER1_JURISDICTIONS } from '@/lib/curriculum-data';
 
 interface CourseSyllabusProps {
@@ -53,10 +51,8 @@ export default async function CourseSyllabusPage({ params }: CourseSyllabusProps
   const flag = jurisdictionMeta ? jurisdictionMeta.flag : '🇺🇸';
 
   return (
-    <div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column', backgroundColor: 'var(--bg-canvas)' }}>
-      <Header />
-
-      <main style={{ flex: 1, padding: '40px 24px', maxWidth: '1100px', margin: '0 auto', width: '100%' }}>
+    <div style={{ minHeight: '100vh', backgroundColor: 'var(--bg-canvas)' }}>
+      <div style={{ padding: '40px 24px', maxWidth: '1100px', margin: '0 auto', width: '100%' }}>
         {/* Breadcrumb Navigation */}
         <nav style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '0.85rem', color: 'var(--text-muted)', marginBottom: '20px' }}>
           <Link href="/learn" style={{ color: 'var(--text-secondary)', textDecoration: 'none', fontWeight: 600 }}>
@@ -253,9 +249,7 @@ export default async function CourseSyllabusPage({ params }: CourseSyllabusProps
             )}
           </div>
         </div>
-      </main>
-
-      <Footer />
+      </div>
     </div>
   );
 }

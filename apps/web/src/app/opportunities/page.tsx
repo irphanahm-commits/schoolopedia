@@ -2,9 +2,6 @@
 
 import React, { useState } from 'react';
 import Link from 'next/link';
-import { Header } from '@/components/Header';
-import { Footer } from '@/components/Footer';
-import { SearchModal } from '@/components/SearchModal';
 
 interface OpportunityItem {
   id: string;
@@ -89,7 +86,6 @@ const OPPORTUNITIES: OpportunityItem[] = [
 ];
 
 export default function OpportunitiesPage() {
-  const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [filterType, setFilterType] = useState<string>('ALL');
 
   const filtered = filterType === 'ALL'
@@ -97,10 +93,8 @@ export default function OpportunitiesPage() {
     : OPPORTUNITIES.filter(o => o.type === filterType);
 
   return (
-    <div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column', backgroundColor: 'var(--bg-canvas)' }}>
-      <Header onOpenSearch={() => setIsSearchOpen(true)} />
-
-      <main style={{ flex: 1, padding: '40px 24px', maxWidth: '1200px', margin: '0 auto', width: '100%' }}>
+    <div style={{ minHeight: '100vh', backgroundColor: 'var(--bg-canvas)' }}>
+      <div style={{ padding: '40px 24px', maxWidth: '1200px', margin: '0 auto', width: '100%' }}>
         {/* Header Hero */}
         <div style={{ marginBottom: '32px' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '8px' }}>
@@ -243,10 +237,7 @@ export default function OpportunitiesPage() {
             </div>
           ))}
         </div>
-      </main>
-
-      <Footer />
-      <SearchModal isOpen={isSearchOpen} onClose={() => setIsSearchOpen(false)} />
+      </div>
     </div>
   );
 }

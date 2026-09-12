@@ -1,8 +1,6 @@
 import React from 'react';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
-import { Header } from '@/components/Header';
-import { Footer } from '@/components/Footer';
 import {
   TIER1_JURISDICTIONS,
   STANDARD_COURSES,
@@ -166,10 +164,8 @@ export default async function JurisdictionOverviewPage({ params }: JurisdictionO
   );
 
   return (
-    <div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column', backgroundColor: '#F8FAFC' }}>
-      <Header />
-
-      <main style={{ flex: 1, maxWidth: '1100px', margin: '0 auto', padding: '2.5rem 1.5rem', width: '100%' }}>
+    <div style={{ minHeight: '100vh', backgroundColor: '#F8FAFC' }}>
+      <div style={{ maxWidth: '1100px', margin: '0 auto', padding: '2.5rem 1.5rem', width: '100%' }}>
         {/* Breadcrumb Navigation */}
         <nav style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', fontSize: '0.875rem', color: '#64748B', marginBottom: '1.5rem' }}>
           <Link href="/learn" style={{ color: '#475569', textDecoration: 'none', fontWeight: 600 }}>
@@ -251,9 +247,7 @@ export default async function JurisdictionOverviewPage({ params }: JurisdictionO
         {renderCourseSection('Elementary Education (Grades 1–5)', 'Core foundational skills in arithmetic, scientific inquiry, and reading literacy.', elementaryCourses)}
         {renderCourseSection('Middle School Education (Grades 6–8 / Junior Secondary)', 'Rigorous algebraic reasoning, cellular biology, computational thinking, and democratic governance.', middleCourses)}
         {renderCourseSection('High School Education (Grades 9–12 / GCSE / A-Levels / AP)', 'College-preparatory coursework in Algebra 1, Biology, Chemistry, Physics, Rhetoric, and AI.', highCourses)}
-      </main>
-
-      <Footer />
+      </div>
     </div>
   );
 }

@@ -2,6 +2,8 @@
 
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
+import { SearchModal } from './SearchModal';
 
 interface HeaderProps {
   onOpenSearch?: () => void;
@@ -82,7 +84,9 @@ export const TIER1_OPTIONS: CurriculumOption[] = [
 ];
 
 export function Header({ onOpenSearch }: HeaderProps) {
+  const router = useRouter();
   const [isSelectorOpen, setIsSelectorOpen] = useState(false);
+  const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [selectedContext, setSelectedContext] = useState<CurriculumOption>(TIER1_OPTIONS[0]);
 
   useEffect(() => {
@@ -94,6 +98,15 @@ export function Header({ onOpenSearch }: HeaderProps) {
         if (match) setSelectedContext(match);
       }
     } catch (_) {}
+
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
+        e.preventDefault();
+        setIsSearchOpen(prev => !prev);
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
   }, []);
 
   const handleSelect = (option: CurriculumOption) => {
@@ -102,6 +115,7 @@ export function Header({ onOpenSearch }: HeaderProps) {
     try {
       localStorage.setItem('schoolopedia_curriculum_context', JSON.stringify(option));
     } catch (_) {}
+    router.push(option.defaultUrl);
   };
 
   return (
@@ -238,7 +252,10 @@ export function Header({ onOpenSearch }: HeaderProps) {
 
           {/* Search Trigger */}
           <button
-            onClick={onOpenSearch}
+            onClick={() => {
+              setIsSearchOpen(true);
+              onOpenSearch?.();
+            }}
             id="header-search-btn"
             style={{
               display: 'flex',
@@ -462,6 +479,9 @@ export function Header({ onOpenSearch }: HeaderProps) {
           </div>
         </div>
       )}
+
+      {/* Embedded Search Modal */}
+      <SearchModal isOpen={isSearchOpen} onClose={() => setIsSearchOpen(false)} />
     </>
   );
 }

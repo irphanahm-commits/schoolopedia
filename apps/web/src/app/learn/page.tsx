@@ -2,9 +2,6 @@
 
 import React, { useState, useMemo } from 'react';
 import Link from 'next/link';
-import { Header } from '@/components/Header';
-import { Footer } from '@/components/Footer';
-import { SearchModal } from '@/components/SearchModal';
 import {
   TIER1_COUNTRIES,
   TIER1_JURISDICTIONS,
@@ -19,7 +16,6 @@ export default function LearnPage() {
   const [selectedGradeBand, setSelectedGradeBand] = useState<string>('all');
   const [selectedSubject, setSelectedSubject] = useState<string>('all');
   const [jurisdictionSearchQuery, setJurisdictionSearchQuery] = useState<string>('');
-  const [isSearchOpen, setIsSearchOpen] = useState<boolean>(false);
 
   // Jurisdictions for currently active country
   const currentCountryJurisdictions = useMemo(() => {
@@ -71,10 +67,8 @@ export default function LearnPage() {
   };
 
   return (
-    <div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column', backgroundColor: '#F8FAFC' }}>
-      <Header onOpenSearch={() => setIsSearchOpen(true)} />
-
-      <main style={{ flex: 1, maxWidth: '1280px', margin: '0 auto', padding: '2.5rem 1.5rem', width: '100%' }}>
+    <div style={{ minHeight: '100vh', backgroundColor: '#F8FAFC' }}>
+      <div style={{ maxWidth: '1280px', margin: '0 auto', padding: '2.5rem 1.5rem', width: '100%' }}>
         {/* Top Breadcrumb & Badge */}
         <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', marginBottom: '1rem', flexWrap: 'wrap' }}>
           <span style={{
@@ -549,10 +543,7 @@ export default function LearnPage() {
             Explore Higher Ed Pathways →
           </Link>
         </div>
-      </main>
-
-      <Footer />
-      {isSearchOpen && <SearchModal isOpen={isSearchOpen} onClose={() => setIsSearchOpen(false)} />}
+      </div>
     </div>
   );
 }

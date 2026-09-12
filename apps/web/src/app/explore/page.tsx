@@ -2,9 +2,6 @@
 
 import React, { useState } from 'react';
 import Link from 'next/link';
-import { Header } from '@/components/Header';
-import { Footer } from '@/components/Footer';
-import { SearchModal } from '@/components/SearchModal';
 
 interface InstitutionItem {
   name: string;
@@ -154,7 +151,6 @@ const INSTITUTIONS: InstitutionItem[] = [
 ];
 
 export default function ExplorePage() {
-  const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [selectedCountry, setSelectedCountry] = useState<string>('ALL');
 
   const filtered = selectedCountry === 'ALL'
@@ -162,10 +158,8 @@ export default function ExplorePage() {
     : INSTITUTIONS.filter(inst => inst.countryCode === selectedCountry);
 
   return (
-    <div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column', backgroundColor: 'var(--bg-canvas)' }}>
-      <Header onOpenSearch={() => setIsSearchOpen(true)} />
-
-      <main style={{ flex: 1, padding: '40px 24px', maxWidth: '1200px', margin: '0 auto', width: '100%' }}>
+    <div style={{ minHeight: '100vh', backgroundColor: 'var(--bg-canvas)' }}>
+      <div style={{ padding: '40px 24px', maxWidth: '1200px', margin: '0 auto', width: '100%' }}>
         {/* Header Hero */}
         <div style={{ marginBottom: '32px' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '8px' }}>
@@ -294,10 +288,7 @@ export default function ExplorePage() {
             </div>
           ))}
         </div>
-      </main>
-
-      <Footer />
-      <SearchModal isOpen={isSearchOpen} onClose={() => setIsSearchOpen(false)} />
+      </div>
     </div>
   );
 }
