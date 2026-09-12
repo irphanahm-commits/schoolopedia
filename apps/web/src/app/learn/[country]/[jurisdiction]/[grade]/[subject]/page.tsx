@@ -2,6 +2,7 @@ import React from 'react';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { LESSONS_CATALOGUE, STANDARD_COURSES, getJurisdiction, TIER1_JURISDICTIONS } from '@/lib/curriculum-data';
+import { getCourseSyllabus } from '@/lib/syllabus-data';
 
 interface CourseSyllabusProps {
   params: Promise<{
@@ -37,7 +38,10 @@ export async function generateStaticParams() {
 export default async function CourseSyllabusPage({ params }: CourseSyllabusProps) {
   const resolvedParams = await params;
 
-  // Filter lessons matching this grade and subject
+  // Retrieve structured multi-unit syllabus tree
+  const syllabus = getCourseSyllabus(resolvedParams.grade, resolvedParams.subject);
+
+  // Filter lessons matching this grade and subject in active catalog
   const matchingLessons = Object.values(LESSONS_CATALOGUE).filter(
     l => l.gradeSlug === resolvedParams.grade && l.subjectSlug === resolvedParams.subject
   );
@@ -50,11 +54,15 @@ export default async function CourseSyllabusPage({ params }: CourseSyllabusProps
   const authorityName = jurisdictionMeta ? jurisdictionMeta.authority : currentLesson.authorityName;
   const flag = jurisdictionMeta ? jurisdictionMeta.flag : '🇺🇸';
 
+  const totalTopics = syllabus
+    ? syllabus.units.reduce((acc, u) => acc + u.topics.length, 0)
+    : matchingLessons.length;
+
   return (
     <div style={{ minHeight: '100vh', backgroundColor: 'var(--bg-canvas)' }}>
       <div style={{ padding: '40px 24px', maxWidth: '1100px', margin: '0 auto', width: '100%' }}>
         {/* Breadcrumb Navigation */}
-        <nav style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '0.85rem', color: 'var(--text-muted)', marginBottom: '20px' }}>
+        <nav style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '0.85rem', color: 'var(--text-muted)', marginBottom: '20px', flexWrap: 'wrap' }}>
           <Link href="/learn" style={{ color: 'var(--text-secondary)', textDecoration: 'none', fontWeight: 600 }}>
             Curriculum Directory
           </Link>
@@ -63,9 +71,11 @@ export default async function CourseSyllabusPage({ params }: CourseSyllabusProps
             {flag} {jurisdictionName}
           </Link>
           <span>/</span>
-          <span style={{ fontWeight: 700, color: 'var(--accent-primary)' }}>{currentLesson.gradeName}</span>
+          <span style={{ fontWeight: 700, color: 'var(--accent-primary)' }}>
+            {syllabus ? syllabus.gradeName : currentLesson.gradeName}
+          </span>
           <span>/</span>
-          <span>{currentLesson.subjectName}</span>
+          <span>{syllabus ? syllabus.subjectName : currentLesson.subjectName}</span>
         </nav>
 
         {/* Course Syllabus Hero */}
@@ -77,177 +87,300 @@ export default async function CourseSyllabusPage({ params }: CourseSyllabusProps
           boxShadow: 'var(--shadow-card)',
           marginBottom: '32px',
         }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '12px' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '14px', flexWrap: 'wrap' }}>
             <span style={{
               fontSize: '0.78rem',
               fontWeight: 800,
-              padding: '3px 10px',
+              padding: '4px 10px',
               borderRadius: '6px',
               backgroundColor: '#eef2ff',
               color: '#4338ca',
             }}>
-              {currentLesson.standardCode}
+              {syllabus ? syllabus.frameworkStandard : currentLesson.standardCode}
             </span>
             <span style={{
               fontSize: '0.78rem',
               fontWeight: 700,
-              padding: '3px 10px',
+              padding: '4px 10px',
               borderRadius: '6px',
               backgroundColor: '#ecfdf5',
               color: '#065f46',
             }}>
-              ✓ {authorityName} Official Syllabus
+              ✓ {authorityName} Official Framework
+            </span>
+            <span style={{
+              fontSize: '0.78rem',
+              fontWeight: 700,
+              padding: '4px 10px',
+              borderRadius: '6px',
+              backgroundColor: '#f8fafc',
+              border: '1px solid #e2e8f0',
+              color: '#475569',
+            }}>
+              📚 {syllabus ? `${syllabus.units.length} Units • ${totalTopics} Sequenced Topics` : `${totalTopics} Topics`}
             </span>
           </div>
 
           <h1 style={{ fontSize: '2.2rem', fontWeight: 800, color: '#0f172a', margin: '0 0 10px' }}>
-            {currentLesson.gradeName} {currentLesson.subjectName} Syllabus
+            {syllabus ? syllabus.title : `${currentLesson.gradeName} ${currentLesson.subjectName} Syllabus`}
           </h1>
-          <p style={{ fontSize: '1rem', color: '#475569', margin: '0 0 20px', maxWidth: '750px' }}>
-            Sequential, competency-aligned curriculum modules designed to guide learners toward complete conceptual mastery and real-world application.
+          <p style={{ fontSize: '1rem', color: '#475569', margin: '0 0 20px', maxWidth: '800px', lineHeight: 1.6 }}>
+            {syllabus ? syllabus.overview : 'Sequential, competency-aligned curriculum modules designed to guide learners toward complete conceptual mastery and real-world application.'}
           </p>
 
-          <div style={{ display: 'flex', gap: '16px', alignItems: 'center' }}>
+          <div style={{ display: 'flex', gap: '16px', alignItems: 'center', flexWrap: 'wrap' }}>
             <Link
               href={`/learn/${resolvedParams.country}/${resolvedParams.jurisdiction}/${resolvedParams.grade}/${resolvedParams.subject}/${currentLesson.slug}`}
               style={{
-                padding: '10px 20px',
+                padding: '12px 24px',
                 borderRadius: '12px',
                 backgroundColor: '#4f46e5',
                 color: '#ffffff',
                 fontWeight: 700,
-                fontSize: '0.9rem',
+                fontSize: '0.92rem',
                 textDecoration: 'none',
                 boxShadow: '0 4px 12px rgba(79, 70, 229, 0.25)',
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: '8px'
               }}
             >
-              Start Active Lesson →
+              Start Interactive Lesson ({currentLesson.title.split(':')[0]}) →
             </Link>
+            <span style={{ fontSize: '0.85rem', color: '#64748b' }}>
+              Academic Year 2026–27 • Verified Against Official Standards
+            </span>
           </div>
         </div>
 
-        {/* Modules / Lessons List */}
-        <div style={{
-          backgroundColor: '#ffffff',
-          borderRadius: '24px',
-          border: '1px solid var(--border-subtle)',
-          padding: '32px',
-          boxShadow: 'var(--shadow-card)',
-        }}>
-          <h2 style={{ fontSize: '1.35rem', fontWeight: 800, color: '#0f172a', marginBottom: '20px' }}>
-            Curriculum Units & Lessons
-          </h2>
-
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
-            {matchingLessons.length > 0 ? (
-              matchingLessons.map((l, index) => (
-                <div
-                  key={l.slug}
-                  style={{
-                    display: 'flex',
-                    justifyContent: 'space-between',
-                    alignItems: 'center',
-                    padding: '20px',
-                    borderRadius: '16px',
-                    border: '1px solid #edf2f7',
-                    backgroundColor: '#fafbfc',
-                  }}
-                >
-                  <div style={{ display: 'flex', gap: '16px', alignItems: 'center' }}>
-                    <div style={{
-                      width: '40px',
-                      height: '40px',
-                      borderRadius: '10px',
-                      backgroundColor: '#eef2ff',
-                      color: '#4f46e5',
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      fontWeight: 800,
-                    }}>
-                      {index + 1}
-                    </div>
-                    <div>
-                      <div style={{ fontWeight: 800, color: '#0f172a', fontSize: '1.05rem', marginBottom: '4px' }}>
-                        {l.title}
-                      </div>
-                      <div style={{ fontSize: '0.82rem', color: '#64748b' }}>
-                        {l.standardCode} • {l.standardTitle}
-                      </div>
-                    </div>
-                  </div>
-
-                  <Link
-                    href={`/learn/${resolvedParams.country}/${resolvedParams.jurisdiction}/${resolvedParams.grade}/${resolvedParams.subject}/${l.slug}`}
-                    style={{
-                      padding: '8px 16px',
-                      borderRadius: '10px',
-                      backgroundColor: '#ffffff',
-                      border: '1px solid #c7d2fe',
-                      color: '#4f46e5',
-                      fontWeight: 700,
-                      fontSize: '0.85rem',
-                      textDecoration: 'none',
-                    }}
-                  >
-                    Open Lesson →
-                  </Link>
-                </div>
-              ))
-            ) : (
+        {/* Units & Topics Outline */}
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '32px' }}>
+          {syllabus ? (
+            syllabus.units.map(unit => (
               <div
+                key={unit.unitNumber}
                 style={{
-                  display: 'flex',
-                  justifyContent: 'space-between',
-                  alignItems: 'center',
-                  padding: '20px',
-                  borderRadius: '16px',
-                  border: '1px solid #edf2f7',
-                  backgroundColor: '#fafbfc',
+                  backgroundColor: '#ffffff',
+                  borderRadius: '24px',
+                  border: '1px solid var(--border-subtle)',
+                  padding: '28px',
+                  boxShadow: 'var(--shadow-card)',
                 }}
               >
-                <div style={{ display: 'flex', gap: '16px', alignItems: 'center' }}>
-                  <div style={{
-                    width: '40px',
-                    height: '40px',
-                    borderRadius: '10px',
-                    backgroundColor: '#eef2ff',
-                    color: '#4f46e5',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    fontWeight: 800,
-                  }}>
-                    1
-                  </div>
-                  <div>
-                    <div style={{ fontWeight: 800, color: '#0f172a', fontSize: '1.05rem', marginBottom: '4px' }}>
-                      {currentLesson.title}
+                {/* Unit Header */}
+                <div style={{ borderBottom: '1px solid #f1f5f9', paddingBottom: '18px', marginBottom: '20px' }}>
+                  <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '6px', flexWrap: 'wrap', gap: '8px' }}>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                      <span style={{
+                        fontSize: '0.78rem',
+                        fontWeight: 800,
+                        padding: '3px 10px',
+                        borderRadius: '6px',
+                        backgroundColor: '#4f46e5',
+                        color: '#ffffff',
+                        textTransform: 'uppercase',
+                        letterSpacing: '0.04em'
+                      }}>
+                        Unit {unit.unitNumber}
+                      </span>
+                      <span style={{
+                        fontSize: '0.78rem',
+                        fontWeight: 700,
+                        padding: '3px 8px',
+                        borderRadius: '6px',
+                        backgroundColor: '#f1f5f9',
+                        color: '#475569',
+                      }}>
+                        {unit.domainCode}
+                      </span>
                     </div>
-                    <div style={{ fontSize: '0.82rem', color: '#64748b' }}>
-                      {currentLesson.standardCode} • {currentLesson.standardTitle}
-                    </div>
+                    <span style={{ fontSize: '0.82rem', fontWeight: 600, color: '#64748b' }}>
+                      {unit.topics.length} Sequenced Topics
+                    </span>
                   </div>
+                  <h2 style={{ fontSize: '1.4rem', fontWeight: 800, color: '#0f172a', margin: '4px 0 6px' }}>
+                    {unit.title}
+                  </h2>
+                  <p style={{ fontSize: '0.9rem', color: '#64748b', margin: 0, lineHeight: 1.5 }}>
+                    {unit.description}
+                  </p>
                 </div>
 
-                <Link
-                  href={`/learn/${resolvedParams.country}/${resolvedParams.jurisdiction}/${resolvedParams.grade}/${resolvedParams.subject}/${currentLesson.slug}`}
-                  style={{
-                    padding: '8px 16px',
-                    borderRadius: '10px',
-                    backgroundColor: '#ffffff',
-                    border: '1px solid #c7d2fe',
-                    color: '#4f46e5',
-                    fontWeight: 700,
-                    fontSize: '0.85rem',
-                    textDecoration: 'none',
-                  }}
-                >
-                  Open Lesson →
-                </Link>
+                {/* Topics in this Unit */}
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+                  {unit.topics.map(topic => {
+                    const hasActiveLesson = topic.hasInteractiveLesson && topic.activeLessonSlug;
+                    const targetSlug = hasActiveLesson ? topic.activeLessonSlug : currentLesson.slug;
+
+                    return (
+                      <div
+                        key={topic.id}
+                        style={{
+                          display: 'flex',
+                          justifyContent: 'space-between',
+                          alignItems: 'center',
+                          padding: '16px 20px',
+                          borderRadius: '14px',
+                          border: hasActiveLesson ? '1.5px solid #c7d2fe' : '1px solid #f1f5f9',
+                          backgroundColor: hasActiveLesson ? '#f5f7ff' : '#ffffff',
+                          transition: 'all 0.2s ease',
+                          gap: '16px',
+                          flexWrap: 'wrap'
+                        }}
+                      >
+                        <div style={{ display: 'flex', gap: '14px', alignItems: 'flex-start', flex: 1, minWidth: '280px' }}>
+                          <div style={{
+                            width: '36px',
+                            height: '36px',
+                            borderRadius: '10px',
+                            backgroundColor: hasActiveLesson ? '#4f46e5' : '#f1f5f9',
+                            color: hasActiveLesson ? '#ffffff' : '#475569',
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            fontWeight: 800,
+                            fontSize: '0.85rem',
+                            flexShrink: 0
+                          }}>
+                            {topic.topicNumber}
+                          </div>
+                          <div>
+                            <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '3px', flexWrap: 'wrap' }}>
+                              <span style={{ fontWeight: 800, color: '#0f172a', fontSize: '1rem' }}>
+                                {topic.title}
+                              </span>
+                              {hasActiveLesson ? (
+                                <span style={{
+                                  fontSize: '0.7rem',
+                                  fontWeight: 800,
+                                  padding: '2px 8px',
+                                  borderRadius: '6px',
+                                  backgroundColor: '#10b981',
+                                  color: '#ffffff',
+                                }}>
+                                  ⚡ Interactive Masterclass Live
+                                </span>
+                              ) : (
+                                <span style={{
+                                  fontSize: '0.7rem',
+                                  fontWeight: 700,
+                                  padding: '2px 8px',
+                                  borderRadius: '6px',
+                                  backgroundColor: '#f1f5f9',
+                                  color: '#475569',
+                                }}>
+                                  ✓ Standard Aligned
+                                </span>
+                              )}
+                            </div>
+                            <div style={{ fontSize: '0.8rem', color: '#64748b', marginBottom: '4px' }}>
+                              <strong>{topic.standardCode}</strong> — {topic.standardTitle}
+                            </div>
+                            <div style={{ fontSize: '0.82rem', color: '#475569', lineHeight: 1.4 }}>
+                              {topic.summary}
+                            </div>
+                          </div>
+                        </div>
+
+                        <div style={{ flexShrink: 0 }}>
+                          <Link
+                            href={`/learn/${resolvedParams.country}/${resolvedParams.jurisdiction}/${resolvedParams.grade}/${resolvedParams.subject}/${targetSlug}`}
+                            style={{
+                              display: 'inline-flex',
+                              alignItems: 'center',
+                              gap: '6px',
+                              padding: '8px 16px',
+                              borderRadius: '10px',
+                              backgroundColor: hasActiveLesson ? '#4f46e5' : '#ffffff',
+                              border: hasActiveLesson ? 'none' : '1px solid #c7d2fe',
+                              color: hasActiveLesson ? '#ffffff' : '#4f46e5',
+                              fontWeight: 700,
+                              fontSize: '0.82rem',
+                              textDecoration: 'none',
+                              boxShadow: hasActiveLesson ? '0 2px 8px rgba(79, 70, 229, 0.25)' : 'none'
+                            }}
+                          >
+                            {hasActiveLesson ? 'Open Lesson →' : 'Explore Concept →'}
+                          </Link>
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
               </div>
-            )}
-          </div>
+            ))
+          ) : (
+            <div style={{
+              backgroundColor: '#ffffff',
+              borderRadius: '24px',
+              border: '1px solid var(--border-subtle)',
+              padding: '32px',
+              boxShadow: 'var(--shadow-card)',
+            }}>
+              <h2 style={{ fontSize: '1.35rem', fontWeight: 800, color: '#0f172a', marginBottom: '20px' }}>
+                Curriculum Units & Lessons
+              </h2>
+
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+                {matchingLessons.map((l, index) => (
+                  <div
+                    key={l.slug}
+                    style={{
+                      display: 'flex',
+                      justifyContent: 'space-between',
+                      alignItems: 'center',
+                      padding: '20px',
+                      borderRadius: '16px',
+                      border: '1px solid #edf2f7',
+                      backgroundColor: '#fafbfc',
+                      flexWrap: 'wrap',
+                      gap: '12px'
+                    }}
+                  >
+                    <div style={{ display: 'flex', gap: '16px', alignItems: 'center' }}>
+                      <div style={{
+                        width: '40px',
+                        height: '40px',
+                        borderRadius: '10px',
+                        backgroundColor: '#eef2ff',
+                        color: '#4f46e5',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        fontWeight: 800,
+                      }}>
+                        {index + 1}
+                      </div>
+                      <div>
+                        <div style={{ fontWeight: 800, color: '#0f172a', fontSize: '1.05rem', marginBottom: '4px' }}>
+                          {l.title}
+                        </div>
+                        <div style={{ fontSize: '0.82rem', color: '#64748b' }}>
+                          {l.standardCode} • {l.standardTitle}
+                        </div>
+                      </div>
+                    </div>
+
+                    <Link
+                      href={`/learn/${resolvedParams.country}/${resolvedParams.jurisdiction}/${resolvedParams.grade}/${resolvedParams.subject}/${l.slug}`}
+                      style={{
+                        padding: '8px 16px',
+                        borderRadius: '10px',
+                        backgroundColor: '#ffffff',
+                        border: '1px solid #c7d2fe',
+                        color: '#4f46e5',
+                        fontWeight: 700,
+                        fontSize: '0.85rem',
+                        textDecoration: 'none',
+                      }}
+                    >
+                      Open Lesson →
+                    </Link>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
         </div>
       </div>
     </div>
