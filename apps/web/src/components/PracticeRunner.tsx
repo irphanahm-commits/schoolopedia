@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
+import { API_BASE_URL } from '@/lib/api';
 import { Question } from '@schoolopedia/types';
 
 interface PracticeRunnerProps {
@@ -46,7 +47,7 @@ export function PracticeRunner({ practiceId, questions }: PracticeRunnerProps) {
 
     // Record practice attempt asynchronously (fail-safe)
     try {
-      await fetch('http://127.0.0.1:8787/api/v1/practices/attempts', {
+      await fetch(`${API_BASE_URL}/api/v1/practices/attempts`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({

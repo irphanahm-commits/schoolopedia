@@ -1,0 +1,11 @@
+name = "schoolopedia-web"
+compatibility_date = "2024-09-23"
+workers_dev = true
+
+routes = [
+  { pattern = "schoolopedia.com", custom_domain = true },
+  { pattern = "www.schoolopedia.com", custom_domain = true }
+]
+
+[assets]
+directory = "./out"

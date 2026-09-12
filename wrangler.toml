@@ -2,6 +2,11 @@ name = "schoolopedia-api"
 main = "workers/api/src/index.ts"
 compatibility_date = "2024-09-23"
 compatibility_flags = ["nodejs_compat"]
+workers_dev = true
+
+routes = [
+  { pattern = "api.schoolopedia.com", custom_domain = true }
+]
 
 [vars]
 ENVIRONMENT = "development"
@@ -15,7 +20,6 @@ migrations_dir = "migrations"
 [[kv_namespaces]]
 binding = "KV"
 id = "4970ba5253824a28895b5f2467eca85f"
-
 
 [triggers]
 crons = ["*/15 * * * *"]

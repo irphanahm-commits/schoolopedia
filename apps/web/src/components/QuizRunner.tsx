@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
+import { API_BASE_URL } from '@/lib/api';
 import { QuizGradingResult } from '@schoolopedia/types';
 
 interface QuizOption {
@@ -60,7 +61,7 @@ export function QuizRunner({
         })),
       };
 
-      const res = await fetch('http://127.0.0.1:8787/api/v1/quizzes/submit', {
+      const res = await fetch(`${API_BASE_URL}/api/v1/quizzes/submit`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

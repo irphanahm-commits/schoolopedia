@@ -3,6 +3,8 @@
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 
+import { API_BASE_URL } from '@/lib/api';
+
 interface SearchResult {
   id: string;
   title: string;
@@ -43,7 +45,7 @@ export function SearchModal({ isOpen, onClose }: SearchModalProps) {
     const timer = setTimeout(async () => {
       setIsLoading(true);
       try {
-        const res = await fetch(`http://127.0.0.1:8787/api/v1/search?q=${encodeURIComponent(query)}`);
+        const res = await fetch(`${API_BASE_URL}/api/v1/search?q=${encodeURIComponent(query)}`);
         const json = await res.json();
         setResults(json.data || []);
       } catch {
