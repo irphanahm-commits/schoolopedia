@@ -222,11 +222,11 @@ INSERT OR IGNORE INTO videos (id, youtube_video_id, title, channel_title, channe
 VALUES
 (
   'vid_khan_linear_eq',
-  'bAerID24QJg',
-  'Linear Equations with Variables on Both Sides',
+  'f15zA0PhSek',
+  'Introduction to solving an equation with variables on both sides',
   'Khan Academy',
   'UC4a-Gbdw7vOaccHmFo40b9g',
-  534,
+  485,
   'AVAILABLE',
   '{"curriculum_alignment": 95, "topic_coverage": 90, "grade_suitability": 95, "explanation_quality": 95, "creator_credibility": 98, "freshness": 85, "availability": 100, "total_score": 93}',
   '2026-09-12T00:00:00Z',

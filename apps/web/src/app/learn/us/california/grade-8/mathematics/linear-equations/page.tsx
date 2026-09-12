@@ -23,11 +23,11 @@ export default function LinearEquationsLessonPage() {
       {
         video: {
           id: 'vid_khan_linear_eq',
-          youtube_video_id: 'bAerID24QJg',
-          title: 'Linear Equations with Variables on Both Sides',
+          youtube_video_id: 'f15zA0PhSek',
+          title: 'Introduction to solving an equation with variables on both sides',
           channel_title: 'Khan Academy',
           channel_id: 'UC4a-Gbdw7vOaccHmFo40b9g',
-          duration_seconds: 534,
+          duration_seconds: 485,
           state: 'AVAILABLE' as const,
           quality_score: {
             curriculum_alignment: 95,
