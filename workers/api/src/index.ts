@@ -229,6 +229,7 @@ app.post('/api/v1/practices/attempts', async (c) => {
 
   const learnerId = c.req.header('X-Learner-Id') || 'learner_anon_default';
   const ctx = createDatabaseContext(c.env.DB);
+  await ctx.learners.getOrCreateLearner(learnerId);
 
   // Check correctness deterministically
   const question = await c.env.DB.prepare('SELECT * FROM questions WHERE id = ?')
@@ -298,6 +299,7 @@ app.post('/api/v1/quizzes/submit', async (c) => {
 
   const learnerId = c.req.header('X-Learner-Id') || 'learner_anon_default';
   const ctx = createDatabaseContext(c.env.DB);
+  await ctx.learners.getOrCreateLearner(learnerId);
 
   try {
     const gradingResult = await ctx.assessments.gradeQuiz(parsed.data.quiz_id, parsed.data.answers, learnerId);

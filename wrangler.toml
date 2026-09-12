@@ -9,16 +9,13 @@ ENVIRONMENT = "development"
 [[d1_databases]]
 binding = "DB"
 database_name = "schoolopedia-db"
-database_id = "schoolopedia-db"
+database_id = "6741d7ad-17d9-4142-a02a-9e77b33f0ad3"
 migrations_dir = "migrations"
 
 [[kv_namespaces]]
 binding = "KV"
-id = "schoolopedia-cache"
+id = "4970ba5253824a28895b5f2467eca85f"
 
-[[r2_buckets]]
-binding = "R2"
-bucket_name = "schoolopedia-snapshots"
 
 [triggers]
 crons = ["*/15 * * * *"]
