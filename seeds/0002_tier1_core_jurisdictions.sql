@@ -17,6 +17,8 @@ INSERT OR IGNORE INTO jurisdictions (id, country_id, code, name, slug, authority
   -- United Kingdom
   ('jur_gb_eng', 'country_gb', 'ENG', 'England', 'england', 'Department for Education (DfE) / Ofqual', '2026-09-12T00:00:00Z', '2026-09-12T00:00:00Z'),
   ('jur_gb_sct', 'country_gb', 'SCT', 'Scotland', 'scotland', 'Scottish Qualifications Authority (SQA)', '2026-09-12T00:00:00Z', '2026-09-12T00:00:00Z'),
+  ('jur_gb_wls', 'country_gb', 'WLS', 'Wales', 'wales', 'Welsh Government / Qualifications Wales', '2026-09-12T00:00:00Z', '2026-09-12T00:00:00Z'),
+  ('jur_gb_nir', 'country_gb', 'NIR', 'Northern Ireland', 'northern-ireland', 'Council for Curriculum, Examinations & Assessment (CCEA)', '2026-09-12T00:00:00Z', '2026-09-12T00:00:00Z'),
   -- Canada
   ('jur_ca_on', 'country_ca', 'ON', 'Ontario', 'ontario', 'Ontario Ministry of Education', '2026-09-12T00:00:00Z', '2026-09-12T00:00:00Z'),
   ('jur_ca_bc', 'country_ca', 'BC', 'British Columbia', 'british-columbia', 'British Columbia Ministry of Education and Child Care', '2026-09-12T00:00:00Z', '2026-09-12T00:00:00Z'),
@@ -70,9 +72,39 @@ INSERT OR IGNORE INTO institutions (id, jurisdiction_id, name, slug, type, websi
   ('inst_ucb', 'jur_us_ca', 'University of California, Berkeley', 'uc-berkeley', 'UNIVERSITY', 'https://berkeley.edu', 'Berkeley', 'California', 'US', 'WASC', 1, 1, '2026-09-12T00:00:00Z', '2026-09-12T00:00:00Z'),
   ('inst_stanford', 'jur_us_ca', 'Stanford University', 'stanford', 'UNIVERSITY', 'https://stanford.edu', 'Stanford', 'California', 'US', 'WASC', 2, 1, '2026-09-12T00:00:00Z', '2026-09-12T00:00:00Z'),
   ('inst_ut_austin', 'jur_us_tx', 'University of Texas at Austin', 'ut-austin', 'UNIVERSITY', 'https://utexas.edu', 'Austin', 'Texas', 'US', 'SACSCOC', 9, 1, '2026-09-12T00:00:00Z', '2026-09-12T00:00:00Z'),
-  -- UK
+  -- UK Higher Education
   ('inst_oxford', 'jur_gb_eng', 'University of Oxford', 'oxford', 'UNIVERSITY', 'https://ox.ac.uk', 'Oxford', 'Oxfordshire', 'GB', 'QAA', 1, 1, '2026-09-12T00:00:00Z', '2026-09-12T00:00:00Z'),
-  ('inst_imperial', 'jur_gb_eng', 'Imperial College London', 'imperial-college', 'UNIVERSITY', 'https://imperial.ac.uk', 'London', 'Greater London', 'GB', 'QAA', 2, 1, '2026-09-12T00:00:00Z', '2026-09-12T00:00:00Z'),
+  ('inst_cambridge', 'jur_gb_eng', 'University of Cambridge', 'cambridge', 'UNIVERSITY', 'https://cam.ac.uk', 'Cambridge', 'Cambridgeshire', 'GB', 'QAA', 2, 1, '2026-09-12T00:00:00Z', '2026-09-12T00:00:00Z'),
+  ('inst_imperial', 'jur_gb_eng', 'Imperial College London', 'imperial-college', 'UNIVERSITY', 'https://imperial.ac.uk', 'London', 'Greater London', 'GB', 'QAA', 3, 1, '2026-09-12T00:00:00Z', '2026-09-12T00:00:00Z'),
+  ('inst_ucl', 'jur_gb_eng', 'University College London (UCL)', 'ucl', 'UNIVERSITY', 'https://ucl.ac.uk', 'London', 'Greater London', 'GB', 'QAA', 4, 1, '2026-09-12T00:00:00Z', '2026-09-12T00:00:00Z'),
+  ('inst_lse', 'jur_gb_eng', 'London School of Economics (LSE)', 'lse', 'UNIVERSITY', 'https://lse.ac.uk', 'London', 'Greater London', 'GB', 'QAA', 5, 1, '2026-09-12T00:00:00Z', '2026-09-12T00:00:00Z'),
+  ('inst_edinburgh', 'jur_gb_sct', 'University of Edinburgh', 'edinburgh', 'UNIVERSITY', 'https://ed.ac.uk', 'Edinburgh', 'Midlothian', 'GB', 'QAA', 6, 1, '2026-09-12T00:00:00Z', '2026-09-12T00:00:00Z'),
+  -- UK State Grammar Schools (11-Plus Selective)
+  ('inst_qe_barnet', 'jur_gb_eng', 'Queen Elizabeth''s School, Barnet', 'qe-barnet', 'GRAMMAR_SCHOOL', 'https://qebarnet.co.uk', 'Barnet', 'Greater London', 'GB', 'Ofsted Outstanding', 1, 1, '2026-09-12T00:00:00Z', '2026-09-12T00:00:00Z'),
+  ('inst_henrietta_barnett', 'jur_gb_eng', 'The Henrietta Barnett School', 'henrietta-barnett', 'GRAMMAR_SCHOOL', 'https://hbschool.org.uk', 'Hampstead Garden Suburb', 'Greater London', 'GB', 'Ofsted Outstanding', 2, 1, '2026-09-12T00:00:00Z', '2026-09-12T00:00:00Z'),
+  ('inst_wilsons', 'jur_gb_eng', 'Wilson''s School', 'wilsons-school', 'GRAMMAR_SCHOOL', 'https://wilsons.school', 'Wallington', 'Greater London', 'GB', 'Ofsted Outstanding', 3, 1, '2026-09-12T00:00:00Z', '2026-09-12T00:00:00Z'),
+  ('inst_tiffin', 'jur_gb_eng', 'The Tiffin School', 'tiffin-school', 'GRAMMAR_SCHOOL', 'https://tiffinschool.co.uk', 'Kingston upon Thames', 'Greater London', 'GB', 'Ofsted Outstanding', 4, 1, '2026-09-12T00:00:00Z', '2026-09-12T00:00:00Z'),
+  ('inst_king_edward_camp_hill', 'jur_gb_eng', 'King Edward VI Camp Hill School for Boys', 'ke-camp-hill', 'GRAMMAR_SCHOOL', 'https://camphillboys.bham.sch.uk', 'Birmingham', 'West Midlands', 'GB', 'Ofsted Outstanding', 5, 1, '2026-09-12T00:00:00Z', '2026-09-12T00:00:00Z'),
+  ('inst_colchester_royal', 'jur_gb_eng', 'Colchester Royal Grammar School', 'colchester-royal', 'GRAMMAR_SCHOOL', 'https://crgs.co.uk', 'Colchester', 'Essex', 'GB', 'Ofsted Outstanding', 6, 1, '2026-09-12T00:00:00Z', '2026-09-12T00:00:00Z'),
+  ('inst_pates', 'jur_gb_eng', 'Pate''s Grammar School', 'pates-grammar', 'GRAMMAR_SCHOOL', 'https://patesgs.org', 'Cheltenham', 'Gloucestershire', 'GB', 'Ofsted Outstanding', 7, 1, '2026-09-12T00:00:00Z', '2026-09-12T00:00:00Z'),
+  -- UK State Academies & Sixth Form Colleges
+  ('inst_brampton_manor', 'jur_gb_eng', 'Brampton Manor Academy & Sixth Form', 'brampton-manor', 'ACADEMY', 'https://bramptonmanor.org', 'Newham', 'Greater London', 'GB', 'Ofsted Outstanding', 1, 1, '2026-09-12T00:00:00Z', '2026-09-12T00:00:00Z'),
+  ('inst_harris_westminster', 'jur_gb_eng', 'Harris Westminster Sixth Form', 'harris-westminster', 'SIXTH_FORM_COLLEGE', 'https://harriswestminster.org.uk', 'Westminster', 'Greater London', 'GB', 'Ofsted Outstanding', 2, 1, '2026-09-12T00:00:00Z', '2026-09-12T00:00:00Z'),
+  ('inst_lae_stratford', 'jur_gb_eng', 'London Academy of Excellence (LAE Stratford)', 'lae-stratford', 'SIXTH_FORM_COLLEGE', 'https://lae.ac.uk', 'Stratford', 'Greater London', 'GB', 'Ofsted Outstanding', 3, 1, '2026-09-12T00:00:00Z', '2026-09-12T00:00:00Z'),
+  ('inst_hills_road', 'jur_gb_eng', 'Hills Road Sixth Form College', 'hills-road', 'SIXTH_FORM_COLLEGE', 'https://hillsroad.ac.uk', 'Cambridge', 'Cambridgeshire', 'GB', 'Ofsted Outstanding', 4, 1, '2026-09-12T00:00:00Z', '2026-09-12T00:00:00Z'),
+  ('inst_woodhouse', 'jur_gb_eng', 'Woodhouse College', 'woodhouse-college', 'SIXTH_FORM_COLLEGE', 'https://woodhouse.ac.uk', 'Finchley', 'Greater London', 'GB', 'Ofsted Outstanding', 5, 1, '2026-09-12T00:00:00Z', '2026-09-12T00:00:00Z'),
+  -- UK Historic Independent / Public Schools
+  ('inst_westminster_school', 'jur_gb_eng', 'Westminster School', 'westminster-school', 'INDEPENDENT', 'https://westminster.org.uk', 'Westminster', 'Greater London', 'GB', 'ISI Excellent', 1, 1, '2026-09-12T00:00:00Z', '2026-09-12T00:00:00Z'),
+  ('inst_st_pauls', 'jur_gb_eng', 'St Paul''s School', 'st-pauls-school', 'INDEPENDENT', 'https://stpaulsschool.org.uk', 'Barnes', 'Greater London', 'GB', 'ISI Excellent', 2, 1, '2026-09-12T00:00:00Z', '2026-09-12T00:00:00Z'),
+  ('inst_eton', 'jur_gb_eng', 'Eton College', 'eton-college', 'INDEPENDENT', 'https://etoncollege.com', 'Windsor', 'Berkshire', 'GB', 'ISI Excellent', 3, 1, '2026-09-12T00:00:00Z', '2026-09-12T00:00:00Z'),
+  ('inst_winchester', 'jur_gb_eng', 'Winchester College', 'winchester-college', 'INDEPENDENT', 'https://winchestercollege.org', 'Winchester', 'Hampshire', 'GB', 'ISI Excellent', 4, 1, '2026-09-12T00:00:00Z', '2026-09-12T00:00:00Z'),
+  ('inst_harrow', 'jur_gb_eng', 'Harrow School', 'harrow-school', 'INDEPENDENT', 'https://harrowschool.org.uk', 'Harrow on the Hill', 'Greater London', 'GB', 'ISI Excellent', 5, 1, '2026-09-12T00:00:00Z', '2026-09-12T00:00:00Z'),
+  ('inst_kcs_wimbledon', 'jur_gb_eng', 'King''s College School (KCS Wimbledon)', 'kcs-wimbledon', 'INDEPENDENT', 'https://kcs.org.uk', 'Wimbledon', 'Greater London', 'GB', 'ISI Excellent', 6, 1, '2026-09-12T00:00:00Z', '2026-09-12T00:00:00Z'),
+  ('inst_wycombe_abbey', 'jur_gb_eng', 'Wycombe Abbey', 'wycombe-abbey', 'INDEPENDENT', 'https://wycombeabbey.com', 'High Wycombe', 'Buckinghamshire', 'GB', 'ISI Excellent', 7, 1, '2026-09-12T00:00:00Z', '2026-09-12T00:00:00Z'),
+  -- Scotland, Wales & Northern Ireland Schools
+  ('inst_jordanhill', 'jur_gb_sct', 'Jordanhill School', 'jordanhill', 'PUBLIC_HIGH_SCHOOL', 'https://jordanhill.glasgow.sch.uk', 'Glasgow', 'Lanarkshire', 'GB', 'Education Scotland Excellent', 1, 1, '2026-09-12T00:00:00Z', '2026-09-12T00:00:00Z'),
+  ('inst_glantaf', 'jur_gb_wls', 'Ysgol Gyfun Gymraeg Glantaf', 'glantaf', 'PUBLIC_HIGH_SCHOOL', 'https://glantaf.cymru', 'Cardiff', 'Glamorgan', 'GB', 'Estyn Excellent', 1, 1, '2026-09-12T00:00:00Z', '2026-09-12T00:00:00Z'),
+  ('inst_methody', 'jur_gb_nir', 'Methodist College Belfast', 'methody', 'GRAMMAR_SCHOOL', 'https://methody.org', 'Belfast', 'Antrim', 'GB', 'ETI Outstanding', 1, 1, '2026-09-12T00:00:00Z', '2026-09-12T00:00:00Z'),
   -- Canada
   ('inst_toronto', 'jur_ca_on', 'University of Toronto', 'u-toronto', 'UNIVERSITY', 'https://utoronto.ca', 'Toronto', 'Ontario', 'CA', 'PEQAB', 1, 1, '2026-09-12T00:00:00Z', '2026-09-12T00:00:00Z'),
   ('inst_waterloo', 'jur_ca_on', 'University of Waterloo', 'u-waterloo', 'UNIVERSITY', 'https://uwaterloo.ca', 'Waterloo', 'Ontario', 'CA', 'PEQAB', 3, 1, '2026-09-12T00:00:00Z', '2026-09-12T00:00:00Z'),

@@ -6,7 +6,10 @@ export type InstitutionType =
   | 'VOCATIONAL'
   | 'PUBLIC_HIGH_SCHOOL'
   | 'CHARTER_SCHOOL'
-  | 'INDEPENDENT';
+  | 'INDEPENDENT'
+  | 'GRAMMAR_SCHOOL'
+  | 'ACADEMY'
+  | 'SIXTH_FORM_COLLEGE';
 
 export interface Institution {
   id: string;

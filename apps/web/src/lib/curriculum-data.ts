@@ -1876,7 +1876,291 @@ export function getAllLessons(): LessonData[] {
   return Object.values(LESSONS_CATALOGUE);
 }
 
-export function getCoursesForJurisdiction(jurisdictionSlug: string): CourseCardData[] {
-  // Returns courses relevant to any Tier 1 jurisdiction
-  return STANDARD_COURSES;
+const UK_COURSE_LOCALIZATION: Record<string, {
+  title: string;
+  grade: string;
+  standardCode: string;
+}> = {
+  // Key Stage 1 & 2 (Primary Years 1–6)
+  'math-grade-1': {
+    title: 'Key Stage 1 Mathematics: Counting, Place Value & Addition Within 20',
+    grade: 'Year 1 (Key Stage 1)',
+    standardCode: 'DfE KS1-MA-NPV / STA Year 1',
+  },
+  'science-grade-1': {
+    title: 'Key Stage 1 Science: Living Things, Plant Growth & Seasonal Changes',
+    grade: 'Year 1 (Key Stage 1)',
+    standardCode: 'DfE KS1-SC-BIO / STA Year 1',
+  },
+  'english-grade-1': {
+    title: 'Key Stage 1 English: Systematic Synthetic Phonics & Early Reading',
+    grade: 'Year 1 (Key Stage 1)',
+    standardCode: 'DfE KS1-ENG-PHO / Letters & Sounds',
+  },
+  'math-grade-2': {
+    title: 'Key Stage 1 Mathematics: Multi-Digit Addition, Subtraction & Shape Properties',
+    grade: 'Year 2 (Key Stage 1)',
+    standardCode: 'DfE KS1-MA-ADD / KS1 Assessment',
+  },
+  'science-grade-2': {
+    title: 'Key Stage 1 Science: Properties of Everyday Materials & Changing Environments',
+    grade: 'Year 2 (Key Stage 1)',
+    standardCode: 'DfE KS1-SC-MAT / STA Year 2',
+  },
+  'english-grade-2': {
+    title: 'Key Stage 1 English: Sentence Construction, Punctuation & Vocabulary',
+    grade: 'Year 2 (Key Stage 1)',
+    standardCode: 'DfE KS1-ENG-GPS / STA Year 2',
+  },
+  'math-grade-3': {
+    title: 'Key Stage 2 Mathematics: Multiplication Tables, Written Methods & Unit Fractions',
+    grade: 'Year 3 (Key Stage 2)',
+    standardCode: 'DfE KS2-MA-MUL / Year 3 Programme',
+  },
+  'science-grade-3': {
+    title: 'Key Stage 2 Science: Forces & Magnets, Light Reflection & Plant Life',
+    grade: 'Year 3 (Key Stage 2)',
+    standardCode: 'DfE KS2-SC-FOR / Year 3 Programme',
+  },
+  'english-grade-3': {
+    title: 'Key Stage 2 English: Reading Comprehension, Paragraphs & Prepositions',
+    grade: 'Year 3 (Key Stage 2)',
+    standardCode: 'DfE KS2-ENG-PAR / Year 3 Programme',
+  },
+  'math-grade-4': {
+    title: 'Key Stage 2 Mathematics: Place Value, Written Multiplication & Fractions',
+    grade: 'Year 4 (Key Stage 2)',
+    standardCode: 'DfE KS2-MA-FDP / Multiplication Tables Check',
+  },
+  'science-grade-4': {
+    title: 'Key Stage 2 Science: States of Matter, Sound Waves & Electrical Circuits',
+    grade: 'Year 4 (Key Stage 2)',
+    standardCode: 'DfE KS2-SC-PHY / Year 4 Programme',
+  },
+  'english-grade-4': {
+    title: 'Key Stage 2 English: Fronted Adverbials, Expanded Noun Phrases & Research Writing',
+    grade: 'Year 4 (Key Stage 2)',
+    standardCode: 'DfE KS2-ENG-GPS / Year 4 Programme',
+  },
+  'history-grade-4': {
+    title: 'Key Stage 2 History: Roman Empire Impact on Britain & Anglo-Saxon Settlements',
+    grade: 'Year 4 (Key Stage 2)',
+    standardCode: 'DfE KS2-HIST-ROM / Statutory Framework',
+  },
+  'math-grade-5': {
+    title: 'Key Stage 2 Mathematics: Fraction Operations, Decimals, Percentages & Volume',
+    grade: 'Year 5 (Key Stage 2)',
+    standardCode: 'DfE KS2-MA-FDP / Year 5 Programme',
+  },
+  'science-grade-5': {
+    title: 'Key Stage 2 Science: Ecosystems, Global Water Cycle & Earth in Space',
+    grade: 'Year 5 (Key Stage 2)',
+    standardCode: 'DfE KS2-SC-SPA / Year 5 Programme',
+  },
+  'english-grade-5': {
+    title: 'Key Stage 2 English: Relative Clauses, Modal Verbs & Formal Non-Fiction Texts',
+    grade: 'Year 5 (Key Stage 2)',
+    standardCode: 'DfE KS2-ENG-TXT / Year 5 Programme',
+  },
+
+  // Key Stage 3 (Lower Secondary - Years 7–9)
+  'math-grade-6': {
+    title: 'Key Stage 3 Mathematics: Ratio, Proportions, Negative Numbers & Expressions',
+    grade: 'Year 7 (Key Stage 3)',
+    standardCode: 'DfE KS3-MA-RAT / Year 7 Programme',
+  },
+  'science-grade-6': {
+    title: 'Key Stage 3 Science: Earth Systems, Plate Tectonics & Planetary Science',
+    grade: 'Year 7 (Key Stage 3)',
+    standardCode: 'DfE KS3-SC-ROC / Year 7 Programme',
+  },
+  'english-grade-6': {
+    title: 'Key Stage 3 English: Analytical Reading, Contextual Inferences & Descriptive Prose',
+    grade: 'Year 7 (Key Stage 3)',
+    standardCode: 'DfE KS3-ENG-PRO / Year 7 Programme',
+  },
+  'history-grade-6': {
+    title: 'Key Stage 3 History: Medieval Britain 1066–1509 (Norman Conquest & Magna Carta)',
+    grade: 'Year 7 (Key Stage 3)',
+    standardCode: 'DfE KS3-HIST-MED / 1066–1509',
+  },
+  'math-grade-7': {
+    title: 'Key Stage 3 Mathematics: Proportional Reasoning, Percentages & Probability Trees',
+    grade: 'Year 8 (Key Stage 3)',
+    standardCode: 'DfE KS3-MA-PRO / Year 8 Programme',
+  },
+  'science-grade-7': {
+    title: 'Key Stage 3 Science: Cell Biology, Microscopy, Plant Nutrition & Photosynthesis',
+    grade: 'Year 8 (Key Stage 3)',
+    standardCode: 'DfE KS3-SC-CEL / Year 8 Programme',
+  },
+  'english-grade-7': {
+    title: 'Key Stage 3 English: Rhetoric, Persuasive Oratory & Critical Non-Fiction Analysis',
+    grade: 'Year 8 (Key Stage 3)',
+    standardCode: 'DfE KS3-ENG-RHE / Year 8 Programme',
+  },
+  'history-grade-7': {
+    title: 'Key Stage 3 History: The British Empire, Industrial Revolution & Social Reform',
+    grade: 'Year 8 (Key Stage 3)',
+    standardCode: 'DfE KS3-HIST-EMP / 1745–1901',
+  },
+  'math-grade-8': {
+    title: 'Key Stage 3 Mathematics: Linear Equations, Straight-Line Graphs & Gradient',
+    grade: 'Year 9 (Key Stage 3)',
+    standardCode: 'DfE KS3-MA-ALG / AQA & Edexcel KS3',
+  },
+  'science-grade-8': {
+    title: 'Key Stage 3 Science: Forces, Speed, Energy Transfers & Particle Model',
+    grade: 'Year 9 (Key Stage 3)',
+    standardCode: 'DfE KS3-SC-FOR / Year 9 Programme',
+  },
+  'english-grade-8': {
+    title: 'Key Stage 3 English: 19th-Century Prose, Shakespearean Drama & Literary Critique',
+    grade: 'Year 9 (Key Stage 3)',
+    standardCode: 'DfE KS3-ENG-SHA / Year 9 Programme',
+  },
+  'civics-grade-8': {
+    title: 'Key Stage 3 Citizenship: UK Parliamentary Democracy, Electoral Systems & The Rule of Law',
+    grade: 'Year 9 (Key Stage 3)',
+    standardCode: 'DfE KS3-CIT-DEM / UK Constitution',
+  },
+  'cs-grade-8': {
+    title: 'Key Stage 3 Computing: Python Programming, Computational Logic & Boolean Gates',
+    grade: 'Year 9 (Key Stage 3)',
+    standardCode: 'DfE KS3-COMP-PRG / BCS Standards',
+  },
+
+  // Key Stage 4 (GCSE - Years 10–11) & Key Stage 5 (A-Levels - Years 12–13)
+  'math-grade-9': {
+    title: 'GCSE Mathematics: Quadratic Expressions, Simultaneous Equations & Inequalities',
+    grade: 'Year 10 (GCSE / Key Stage 4)',
+    standardCode: 'Ofqual / Edexcel 1MA1 / AQA 8300',
+  },
+  'science-grade-9': {
+    title: 'GCSE Biology: Cell Structure, Cell Division, Genetics & Natural Selection',
+    grade: 'Year 10 (GCSE / Key Stage 4)',
+    standardCode: 'Ofqual / AQA 8461 / Edexcel 1BI0',
+  },
+  'english-grade-9': {
+    title: 'GCSE English Language: Explorations in Creative Reading & Non-Fiction Perspectives',
+    grade: 'Year 10 (GCSE / Key Stage 4)',
+    standardCode: 'Ofqual / AQA 8700 / Edexcel 1EN0',
+  },
+  'history-grade-9': {
+    title: 'GCSE History: The Cold War, Global Superpower Relations & Crisis Management',
+    grade: 'Year 10 (GCSE / Key Stage 4)',
+    standardCode: 'Ofqual / AQA 8145 / Edexcel 1HI0',
+  },
+  'math-grade-10': {
+    title: 'GCSE Mathematics (Higher Tier): Deductive Geometry, Trigonometry & Circle Theorems',
+    grade: 'Year 11 (GCSE / Key Stage 4)',
+    standardCode: 'Ofqual / Edexcel 1MA1 / AQA 8300 (Grades 9–1)',
+  },
+  'science-grade-10': {
+    title: 'GCSE Chemistry: Atomic Structure, Quantitative Chemistry, Bonding & Electrolysis',
+    grade: 'Year 11 (GCSE / Key Stage 4)',
+    standardCode: 'Ofqual / AQA 8462 / Edexcel 1CH0',
+  },
+  'history-grade-10': {
+    title: 'GCSE History: Germany 1890–1945 (Democracy & Dictatorship), Conflict & Tension',
+    grade: 'Year 11 (GCSE / Key Stage 4)',
+    standardCode: 'Ofqual / AQA 8145',
+  },
+  'math-grade-11': {
+    title: 'A-Level Mathematics (Year 12): Pure Functions, Trigonometric Identities & Intro Calculus',
+    grade: 'Year 12 (A-Level / Key Stage 5)',
+    standardCode: 'Ofqual / Edexcel 9MA0 / AQA 7357',
+  },
+  'science-grade-11': {
+    title: 'A-Level Physics: Classical Mechanics, Kinematics, Energy & Wave Phenomena',
+    grade: 'Year 12 (A-Level / Key Stage 5)',
+    standardCode: 'Ofqual / AQA 7408 / OCR H556',
+  },
+  'history-grade-11': {
+    title: 'A-Level History: Britain 1783–1885 (Industrialisation & Reform) and Parliamentary Evolution',
+    grade: 'Year 12 (A-Level / Key Stage 5)',
+    standardCode: 'Ofqual / AQA 7042 / Edexcel 9HI0',
+  },
+  'math-grade-12': {
+    title: 'A-Level Mathematics (Year 13): Differential Calculus, Integration Techniques & Differential Equations',
+    grade: 'Year 13 (A-Level / Key Stage 5)',
+    standardCode: 'Ofqual / Edexcel 9MA0 / AQA 7357',
+  },
+  'cs-grade-12': {
+    title: 'A-Level Computer Science: Advanced Data Structures, Algorithms, Complexity & Machine Learning',
+    grade: 'Year 13 (A-Level / Key Stage 5)',
+    standardCode: 'Ofqual / OCR H446 / AQA 7517',
+  },
+};
+
+export function getCoursesForJurisdiction(jurisdictionSlugOrCountry: string, jurisdictionSlug?: string): CourseCardData[] {
+  const normCountry = jurisdictionSlugOrCountry.toLowerCase();
+  const normJur = (jurisdictionSlug || jurisdictionSlugOrCountry).toLowerCase();
+
+  const isUK = normCountry === 'gb' || ['england', 'scotland', 'wales', 'northern-ireland'].includes(normJur);
+
+  if (!isUK) {
+    return STANDARD_COURSES;
+  }
+
+  // Localize for UK Home Nations
+  return STANDARD_COURSES.map(course => {
+    const loc = UK_COURSE_LOCALIZATION[course.slug];
+    if (!loc) {
+      return course;
+    }
+
+    // Special Scottish adaptations
+    if (normJur === 'scotland') {
+      let scotGrade = loc.grade;
+      let scotStandard = loc.standardCode.replace('DfE', 'Education Scotland').replace('Ofqual', 'SQA');
+      if (course.gradeSlug === 'grade-1') scotGrade = 'Primary 1 (CfE Early/First)';
+      else if (course.gradeSlug === 'grade-2') scotGrade = 'Primary 2 (CfE First)';
+      else if (course.gradeSlug === 'grade-3') scotGrade = 'Primary 3 (CfE First)';
+      else if (course.gradeSlug === 'grade-4') scotGrade = 'Primary 4 (CfE Second)';
+      else if (course.gradeSlug === 'grade-5') scotGrade = 'Primary 5 (CfE Second)';
+      else if (course.gradeSlug === 'grade-6') scotGrade = 'S1 (CfE Third Level)';
+      else if (course.gradeSlug === 'grade-7') scotGrade = 'S2 (CfE Third Level)';
+      else if (course.gradeSlug === 'grade-8') scotGrade = 'S3 (CfE Fourth Level)';
+      else if (course.gradeSlug === 'grade-9') scotGrade = 'S4 (National 4/5)';
+      else if (course.gradeSlug === 'grade-10') scotGrade = 'S4 (National 5)';
+      else if (course.gradeSlug === 'grade-11') scotGrade = 'S5 (Higher)';
+      else if (course.gradeSlug === 'grade-12') scotGrade = 'S6 (Advanced Higher)';
+
+      return {
+        ...course,
+        title: loc.title.replace('Key Stage 1', 'Primary').replace('Key Stage 2', 'Primary').replace('Key Stage 3', 'Broad General Education (S1–S3)').replace('GCSE', 'National 5').replace('A-Level', 'Higher / Advanced Higher'),
+        grade: scotGrade,
+        standardCode: scotStandard,
+      };
+    }
+
+    // Special Welsh adaptations
+    if (normJur === 'wales') {
+      let welshStandard = loc.standardCode.replace('DfE', 'Curriculum for Wales / Llywodraeth Cymru').replace('Ofqual', 'Qualifications Wales / WJEC');
+      return {
+        ...course,
+        grade: loc.grade.replace('Key Stage 1', 'Progression Step 1/2').replace('Key Stage 2', 'Progression Step 2/3').replace('Key Stage 3', 'Progression Step 4').replace('Key Stage 4', 'Progression Step 5 / WJEC GCSE').replace('Key Stage 5', 'WJEC A-Level'),
+        standardCode: welshStandard,
+      };
+    }
+
+    // Special Northern Ireland adaptations
+    if (normJur === 'northern-ireland') {
+      let niStandard = loc.standardCode.replace('DfE', 'CCEA NI Curriculum').replace('Ofqual', 'CCEA Qualifications');
+      return {
+        ...course,
+        grade: loc.grade.replace('Key Stage 1', 'P1–P3').replace('Key Stage 2', 'P4–P7').replace('Key Stage 3', 'Years 8–10 (CCEA KS3)').replace('Key Stage 4', 'Years 11–12 (CCEA GCSE)').replace('Key Stage 5', 'Years 13–14 (CCEA A-Level)'),
+        standardCode: niStandard,
+      };
+    }
+
+    // England (Default UK)
+    return {
+      ...course,
+      title: loc.title,
+      grade: loc.grade,
+      standardCode: loc.standardCode,
+    };
+  });
 }

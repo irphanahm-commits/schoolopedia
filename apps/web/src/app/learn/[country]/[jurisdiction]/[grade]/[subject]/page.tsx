@@ -1,7 +1,7 @@
 import React from 'react';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
-import { LESSONS_CATALOGUE, STANDARD_COURSES, getJurisdiction, TIER1_JURISDICTIONS } from '@/lib/curriculum-data';
+import { LESSONS_CATALOGUE, STANDARD_COURSES, getCoursesForJurisdiction, getJurisdiction, TIER1_JURISDICTIONS } from '@/lib/curriculum-data';
 import { getCourseSyllabus } from '@/lib/syllabus-data';
 import { TopicVideoPlayButton } from '@/components/TopicVideoPlayButton';
 
@@ -42,6 +42,10 @@ export default async function CourseSyllabusPage({ params }: CourseSyllabusProps
   // Retrieve structured multi-unit syllabus tree
   const syllabus = getCourseSyllabus(resolvedParams.grade, resolvedParams.subject);
 
+  // Retrieve localized courses for this specific jurisdiction
+  const localizedCourses = getCoursesForJurisdiction(resolvedParams.country, resolvedParams.jurisdiction);
+  const matchedCourse = localizedCourses.find(c => c.gradeSlug === resolvedParams.grade && c.subjectSlug === resolvedParams.subject);
+
   // Filter lessons matching this grade and subject in active catalog
   const matchingLessons = Object.values(LESSONS_CATALOGUE).filter(
     l => l.gradeSlug === resolvedParams.grade && l.subjectSlug === resolvedParams.subject
@@ -59,6 +63,10 @@ export default async function CourseSyllabusPage({ params }: CourseSyllabusProps
     ? syllabus.units.reduce((acc, u) => acc + u.topics.length, 0)
     : matchingLessons.length;
 
+  const displayGradeName = matchedCourse ? matchedCourse.grade : (syllabus ? syllabus.gradeName : currentLesson.gradeName);
+  const displayTitle = matchedCourse ? matchedCourse.title : (syllabus ? syllabus.title : `${currentLesson.gradeName} ${currentLesson.subjectName} Syllabus`);
+  const displayStandard = matchedCourse ? matchedCourse.standardCode : (syllabus ? syllabus.frameworkStandard : currentLesson.standardCode);
+
   return (
     <div style={{ minHeight: '100vh', backgroundColor: 'var(--bg-canvas)' }}>
       <div style={{ padding: '40px 24px', maxWidth: '1100px', margin: '0 auto', width: '100%' }}>
@@ -73,7 +81,7 @@ export default async function CourseSyllabusPage({ params }: CourseSyllabusProps
           </Link>
           <span>/</span>
           <span style={{ fontWeight: 700, color: 'var(--accent-primary)' }}>
-            {syllabus ? syllabus.gradeName : currentLesson.gradeName}
+            {displayGradeName}
           </span>
           <span>/</span>
           <span>{syllabus ? syllabus.subjectName : currentLesson.subjectName}</span>
@@ -82,9 +90,9 @@ export default async function CourseSyllabusPage({ params }: CourseSyllabusProps
         {/* Grade-Level Subject Switcher */}
         <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '24px', overflowX: 'auto', paddingBottom: '4px' }}>
           <span style={{ fontSize: '0.8rem', fontWeight: 700, color: 'var(--text-muted)', whiteSpace: 'nowrap' }}>
-            {syllabus ? syllabus.gradeName : currentLesson.gradeName} Subjects:
+            {displayGradeName} Subjects:
           </span>
-          {STANDARD_COURSES.filter(c => c.gradeSlug === resolvedParams.grade).map(gc => {
+          {localizedCourses.filter(c => c.gradeSlug === resolvedParams.grade).map(gc => {
             const isCurrent = gc.subjectSlug === resolvedParams.subject;
             return (
               <Link
@@ -131,7 +139,7 @@ export default async function CourseSyllabusPage({ params }: CourseSyllabusProps
               backgroundColor: '#eef2ff',
               color: '#4338ca',
             }}>
-              {syllabus ? syllabus.frameworkStandard : currentLesson.standardCode}
+              {displayStandard}
             </span>
             <span style={{
               fontSize: '0.78rem',
@@ -157,7 +165,7 @@ export default async function CourseSyllabusPage({ params }: CourseSyllabusProps
           </div>
 
           <h1 style={{ fontSize: '2.2rem', fontWeight: 800, color: '#0f172a', margin: '0 0 10px' }}>
-            {syllabus ? syllabus.title : `${currentLesson.gradeName} ${currentLesson.subjectName} Syllabus`}
+            {displayTitle}
           </h1>
           <p style={{ fontSize: '1rem', color: '#475569', margin: '0 0 20px', maxWidth: '800px', lineHeight: 1.6 }}>
             {syllabus ? syllabus.overview : 'Sequential, competency-aligned curriculum modules designed to guide learners toward complete conceptual mastery and real-world application.'}

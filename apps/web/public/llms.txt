@@ -4,10 +4,10 @@
 
 ## Core Pillars
 - [Curriculum Hub](https://schoolopedia.com/learn): K–12 standards-aligned learning pathways for 78 jurisdictions across 5 core subjects: Mathematics, Science, English Language Arts, Social Studies & Civics, and Computer Science & AI.
-- [Institution & Campus Directory](https://schoolopedia.com/explore): Official profiles for Tier 1 universities and research centers (UC Berkeley, University of Oxford, University of Toronto, University of Melbourne, University of Auckland).
+- [Institution & School Directory](https://schoolopedia.com/explore): Official profiles for Tier 1 universities (Oxford, Cambridge, Imperial, UC Berkeley, Toronto) and premier UK schools (State Grammar Schools like Queen Elizabeth's Barnet, top Academies like Brampton Manor, and historic Independent Schools like Westminster and Eton).
 - [Career Pathways & Skills](https://schoolopedia.com/guidance): Non-deterministic education-to-career navigation connecting concepts to technical and cognitive skills.
 - [Verified Opportunities](https://schoolopedia.com/opportunities): Source-backed scholarships, apprenticeships, and summer programs with time-aware deadlines.
-- [Living Curriculum Updates](https://schoolopedia.com/blog): Track state and national curriculum framework revisions, standards alignment notes, and pedagogical guides.
+- [Living Curriculum Updates & UK Guide](https://schoolopedia.com/blog): Track state/national curriculum framework revisions, standards alignment notes, and the comprehensive UK School System Guide (Key Stages, GCSEs, A-Levels).
 
 ## Canonical First Vertical Slice
 - Target: United States → California → Public School System → 2026–27 Academic Year → Grade 8 → Mathematics → Linear Equations in One Variable
@@ -17,7 +17,11 @@
 
 ## 78 Tier 1 Jurisdictions Covered
 1. United States (51): All 50 states + Washington D.C. (CCSS, Texas TEKS, Florida B.E.S.T., Virginia SOL, NY NextGen, etc.)
-2. United Kingdom (4): England (DfE / National Curriculum KS1–4), Scotland (CfE / SQA), Wales (Curriculum for Wales), Northern Ireland (CCEA)
+2. United Kingdom (4):
+   - England: Department for Education (DfE) National Curriculum (Key Stages 1–5, GCSE 9–1, GCE A-Levels / AQA, Edexcel, OCR)
+   - Scotland: Curriculum for Excellence (CfE / SQA Nationals 4/5, Highers, Advanced Highers)
+   - Wales: Curriculum for Wales / Cwricwlwm i Gymru (Progression Steps 1–5 / WJEC GCSEs & A-Levels)
+   - Northern Ireland: The Northern Ireland Curriculum (CCEA / Key Stages 1–4 & A-Levels)
 3. Canada (13): 10 Provinces (Ontario MoE, British Columbia MoE, Alberta Education, Quebec MEQ, etc.) + 3 Territories
 4. Australia (8): 6 States (NSW NESA, Victoria VCAA, Queensland QCAA, WA SCSA, SA SACE, Tasmania TASC) + 2 Mainland Territories (ACARA v9.0)
 5. New Zealand (2 Pathways): English-Medium (The New Zealand Curriculum - NZC) and Māori-Medium (Te Marautanga o Aotearoa - TMoA)

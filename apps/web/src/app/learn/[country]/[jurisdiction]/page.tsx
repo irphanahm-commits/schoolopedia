@@ -4,6 +4,7 @@ import { notFound } from 'next/navigation';
 import {
   TIER1_JURISDICTIONS,
   STANDARD_COURSES,
+  getCoursesForJurisdiction,
   getJurisdiction,
   CourseCardData
 } from '@/lib/curriculum-data';
@@ -44,10 +45,18 @@ export default async function JurisdictionOverviewPage({ params }: JurisdictionO
     'computer-science': { bg: '#F3E8FF', text: '#7E22CE', icon: '💻' }
   };
 
+  const isUK = jurisdiction.countryCode.toLowerCase() === 'gb';
+  const isScotland = isUK && jurisdiction.slug.toLowerCase() === 'scotland';
+  const isWales = isUK && jurisdiction.slug.toLowerCase() === 'wales';
+  const isNI = isUK && jurisdiction.slug.toLowerCase() === 'northern-ireland';
+
+  // Retrieve localized courses for this specific jurisdiction
+  const allCourses = getCoursesForJurisdiction(jurisdiction.countryCode, jurisdiction.slug);
+
   // Group courses by grade band
-  const elementaryCourses = STANDARD_COURSES.filter(c => c.gradeBand === 'elementary');
-  const middleCourses = STANDARD_COURSES.filter(c => c.gradeBand === 'middle-school');
-  const highCourses = STANDARD_COURSES.filter(c => c.gradeBand === 'high-school');
+  const elementaryCourses = allCourses.filter(c => c.gradeBand === 'elementary');
+  const middleCourses = allCourses.filter(c => c.gradeBand === 'middle-school');
+  const highCourses = allCourses.filter(c => c.gradeBand === 'high-school');
 
   const renderCourseSection = (id: string, title: string, subtitle: string, courses: CourseCardData[]) => (
     <div id={id} style={{ marginBottom: '3rem', scrollMarginTop: '20px' }}>
@@ -246,10 +255,10 @@ export default async function JurisdictionOverviewPage({ params }: JurisdictionO
           </div>
         </div>
 
-        {/* Grade-Level Quick Filter Pills */}
+        {/* Grade-Level / Key Stage Quick Filter Pills */}
         <div style={{ display: 'flex', gap: '10px', marginBottom: '2rem', flexWrap: 'wrap', alignItems: 'center' }}>
           <span style={{ fontSize: '0.85rem', fontWeight: 700, color: '#64748B' }}>
-            Jump to Grade Band:
+            {isUK ? 'Jump to Key Stage / Phase:' : 'Jump to Grade Band:'}
           </span>
           <a
             href="#elementary"
@@ -268,7 +277,17 @@ export default async function JurisdictionOverviewPage({ params }: JurisdictionO
               boxShadow: '0 1px 3px rgba(0,0,0,0.05)',
             }}
           >
-            <span>🎒 Elementary (Grades 1–5)</span>
+            <span>
+              {isScotland
+                ? '🎒 Primary (P1–P5)'
+                : isWales
+                ? '🎒 Progression Steps 1–3 (Primary)'
+                : isNI
+                ? '🎒 Primary (P1–P5)'
+                : isUK
+                ? '🎒 Key Stage 1 & 2 (Years 1–5 Primary)'
+                : '🎒 Elementary (Grades 1–5)'}
+            </span>
             <span style={{ backgroundColor: '#EEF2FF', padding: '1px 6px', borderRadius: '10px', fontSize: '0.75rem' }}>{elementaryCourses.length}</span>
           </a>
           <a
@@ -288,7 +307,17 @@ export default async function JurisdictionOverviewPage({ params }: JurisdictionO
               boxShadow: '0 1px 3px rgba(0,0,0,0.05)',
             }}
           >
-            <span>🏫 Middle School (Grades 6–8)</span>
+            <span>
+              {isScotland
+                ? '🏫 Broad General Education (S1–S3)'
+                : isWales
+                ? '🏫 Progression Step 4 (Years 7–9)'
+                : isNI
+                ? '🏫 Key Stage 3 (Years 8–10)'
+                : isUK
+                ? '🏫 Key Stage 3 (Years 7–9 Lower Secondary)'
+                : '🏫 Middle School (Grades 6–8)'}
+            </span>
             <span style={{ backgroundColor: '#E0F2FE', padding: '1px 6px', borderRadius: '10px', fontSize: '0.75rem' }}>{middleCourses.length}</span>
           </a>
           <a
@@ -308,15 +337,90 @@ export default async function JurisdictionOverviewPage({ params }: JurisdictionO
               boxShadow: '0 1px 3px rgba(0,0,0,0.05)',
             }}
           >
-            <span>🎓 High School (Grades 9–12)</span>
+            <span>
+              {isScotland
+                ? '🎓 Senior Phase (S4–S6 / Nationals & Highers)'
+                : isWales
+                ? '📝 Progression Step 5 (WJEC GCSEs & A-Levels)'
+                : isNI
+                ? '🎓 Key Stage 4 & Sixth Form (GCSE & A-Levels)'
+                : isUK
+                ? '📝 Key Stage 4 & 5 (GCSE & A-Levels / Sixth Form)'
+                : '🎓 High School (Grades 9–12)'}
+            </span>
             <span style={{ backgroundColor: '#FCE7F3', padding: '1px 6px', borderRadius: '10px', fontSize: '0.75rem' }}>{highCourses.length}</span>
           </a>
         </div>
 
-        {/* Multi-Grade Progression Sections */}
-        {renderCourseSection('elementary', 'Elementary Education (Grades 1–5)', 'Core foundational skills in arithmetic, scientific inquiry, and reading literacy.', elementaryCourses)}
-        {renderCourseSection('middle-school', 'Middle School Education (Grades 6–8 / Junior Secondary)', 'Rigorous algebraic reasoning, cellular biology, computational thinking, and democratic governance.', middleCourses)}
-        {renderCourseSection('high-school', 'High School Education (Grades 9–12 / GCSE / A-Levels / AP)', 'College-preparatory coursework in Algebra 1, Biology, Chemistry, Physics, Rhetoric, and AI.', highCourses)}
+        {/* Multi-Grade / Key Stage Progression Sections */}
+        {renderCourseSection(
+          'elementary',
+          isScotland
+            ? 'Primary School Education (P1–P5)'
+            : isWales
+            ? 'Curriculum for Wales: Progression Steps 1–3 (Primary)'
+            : isNI
+            ? 'Primary Education (P1–P5 / Northern Ireland Curriculum)'
+            : isUK
+            ? 'Primary Education: Key Stage 1 & 2 (Years 1–5)'
+            : 'Elementary Education (Grades 1–5)',
+          isScotland
+            ? 'Curriculum for Excellence (CfE) Early, First, and Second Level literacy, numeracy, and environmental inquiry.'
+            : isWales
+            ? 'Foundational development across the 6 Areas of Learning & Experience (AoLE) in bilingual Wales.'
+            : isNI
+            ? 'CCEA curriculum outcomes in Communication, Using Mathematics, and The World Around Us.'
+            : isUK
+            ? 'DfE Statutory Programmes of Study in Mathematics (Number Bonds & Written Methods), Synthetic Phonics, and Science.'
+            : 'Core foundational skills in arithmetic, scientific inquiry, and reading literacy.',
+          elementaryCourses
+        )}
+
+        {renderCourseSection(
+          'middle-school',
+          isScotland
+            ? 'Broad General Education (S1–S3 BGE)'
+            : isWales
+            ? 'Curriculum for Wales: Progression Step 4 (Lower Secondary)'
+            : isNI
+            ? 'Key Stage 3 Post-Primary (Years 8–10)'
+            : isUK
+            ? 'Secondary Education: Key Stage 3 (Years 7–9)'
+            : 'Middle School Education (Grades 6–8 / Junior Secondary)',
+          isScotland
+            ? 'Third and Fourth Level CfE progression in mathematics, sciences, technologies, and social studies.'
+            : isWales
+            ? 'Deepening conceptual inquiry across AoLE disciplines preparing students for Made-for-Wales qualifications.'
+            : isNI
+            ? 'Secondary and grammar school foundations across Mathematics, Science, English, and Citizenship.'
+            : isUK
+            ? 'DfE statutory secondary curriculum in Algebraic Equations, Cell Biology, Python Computing, and British History/Citizenship.'
+            : 'Rigorous algebraic reasoning, cellular biology, computational thinking, and democratic governance.',
+          middleCourses
+        )}
+
+        {renderCourseSection(
+          'high-school',
+          isScotland
+            ? 'Senior Phase (S4–S6 / Nationals, Highers & Advanced Highers)'
+            : isWales
+            ? 'Senior Secondary & Sixth Form (WJEC GCSEs & A-Levels)'
+            : isNI
+            ? 'Key Stage 4 & Post-16 (GCSEs & GCE A-Levels)'
+            : isUK
+            ? 'Upper Secondary & Sixth Form: GCSE & A-Levels (Years 10–13)'
+            : 'High School Education (Grades 9–12 / GCSE / A-Levels / AP)',
+          isScotland
+            ? 'SQA certified National 5, Higher, and Advanced Higher qualifications leading to Scottish and global university admissions.'
+            : isWales
+            ? 'Qualifications Wales approved GCSEs and GCE AS/A-Levels administered by WJEC / CBAC.'
+            : isNI
+            ? 'CCEA examinations and GCE Advanced Levels preparing students for university entrance.'
+            : isUK
+            ? 'Ofqual-regulated GCSEs (Grades 9–1) and GCE A-Levels across major awarding bodies (AQA, Pearson Edexcel, OCR).'
+            : 'College-preparatory coursework in Algebra 1, Biology, Chemistry, Physics, Rhetoric, and AI.',
+          highCourses
+        )}
       </div>
     </div>
   );

@@ -53,7 +53,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
   ];
 
   // 2. Tier 1 Countries
-  const countryCodes = ['us', 'uk', 'ca', 'au', 'nz'];
+  const countryCodes = ['us', 'gb', 'uk', 'ca', 'au', 'nz'];
   const countryRoutes: MetadataRoute.Sitemap = countryCodes.map((code) => ({
     url: `${baseUrl}/learn/${code}`,
     lastModified,
@@ -92,6 +92,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
       lastModified,
       changeFrequency: 'monthly' as const,
       priority: 0.8,
+    })),
+    ...ukNations.map((n) => ({
+      url: `${baseUrl}/learn/gb/${n}`,
+      lastModified,
+      changeFrequency: 'monthly' as const,
+      priority: 0.85,
     })),
     ...ukNations.map((n) => ({
       url: `${baseUrl}/learn/uk/${n}`,
@@ -135,7 +141,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     },
   ];
 
-  // 5. Initial Editorial Blog Articles
+  // 5. Editorial Blog Articles
   const blogRoutes: MetadataRoute.Sitemap = [
     {
       url: `${baseUrl}/blog/california-math-framework-2026-linear-equations`,
@@ -154,6 +160,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
       lastModified,
       changeFrequency: 'monthly',
       priority: 0.8,
+    },
+    {
+      url: `${baseUrl}/blog/uk-school-system-key-stages-gcse-alevels-guide`,
+      lastModified,
+      changeFrequency: 'monthly',
+      priority: 0.85,
     },
   ];
 

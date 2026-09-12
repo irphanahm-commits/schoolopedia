@@ -191,4 +191,74 @@ export const BLOG_POSTS: BlogPost[] = [
       },
     },
   },
+  {
+    slug: 'uk-school-system-key-stages-gcse-alevels-guide',
+    title: 'Navigating the UK School System: Key Stages, GCSEs, A-Levels, Grammar Schools & Academies Explained',
+    summary: 'A comprehensive pedagogical guide to the British education landscape across England, Scotland, Wales, and Northern Ireland: from EYFS and Key Stages to 11-Plus selective grammar schools, Multi-Academy Trusts, GCSE 9–1 grading, and A-Level university matriculation.',
+    category: 'Pedagogy & Standards',
+    author: {
+      name: 'Arthur Pendelton, M.Ed.',
+      role: 'Senior British Education Analyst',
+      avatar: 'AP',
+    },
+    publishedAt: 'September 12, 2026',
+    lastVerifiedAt: 'September 2026',
+    readTime: '10 min read',
+    tags: ['UK Education', 'Key Stages', 'GCSE', 'A-Levels', 'Grammar Schools', 'Multi-Academy Trusts', 'DfE', 'Ofqual'],
+    content: {
+      introduction: 'For families, educators, and international observers, the United Kingdom’s educational ecosystem can appear intricate and multi-layered. Across England, Scotland, Wales, and Northern Ireland, education policy is devolved, resulting in distinct statutory frameworks, stage terminologies, and qualification benchmarks. This guide demystifies the UK schooling architecture from Key Stage 1 through Sixth Form.',
+      keyTakeaways: [
+        'The English education system is organized into 5 statutory Key Stages across Years 1 to 13, culminating in GCSEs (Years 10–11) and GCE A-Levels (Years 12–13).',
+        'State-funded secondary schools in England encompass non-selective Academies (run by Multi-Academy Trusts), Local Authority maintained schools, and 163 highly selective State Grammar Schools accessed via the 11-Plus examination.',
+        'GCSEs are graded on a numerical scale from 9 to 1 (where 9 represents exceptional attainment, 7 is equivalent to an old grade A, and 4 is a standard pass).',
+        'Scotland operates an entirely separate curriculum—the Curriculum for Excellence (CfE)—spanning Primary (P1–P7) and Secondary (S1–S6), culminating in SQA National 5, Higher, and Advanced Higher qualifications.',
+      ],
+      sections: [
+        {
+          heading: '1. The Key Stage Progression in England & Wales',
+          body: [
+            'In England, compulsory education begins at age 5 in Year 1 (preceded by the Early Years Foundation Stage / Reception). Primary education spans Key Stage 1 (Years 1–2, ages 5–7) and Key Stage 2 (Years 3–6, ages 7–11). At the conclusion of Year 6, students sit statutory National Curriculum Tests (commonly known as SATs) measuring progress in Reading, Mathematics, and Grammar, Punctuation & Spelling (GPS).',
+            'Secondary education commences at age 11 in Key Stage 3 (Years 7–9), focusing on broad academic foundations across the National Curriculum. In Year 10, students enter Key Stage 4 (Years 10–11), during which they study for the General Certificate of Secondary Education (GCSE) over a two-year syllabus regulated by Ofqual and administered by awarding organizations including AQA, Pearson Edexcel, and OCR.',
+          ],
+          highlightBox: {
+            title: 'GCSE 9–1 Grading Standard',
+            text: 'Since the 2017 reforms, GCSEs no longer use letter grades (A*–G). The 9–1 scale provides greater differentiation at the top: Grade 9 is awarded to approximately the top 3–4% of candidates nationally; Grade 7 anchors the former Grade A; Grade 4 is a standard pass, and Grade 5 is a strong pass benchmarked against international standards.',
+          },
+        },
+        {
+          heading: '2. State Grammar Schools, Academies & Independent Public Schools',
+          body: [
+            'The institutional landscape of secondary education in England comprises four primary categories:',
+            '• State Grammar Schools: There are 163 state-funded selective grammar schools in England (e.g. Queen Elizabeth’s School Barnet, Wilson’s School, Henrietta Barnett School). Tuition is completely free, and admission is determined solely by the competitive 11-Plus (11+) entrance exam testing Verbal Reasoning, Non-Verbal Reasoning, English, and Mathematics.',
+            '• Academies & Multi-Academy Trusts (MATs): Academies are state-funded schools independent of local authority control, funded directly by the Department for Education. Institutions like Brampton Manor Academy, Harris Westminster Sixth Form, and London Academy of Excellence (LAE) have achieved legendary status for social mobility, routinely sending dozens of students to Oxford and Cambridge each year.',
+            '• Historic Independent ("Public") Schools: World-renowned fee-paying schools such as Westminster School, St Paul’s, Eton College, Winchester College, and Harrow School operate under Royal Charters with selective entrance examinations at 11+, 13+ (Common Entrance), and 16+.',
+            '• Sixth Form Colleges & 16–19 Academies: Dedicated post-16 specialist providers (e.g. Hills Road Sixth Form College in Cambridge, Woodhouse College) focused purely on A-Level academic preparation.',
+          ],
+        },
+        {
+          heading: '3. Sixth Form & GCE A-Levels: The Gateway to University',
+          body: [
+            'Key Stage 5 (Years 12 and 13, ages 16–18)—often referred to as Sixth Form—is the academic pinnacle of secondary schooling. Students typically select 3 or 4 subjects to study in profound depth, leading to General Certificate of Education Advanced Level (A-Level) examinations.',
+            'A-Levels are the primary metric evaluated by UK universities via UCAS (Universities and Colleges Admissions Service). For hyper-competitive degrees at the University of Oxford, University of Cambridge, Imperial College London, and other Russell Group institutions, typical conditional offers require A*A*A or A*AA alongside admissions assessments (such as the TMUA, MAT, PAT, or STEP) and intensive academic interviews.',
+          ],
+        },
+        {
+          heading: '4. Devolved Curricula: Scotland, Wales, and Northern Ireland',
+          body: [
+            'Scotland: Under the Curriculum for Excellence (CfE), learners progress through Primary 1–7 (P1–P7) and Secondary 1–3 (S1–S3 BGE) before entering the Senior Phase (S4–S6). Rather than GCSEs and A-Levels, Scottish students sit National 5 qualifications in S4, Highers in S5 (the primary benchmark for Scottish university entry), and Advanced Highers in S6.',
+            'Wales: Under the Curriculum for Wales (Cwricwlwm i Gymru), learning is structured across Progression Steps 1 to 5 within 6 Areas of Learning and Experience (AoLE), with Made-for-Wales GCSEs and A-Levels regulated by Qualifications Wales and examined by WJEC.',
+            'Northern Ireland: Administered by CCEA, the NI Curriculum features primary schooling from P1 to P7 (starting age 4) and post-primary schooling through Key Stages 3, 4 (GCSE), and Sixth Form (A-Levels). Academic selection into Voluntary Grammar Schools remains prominent via the SEAG Transfer Test.',
+          ],
+          highlightBox: {
+            title: 'Universal Equivalence in Schoolopedia',
+            text: 'Schoolopedia maps all statutory programmes of study across England, Scotland, Wales, and Northern Ireland into our unified curriculum graph. Whether solving linear equations in Manchester, Edinburgh, Cardiff, or Belfast, students access verified masterclasses and pedagogical drills calibrated to their exact exam board.',
+          },
+        },
+      ],
+      relatedCurriculumLink: {
+        title: 'Explore the UK Curriculum & Tier 1 Schools in Schoolopedia',
+        url: '/learn/gb/england',
+      },
+    },
+  },
 ];
