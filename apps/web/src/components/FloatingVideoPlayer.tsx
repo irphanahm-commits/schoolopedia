@@ -104,6 +104,17 @@ export function FloatingVideoPlayer() {
 
         {/* Action Controls */}
         <div style={{ display: 'flex', alignItems: 'center', gap: '6px', flexShrink: 0 }}>
+          <a
+            href={`https://www.youtube.com/watch?v=${activeVideo.youtubeVideoId}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="floating-video-action-btn"
+            title="Open on YouTube"
+            id="btn-floating-youtube-external"
+            style={{ textDecoration: 'none', color: '#E2E8F0', fontSize: '0.75rem', display: 'flex', alignItems: 'center', justifyContent: 'center' }}
+          >
+            ↗
+          </a>
           <button
             onClick={() => setPlayerMode('modal')}
             className="floating-video-action-btn"
