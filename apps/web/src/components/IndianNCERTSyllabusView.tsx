@@ -3,6 +3,8 @@
 import React, { useState } from 'react';
 import { IndianSubjectCurriculum, IndianNCERTChapter } from '@/lib/indian-ncert-curriculum';
 import { useVideoPlayer, VideoModalItem } from '@/lib/VideoContext';
+import { getIndianBoardStudySuite } from '@/lib/indian-board-materials';
+import { IndianClassBoardSuiteView } from '@/components/IndianClassBoardSuiteView';
 
 interface IndianNCERTSyllabusViewProps {
   curriculum: IndianSubjectCurriculum;
@@ -18,6 +20,9 @@ export function IndianNCERTSyllabusView({
   const [activeMedium, setActiveMedium] = useState<'english' | 'hindi'>('english');
   const [searchQuery, setSearchQuery] = useState('');
   const [activeChapterVideoOverride, setActiveChapterVideoOverride] = useState<Record<number, 'english' | 'hindi'>>({});
+  const [activeMainTab, setActiveMainTab] = useState<'chapters' | 'suite'>('chapters');
+
+  const boardSuite = getIndianBoardStudySuite(curriculum.classSlug, curriculum.subjectSlug);
 
   const filteredChapters = curriculum.chapters.filter((ch) => {
     if (!searchQuery.trim()) return true;
@@ -226,21 +231,98 @@ export function IndianNCERTSyllabusView({
             <span>{curriculum.totalChapters} Total Chapters with Dedicated Masterclass Videos</span>
           </div>
         </div>
+
+        {/* Board Exam Suite Navigation Bar (Classes 10 & 12) */}
+        {boardSuite && (
+          <div
+            style={{
+              marginTop: '18px',
+              paddingTop: '16px',
+              borderTop: '1px solid #e2e8f0',
+              display: 'flex',
+              gap: '10px',
+              flexWrap: 'wrap',
+              alignItems: 'center',
+            }}
+          >
+            <span style={{ fontSize: '0.82rem', fontWeight: 800, color: '#334155', marginRight: '4px' }}>
+              Study & Exam Suite:
+            </span>
+            <button
+              type="button"
+              onClick={() => setActiveMainTab('chapters')}
+              style={{
+                padding: '8px 16px',
+                borderRadius: '10px',
+                fontSize: '0.85rem',
+                fontWeight: 700,
+                cursor: 'pointer',
+                border: activeMainTab === 'chapters' ? '2px solid #4f46e5' : '1px solid #cbd5e1',
+                backgroundColor: activeMainTab === 'chapters' ? '#4f46e5' : '#ffffff',
+                color: activeMainTab === 'chapters' ? '#ffffff' : '#334155',
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: '6px',
+                boxShadow: activeMainTab === 'chapters' ? '0 2px 8px rgba(79, 70, 229, 0.2)' : 'none',
+              }}
+            >
+              <span>📑</span>
+              <span>Official NCERT Chapters & Videos ({curriculum.totalChapters})</span>
+            </button>
+
+            <button
+              type="button"
+              onClick={() => setActiveMainTab('suite')}
+              style={{
+                padding: '8px 16px',
+                borderRadius: '10px',
+                fontSize: '0.85rem',
+                fontWeight: 700,
+                cursor: 'pointer',
+                border: activeMainTab === 'suite' ? '2px solid #dc2626' : '1px solid #cbd5e1',
+                backgroundColor: activeMainTab === 'suite' ? '#dc2626' : '#ffffff',
+                color: activeMainTab === 'suite' ? '#ffffff' : '#334155',
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: '6px',
+                boxShadow: activeMainTab === 'suite' ? '0 2px 8px rgba(220, 38, 38, 0.2)' : 'none',
+              }}
+            >
+              <span>🔥</span>
+              <span>5-Year Solved Papers (2020–2024), MCQs & Notes</span>
+            </button>
+          </div>
+        )}
       </div>
 
-      {/* Chapter Search / Filter */}
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px', flexWrap: 'wrap', gap: '12px' }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-          <h3 style={{ fontSize: '1.25rem', fontWeight: 800, color: '#0f172a', margin: 0 }}>
-            {activeMedium === 'hindi' ? 'अध्याय सूची एवं वीडियो कक्षाएं' : 'Chapter List & Video Masterclasses'}
-          </h3>
-          <span style={{ fontSize: '0.82rem', fontWeight: 700, padding: '2px 8px', borderRadius: '12px', backgroundColor: '#e2e8f0', color: '#334155' }}>
-            {filteredChapters.length} of {curriculum.totalChapters} Chapters
-          </span>
+      {/* Render Board Suite View if active */}
+      {activeMainTab === 'suite' && boardSuite && (
+        <div style={{ marginBottom: '24px' }}>
+          <IndianClassBoardSuiteView
+            suite={boardSuite}
+            classLabel={curriculum.classLabel}
+            subjectName={activeMedium === 'hindi' ? curriculum.subjectNameHindi : curriculum.subjectNameEnglish}
+            activeMedium={activeMedium}
+            onMediumChange={setActiveMedium}
+          />
         </div>
+      )}
 
-        <div style={{ position: 'relative', minWidth: '280px' }}>
-          <input
+      {/* Chapters Section (Visible when activeMainTab is chapters) */}
+      {activeMainTab === 'chapters' && (
+        <div>
+          {/* Chapter Search / Filter */}
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px', flexWrap: 'wrap', gap: '12px' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+              <h3 style={{ fontSize: '1.25rem', fontWeight: 800, color: '#0f172a', margin: 0 }}>
+                {activeMedium === 'hindi' ? 'अध्याय सूची एवं वीडियो कक्षाएं' : 'Chapter List & Video Masterclasses'}
+              </h3>
+              <span style={{ fontSize: '0.82rem', fontWeight: 700, padding: '2px 8px', borderRadius: '12px', backgroundColor: '#e2e8f0', color: '#334155' }}>
+                {filteredChapters.length} of {curriculum.totalChapters} Chapters
+              </span>
+            </div>
+            <div style={{ position: 'relative', minWidth: '280px' }}>
+              <input
             type="text"
             placeholder={activeMedium === 'hindi' ? 'अध्याय या विषय खोजें...' : 'Filter chapters or topics...'}
             value={searchQuery}
@@ -382,6 +464,63 @@ export function IndianNCERTSyllabusView({
                       ))}
                     </div>
                   </div>
+
+                  {/* Chapter-Level Board Prep Links (Classes 10 & 12) */}
+                  {boardSuite && (
+                    <div style={{ display: 'flex', gap: '8px', marginTop: '14px', flexWrap: 'wrap', alignItems: 'center' }}>
+                      <span style={{ fontSize: '0.74rem', fontWeight: 800, color: '#4338ca', textTransform: 'uppercase' }}>
+                        Board Prep:
+                      </span>
+                      <button
+                        type="button"
+                        onClick={() => setActiveMainTab('suite')}
+                        style={{
+                          fontSize: '0.75rem',
+                          fontWeight: 700,
+                          padding: '3px 8px',
+                          borderRadius: '6px',
+                          backgroundColor: '#eef2ff',
+                          color: '#4338ca',
+                          border: '1px solid #c7d2fe',
+                          cursor: 'pointer',
+                        }}
+                      >
+                        📝 Chapter Notes
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => setActiveMainTab('suite')}
+                        style={{
+                          fontSize: '0.75rem',
+                          fontWeight: 700,
+                          padding: '3px 8px',
+                          borderRadius: '6px',
+                          backgroundColor: '#ecfdf5',
+                          color: '#065f46',
+                          border: '1px solid #a7f3d0',
+                          cursor: 'pointer',
+                        }}
+                      >
+                        🎯 Practice MCQs
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => setActiveMainTab('suite')}
+                        style={{
+                          fontSize: '0.75rem',
+                          fontWeight: 700,
+                          padding: '3px 8px',
+                          borderRadius: '6px',
+                          backgroundColor: '#fef3c7',
+                          color: '#92400e',
+                          border: '1px solid #fde68a',
+                          cursor: 'pointer',
+                        }}
+                      >
+                        💡 Solved Q&A
+                      </button>
+                    </div>
+                  )}
                 </div>
 
                 {/* Right: Dedicated Video Masterclass Card for this Chapter */}
@@ -494,5 +633,7 @@ export function IndianNCERTSyllabusView({
         })}
       </div>
     </div>
+  )}
+</div>
   );
 }
