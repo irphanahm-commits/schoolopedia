@@ -20,13 +20,14 @@ export function IndianMarathonShowcase({
   boardName,
 }: IndianMarathonShowcaseProps) {
   const { playVideo } = useVideoPlayer();
-  const [filter, setFilter] = useState<'ALL' | 'MARATHON' | 'ONE_SHOT' | 'HINDI' | 'ENGLISH'>('ALL');
+  const [filter, setFilter] = useState<'ALL' | 'NEXT_TOPPERS' | 'MARATHON' | 'ONE_SHOT' | 'HINDI' | 'ENGLISH'>('ALL');
 
   if (!marathons || marathons.length === 0) {
     return null;
   }
 
   const filtered = marathons.filter(m => {
+    if (filter === 'NEXT_TOPPERS') return m.channelTitle.toLowerCase().includes('next toppers') || m.educator.toLowerCase().includes('next toppers') || m.educator.toLowerCase().includes('prashant kirad') || m.educator.toLowerCase().includes('shobhit nirwan');
     if (filter === 'MARATHON') return m.type === 'FULL_SYLLABUS_MARATHON';
     if (filter === 'ONE_SHOT') return m.type === 'ONE_SHOT_CHAPTER';
     if (filter === 'HINDI') return m.language.includes('Hindi');
@@ -85,6 +86,19 @@ export function IndianMarathonShowcase({
                 fontWeight: 700,
                 padding: '3px 8px',
                 borderRadius: '6px',
+                backgroundColor: '#fef3c7',
+                color: '#92400e',
+                border: '1px solid #fde68a',
+              }}
+            >
+              ★ Next Toppers & Prashant Kirad Verified
+            </span>
+            <span
+              style={{
+                fontSize: '0.75rem',
+                fontWeight: 700,
+                padding: '3px 8px',
+                borderRadius: '6px',
                 backgroundColor: '#ffedd5',
                 color: '#9a3412',
               }}
@@ -108,7 +122,7 @@ export function IndianMarathonShowcase({
             Full Board Marathons & Chapter One-Shots
           </h2>
           <p style={{ fontSize: '0.88rem', color: '#64748b', margin: 0, maxWidth: '800px', lineHeight: 1.5 }}>
-            Watch complete full-syllabus revision sessions and chapter-by-chapter deep dives by India’s most acclaimed educators (Physics Wallah, Dear Sir, Vedantu, Magnet Brains, NCERT Wallah). Mapped directly to official board blueprints.
+            Watch complete full-syllabus revision sessions and chapter-by-chapter deep dives by India’s most acclaimed educators (Next Toppers, Prashant Kirad, Shobhit Nirwan, Physics Wallah, Dear Sir, Vedantu, Magnet Brains, NCERT Wallah). Mapped directly to official board blueprints.
           </p>
         </div>
 
@@ -116,6 +130,7 @@ export function IndianMarathonShowcase({
         <div style={{ display: 'flex', gap: '6px', flexWrap: 'wrap' }}>
           {[
             { id: 'ALL', label: 'All Videos' },
+            { id: 'NEXT_TOPPERS', label: '🔥 Next Toppers' },
             { id: 'MARATHON', label: '⚡ Full Marathons' },
             { id: 'ONE_SHOT', label: '📖 Chapter One-Shots' },
             { id: 'HINDI', label: '🇮🇳 Hindi / Hinglish' },

@@ -7,8 +7,11 @@ import { TopicVideoPlayButton } from '@/components/TopicVideoPlayButton';
 import { IndianMarathonShowcase } from '@/components/IndianMarathonShowcase';
 import { IndianTopicVideoPlayButton } from '@/components/IndianTopicVideoPlayButton';
 import { IndianNCERTSyllabusView } from '@/components/IndianNCERTSyllabusView';
+import { IndianAEODirectAnswerBox } from '@/components/IndianAEODirectAnswerBox';
 import { getIndianMarathonsForCourse, getIndianAlternativeForTopic } from '@/lib/indian-syllabus-data';
 import { getIndianNCERTSubjectCurriculum } from '@/lib/indian-ncert-curriculum';
+import { getIndianStructuredData, getIndianClassKeywords, INDIAN_NCERT_BOOKS_REGISTRY } from '@/lib/indian-seo-metadata';
+import { Metadata } from 'next';
 
 interface CourseSyllabusProps {
   params: Promise<{
@@ -17,6 +20,40 @@ interface CourseSyllabusProps {
     grade: string;
     subject: string;
   }>;
+}
+
+export async function generateMetadata({ params }: CourseSyllabusProps): Promise<Metadata> {
+  const resolvedParams = await params;
+  const isIndia = resolvedParams.country.toLowerCase() === 'in' || ['cbse', 'icse', 'nios', 'maharashtra', 'uttar-pradesh', 'karnataka', 'tamil-nadu'].includes(resolvedParams.jurisdiction.toLowerCase());
+
+  if (isIndia) {
+    const classNum = resolvedParams.grade.replace('grade-', '');
+    const roman = classNum === '10' ? 'Class X' : classNum === '12' ? 'Class XII' : classNum === '9' ? 'Class IX' : classNum === '11' ? 'Class XI' : `Class ${classNum}`;
+    const subjectName = resolvedParams.subject.split('-').map(s => s.charAt(0).toUpperCase() + s.slice(1)).join(' ');
+    const boardUpper = resolvedParams.jurisdiction.toUpperCase();
+    const keywords = getIndianClassKeywords(resolvedParams.grade, resolvedParams.subject, resolvedParams.jurisdiction);
+    const book = INDIAN_NCERT_BOOKS_REGISTRY[resolvedParams.grade]?.[resolvedParams.subject];
+    const bookTitle = book ? ` | ${book.bookEnglish}` : '';
+
+    const title = `${boardUpper} Class ${classNum} ${subjectName} (${roman}) - NCERT Solutions, 5-Year Solved Sample Papers, MCQs & Notes${bookTitle} | Schoolopedia`;
+    const description = `Complete ${boardUpper} Class ${classNum} (${roman}) ${subjectName} Board Examination & NCERT Study Suite. Includes 5-year solved previous year question papers (2020–2024), official step-wise marking schemes, chapter MCQs, Next Toppers & Physics Wallah masterclasses, and revision notes.`;
+
+    return {
+      title,
+      description,
+      keywords: keywords.join(', '),
+      openGraph: {
+        title,
+        description,
+        type: 'website',
+        url: `https://schoolopedia.com/learn/in/${resolvedParams.jurisdiction}/${resolvedParams.grade}/${resolvedParams.subject}`,
+      },
+    };
+  }
+
+  return {
+    title: `Course Syllabus | Schoolopedia`,
+  };
 }
 
 export async function generateStaticParams() {
@@ -94,6 +131,16 @@ export default async function CourseSyllabusPage({ params }: CourseSyllabusProps
   if (isIndia && indianCurriculum) {
     displayStandard = `NCERT / CBSE Prescribed • ${indianCurriculum.totalChapters} Chapters`;
   }
+
+  const structuredData = isIndia ? getIndianStructuredData({
+    country: resolvedParams.country,
+    jurisdiction: resolvedParams.jurisdiction,
+    gradeSlug: resolvedParams.grade,
+    subjectSlug: resolvedParams.subject,
+    subjectName: indianCurriculum ? indianCurriculum.subjectNameEnglish : (syllabus ? syllabus.subjectName : currentLesson.subjectName),
+    classLabel: displayGradeName,
+    canonicalUrl: `https://schoolopedia.com/learn/in/${resolvedParams.jurisdiction}/${resolvedParams.grade}/${resolvedParams.subject}`,
+  }) : null;
 
   return (
     <div style={{ minHeight: '100vh', backgroundColor: 'var(--bg-canvas)' }}>
@@ -227,6 +274,39 @@ export default async function CourseSyllabusPage({ params }: CourseSyllabusProps
             </span>
           </div>
         </div>
+
+        {/* AIO & GEO Machine-Readable Structured Schemas */}
+        {isIndia && structuredData && (
+          <>
+            <script
+              type="application/ld+json"
+              dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData.courseSchema) }}
+            />
+            <script
+              type="application/ld+json"
+              dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData.learningResourceSchema) }}
+            />
+            <script
+              type="application/ld+json"
+              dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData.faqSchema) }}
+            />
+            <script
+              type="application/ld+json"
+              dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData.breadcrumbSchema) }}
+            />
+          </>
+        )}
+
+        {/* AEO & GEO Direct Answer Box (Google AI Overviews & Perplexity) */}
+        {isIndia && (
+          <IndianAEODirectAnswerBox
+            gradeSlug={resolvedParams.grade}
+            subjectSlug={resolvedParams.subject}
+            jurisdictionSlug={resolvedParams.jurisdiction}
+            classLabel={displayGradeName}
+            subjectName={indianCurriculum ? indianCurriculum.subjectNameEnglish : (syllabus ? syllabus.subjectName : currentLesson.subjectName)}
+          />
+        )}
 
         {/* Official Indian NCERT Chapter Syllabus with Dual Medium (English & Hindi) and Chapter-Wise Videos */}
         {isIndia && indianCurriculum && (

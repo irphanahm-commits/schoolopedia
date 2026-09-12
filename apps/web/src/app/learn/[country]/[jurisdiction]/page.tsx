@@ -9,11 +9,45 @@ import {
   CourseCardData
 } from '@/lib/curriculum-data';
 
+import { Metadata } from 'next';
+
 interface JurisdictionOverviewProps {
   params: Promise<{
     country: string;
     jurisdiction: string;
   }>;
+}
+
+export async function generateMetadata({ params }: JurisdictionOverviewProps): Promise<Metadata> {
+  const resolvedParams = await params;
+  const isIndia = resolvedParams.country.toLowerCase() === 'in';
+  const jName = resolvedParams.jurisdiction.toUpperCase();
+
+  if (isIndia) {
+    const title = `${jName} Board Curriculum (Classes 6–12) - NCERT Solutions, 5-Year Solved Papers, MCQs & Notes | Schoolopedia`;
+    const description = `Complete official ${jName} Indian school education directory. Strictly unmixed Classes 7, 8, 9, 10, 11, and 12 with ultra-important Class 10th & 12th Board Exam Suites: 5-year solved papers (2020–2024), chapter MCQs, Next Toppers & Physics Wallah videos, and NCERT revision notes.`;
+    const keywords = [
+      `${jName} Board`, 'CBSE', 'NCERT', 'Class 10', 'Class X', 'Class 12', 'Class XII', 'Class 9', 'Class IX', 'Class 11', 'Class XI', 'Class 8', 'Class 7', 'Class 6',
+      'sample papers', 'solved sample papers', 'previous years question papers', 'pyqs', 'maths', 'science', 'social science', 'sst',
+      'next toppers', 'physics wallah', 'dear sir', 'magnet brains', 'ncert solutions'
+    ].join(', ');
+
+    return {
+      title,
+      description,
+      keywords,
+      openGraph: {
+        title,
+        description,
+        type: 'website',
+        url: `https://schoolopedia.com/learn/in/${resolvedParams.jurisdiction}`,
+      },
+    };
+  }
+
+  return {
+    title: `Curriculum Overview | Schoolopedia`,
+  };
 }
 
 export async function generateStaticParams() {

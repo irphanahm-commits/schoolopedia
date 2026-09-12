@@ -125,8 +125,9 @@ export default function sitemap(): MetadataRoute.Sitemap {
     })),
   ];
 
-  // 4. Grounded Curricular Vertical Slice Lessons & Hubs
+  // 4. Grounded Curricular Vertical Slice Lessons & Indian Board Exam Hubs
   const lessonRoutes: MetadataRoute.Sitemap = [
+    // US Vertical Slices
     {
       url: `${baseUrl}/learn/us/california/grade-8/mathematics`,
       lastModified,
@@ -139,8 +140,194 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: 'weekly',
       priority: 0.95,
     },
+
+    // Ultra-Important Indian Class 10 (Class X) Board Exam Hubs (Priority 1.0 - Daily)
+    {
+      url: `${baseUrl}/learn/in/cbse/grade-10/science`,
+      lastModified,
+      changeFrequency: 'daily',
+      priority: 1.0,
+    },
+    {
+      url: `${baseUrl}/learn/in/cbse/grade-10/mathematics`,
+      lastModified,
+      changeFrequency: 'daily',
+      priority: 1.0,
+    },
+    {
+      url: `${baseUrl}/learn/in/cbse/grade-10/social-studies`,
+      lastModified,
+      changeFrequency: 'daily',
+      priority: 0.95,
+    },
+    {
+      url: `${baseUrl}/learn/in/cbse/grade-10/english`,
+      lastModified,
+      changeFrequency: 'daily',
+      priority: 0.95,
+    },
+    {
+      url: `${baseUrl}/learn/in/icse/grade-10/science`,
+      lastModified,
+      changeFrequency: 'daily',
+      priority: 0.95,
+    },
+    {
+      url: `${baseUrl}/learn/in/icse/grade-10/mathematics`,
+      lastModified,
+      changeFrequency: 'daily',
+      priority: 0.95,
+    },
+    {
+      url: `${baseUrl}/learn/in/nios/grade-10/science`,
+      lastModified,
+      changeFrequency: 'weekly',
+      priority: 0.9,
+    },
+    {
+      url: `${baseUrl}/learn/in/nios/grade-10/mathematics`,
+      lastModified,
+      changeFrequency: 'weekly',
+      priority: 0.9,
+    },
+    {
+      url: `${baseUrl}/learn/in/maharashtra/grade-10/science`,
+      lastModified,
+      changeFrequency: 'weekly',
+      priority: 0.9,
+    },
+    {
+      url: `${baseUrl}/learn/in/maharashtra/grade-10/mathematics`,
+      lastModified,
+      changeFrequency: 'weekly',
+      priority: 0.9,
+    },
+    {
+      url: `${baseUrl}/learn/in/uttar-pradesh/grade-10/science`,
+      lastModified,
+      changeFrequency: 'weekly',
+      priority: 0.9,
+    },
+    {
+      url: `${baseUrl}/learn/in/uttar-pradesh/grade-10/mathematics`,
+      lastModified,
+      changeFrequency: 'weekly',
+      priority: 0.9,
+    },
+
+    // Ultra-Important Indian Class 12 (Class XII) Senior Board Exam Hubs (Priority 1.0 - Daily)
+    {
+      url: `${baseUrl}/learn/in/cbse/grade-12/physics`,
+      lastModified,
+      changeFrequency: 'daily',
+      priority: 1.0,
+    },
+    {
+      url: `${baseUrl}/learn/in/cbse/grade-12/chemistry`,
+      lastModified,
+      changeFrequency: 'daily',
+      priority: 1.0,
+    },
+    {
+      url: `${baseUrl}/learn/in/cbse/grade-12/mathematics`,
+      lastModified,
+      changeFrequency: 'daily',
+      priority: 1.0,
+    },
+    {
+      url: `${baseUrl}/learn/in/cbse/grade-12/biology`,
+      lastModified,
+      changeFrequency: 'daily',
+      priority: 0.95,
+    },
+    {
+      url: `${baseUrl}/learn/in/icse/grade-12/physics`,
+      lastModified,
+      changeFrequency: 'daily',
+      priority: 0.95,
+    },
+    {
+      url: `${baseUrl}/learn/in/icse/grade-12/chemistry`,
+      lastModified,
+      changeFrequency: 'daily',
+      priority: 0.95,
+    },
+    {
+      url: `${baseUrl}/learn/in/icse/grade-12/mathematics`,
+      lastModified,
+      changeFrequency: 'daily',
+      priority: 0.95,
+    },
+
+    // Highly Searched Indian Classes 9, 11, 8, 7 & 6 Hubs
+    {
+      url: `${baseUrl}/learn/in/cbse/grade-9/science`,
+      lastModified,
+      changeFrequency: 'weekly',
+      priority: 0.9,
+    },
+    {
+      url: `${baseUrl}/learn/in/cbse/grade-9/mathematics`,
+      lastModified,
+      changeFrequency: 'weekly',
+      priority: 0.9,
+    },
+    {
+      url: `${baseUrl}/learn/in/cbse/grade-9/social-studies`,
+      lastModified,
+      changeFrequency: 'weekly',
+      priority: 0.9,
+    },
+    {
+      url: `${baseUrl}/learn/in/cbse/grade-11/physics`,
+      lastModified,
+      changeFrequency: 'weekly',
+      priority: 0.9,
+    },
+    {
+      url: `${baseUrl}/learn/in/cbse/grade-11/chemistry`,
+      lastModified,
+      changeFrequency: 'weekly',
+      priority: 0.9,
+    },
+    {
+      url: `${baseUrl}/learn/in/cbse/grade-11/mathematics`,
+      lastModified,
+      changeFrequency: 'weekly',
+      priority: 0.9,
+    },
+    {
+      url: `${baseUrl}/learn/in/cbse/grade-8/science`,
+      lastModified,
+      changeFrequency: 'weekly',
+      priority: 0.85,
+    },
     {
       url: `${baseUrl}/learn/in/cbse/grade-8/mathematics`,
+      lastModified,
+      changeFrequency: 'weekly',
+      priority: 0.85,
+    },
+    {
+      url: `${baseUrl}/learn/in/cbse/grade-7/science`,
+      lastModified,
+      changeFrequency: 'weekly',
+      priority: 0.85,
+    },
+    {
+      url: `${baseUrl}/learn/in/cbse/grade-7/mathematics`,
+      lastModified,
+      changeFrequency: 'weekly',
+      priority: 0.85,
+    },
+    {
+      url: `${baseUrl}/learn/in/cbse/grade-6/science`,
+      lastModified,
+      changeFrequency: 'weekly',
+      priority: 0.85,
+    },
+    {
+      url: `${baseUrl}/learn/in/cbse/grade-6/mathematics`,
       lastModified,
       changeFrequency: 'weekly',
       priority: 0.85,

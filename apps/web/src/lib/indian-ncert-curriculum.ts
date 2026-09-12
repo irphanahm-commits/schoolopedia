@@ -66,7 +66,7 @@ export const INDIAN_NCERT_CURRICULUM_DATABASE: Record<string, IndianSubjectCurri
         summaryHindi: 'अंकगणित की आधारभूत प्रमेय, अपरिमेय संख्याओं का पुनर्भ्रमण और उनके दशमलव प्रसार का अध्ययन।',
         keyTopicsEnglish: ['Fundamental Theorem of Arithmetic', 'Revisiting Irrational Numbers (√2, √3, √5)', 'Prime Factorisation'],
         keyTopicsHindi: ['अंकगणित की आधारभूत प्रमेय', 'अपरिमेय संख्याओं की सिद्धि', 'अभाज्य गुणनखंडन'],
-        englishVideo: { youtubeVideoId: 'fl-Q_bT-oO0', title: 'Real Numbers Full Chapter | CBSE Class 10 Maths Chapter 1', channelTitle: 'Dear Sir', durationFormatted: '1h 35m' },
+        englishVideo: { youtubeVideoId: 'LDVXKYFunQA', title: 'Real Numbers - Lecture 1 | Abhay Batch Class 10 Maths', channelTitle: 'Next Toppers (Shobhit Nirwan)', durationFormatted: '1h 25m' },
         hindiVideo: { youtubeVideoId: 'LJ82sOi9FHQ', title: 'Real Numbers (वास्तविक संख्याएँ) - One Shot Revision | Class 10 Maths Chapter 1', channelTitle: 'Magnet Brains Hindi Medium', durationFormatted: '1h 20m' },
       },
       {
@@ -79,7 +79,7 @@ export const INDIAN_NCERT_CURRICULUM_DATABASE: Record<string, IndianSubjectCurri
         summaryHindi: 'बहुपद के शून्यकों का ज्यामितीय अर्थ तथा द्विघात बहुपद के शून्यकों और गुणांकों के बीच संबंध।',
         keyTopicsEnglish: ['Geometrical Meaning of Zeroes', 'Relationship Between Zeroes & Coefficients', 'Quadratic Polynomial Formulation'],
         keyTopicsHindi: ['शून्यकों का ज्यामितीय अर्थ', 'शून्यकों और गुणांकों में संबंध', 'द्विघात बहुपद निर्माण'],
-        englishVideo: { youtubeVideoId: 'WN59Vy59IJk', title: 'Polynomials in One Shot | Class 10th Maths Chapter 2', channelTitle: 'Dear Sir', durationFormatted: '1h 15m' },
+        englishVideo: { youtubeVideoId: 'Vd1OjVX3VZE', title: 'Polynomials One Shot Full Chapter Explanation | Class 10 Maths', channelTitle: 'Next Toppers (Shobhit Nirwan)', durationFormatted: '1h 15m' },
         hindiVideo: { youtubeVideoId: 'f6Eb4tfF4RE', title: 'Polynomials (बहुपद) - One Shot Revision | Class 10 Maths Chapter 2', channelTitle: 'Magnet Brains Hindi Medium', durationFormatted: '1h 10m' },
       },
       {
@@ -92,7 +92,7 @@ export const INDIAN_NCERT_CURRICULUM_DATABASE: Record<string, IndianSubjectCurri
         summaryHindi: 'रैखिक समीकरण युग्म का ग्राफीय एवं बीजगणितीय हल: प्रतिस्थापन विधि, विलोपन विधि तथा संगतता की स्थितियाँ।',
         keyTopicsEnglish: ['Graphical Method of Solution', 'Substitution Method', 'Elimination Method', 'Consistency Conditions (a1/a2)'],
         keyTopicsHindi: ['ग्राफीय विधि', 'प्रतिस्थापन विधि', 'विलोपन विधि', 'संगत और असंगत समीकरण'],
-        englishVideo: { youtubeVideoId: 'UosO7XtBd-k', title: 'Linear Equations in Two Variables | Complete Class 10 Marathon', channelTitle: 'Physics Wallah Foundation', durationFormatted: '1h 45m' },
+        englishVideo: { youtubeVideoId: '7fUxzREECQI', title: 'Linear Equations in Two Variables - Hacks & Concepts | Class 10 Maths', channelTitle: 'Next Toppers (Shobhit Nirwan)', durationFormatted: '1h 35m' },
         hindiVideo: { youtubeVideoId: 'LJ82sOi9FHQ', title: 'दो चर वाले रैखिक समीकरण युग्म - Full Chapter | Class 10 Maths', channelTitle: 'Magnet Brains Hindi Medium', durationFormatted: '1h 30m' },
       },
       {
@@ -105,7 +105,7 @@ export const INDIAN_NCERT_CURRICULUM_DATABASE: Record<string, IndianSubjectCurri
         summaryHindi: 'द्विघात समीकरण का मानक रूप, गुणनखंडन विधि से हल, द्विघाती सूत्र (श्रीधराचार्य) और विविक्तकर (D) द्वारा मूलों की प्रकृति।',
         keyTopicsEnglish: ['Solution by Factorisation', 'Quadratic Formula', 'Discriminant & Nature of Roots (D > 0, D = 0, D < 0)'],
         keyTopicsHindi: ['गुणनखंडन द्वारा हल', 'द्विघाती सूत्र', 'विविक्तकर और मूलों की प्रकृति'],
-        englishVideo: { youtubeVideoId: '73l1NADMVbs', title: 'Quadratic Equations | Class 10th Chapter 4 One Shot', channelTitle: 'Dear Sir', durationFormatted: '1h 12m' },
+        englishVideo: { youtubeVideoId: 'xMyV4no7ca0', title: 'Quadratic Equations One Shot Masterclass | Class 10 Maths', channelTitle: 'Next Toppers (Shobhit Nirwan)', durationFormatted: '1h 22m' },
         hindiVideo: { youtubeVideoId: 'f6Eb4tfF4RE', title: 'द्विघात समीकरण (Quadratic Equations) - One Shot | Class 10 Maths', channelTitle: 'Magnet Brains Hindi Medium', durationFormatted: '1h 25m' },
       },
       {
@@ -266,7 +266,7 @@ export const INDIAN_NCERT_CURRICULUM_DATABASE: Record<string, IndianSubjectCurri
         summaryHindi: 'रासायनिक समीकरण, समीकरण संतुलित करना, रासायनिक अभिक्रियाओं के प्रकार (संयोजन, वियोजन, विस्थापन, द्विविस्थापन) और उपचयन-अपचयन (रेडॉक्स)।',
         keyTopicsEnglish: ['Balancing Chemical Equations', 'Combination & Decomposition', 'Displacement & Double Displacement', 'Redox, Corrosion & Rancidity'],
         keyTopicsHindi: ['समीकरण संतुलन', 'संयोजन एवं वियोजन', 'विस्थापन एवं द्विविस्थापन', 'उपचयन-अपचयन, संक्षारण और विकृतगंधिता'],
-        englishVideo: { youtubeVideoId: 'JJD14urpQg4', title: 'Chemical Reactions And Equations | Complete Chapter in ONE SHOT', channelTitle: 'Physics Wallah Foundation', durationFormatted: '2h 10m' },
+        englishVideo: { youtubeVideoId: 'hVvvQLvhAgo', title: 'Chemical Reactions & Equations - Abhay Batch | Class 10 Science', channelTitle: 'Next Toppers (Prashant Kirad)', durationFormatted: '2h 10m' },
         hindiVideo: { youtubeVideoId: '53MKKyspwdc', title: 'रासायनिक अभिक्रियाएँ एवं समीकरण - Full Chapter Explanation | Class 10 Science', channelTitle: 'Magnet Brains', durationFormatted: '2h 05m' },
       },
       {
@@ -279,7 +279,7 @@ export const INDIAN_NCERT_CURRICULUM_DATABASE: Record<string, IndianSubjectCurri
         summaryHindi: 'अम्ल एवं क्षारक के रासायनिक गुणधर्म, सूचक, दैनिक जीवन में pH का महत्व, तथा महत्वपूर्ण लवणों (विरंजक चूर्ण, बेकिंग सोडा, धावन सोडा, प्लास्टर ऑफ पेरिस) का निर्माण।',
         keyTopicsEnglish: ['Acid-Base Reactions with Metals', 'pH Scale & Indicators', 'Common Salt Compounds (NaOH, NaHCO3, Na2CO3, CaSO4.1/2H2O)'],
         keyTopicsHindi: ['धातुओं के साथ अभिक्रिया', 'pH पैमाना', 'महत्वपूर्ण लवण एवं उनके उपयोग'],
-        englishVideo: { youtubeVideoId: 'qpT9emB3E7U', title: 'Acids, Bases and Salts Complete Chapter Revision | Vedantu', channelTitle: 'Vedantu CBSE 10th', durationFormatted: '1h 45m' },
+        englishVideo: { youtubeVideoId: 'qKl4mieovu0', title: 'Acids Bases and Salts Complete Chapter | Class 10 Science | NCERT Covered', channelTitle: 'Next Toppers (Prashant Kirad)', durationFormatted: '1h 55m' },
         hindiVideo: { youtubeVideoId: '53MKKyspwdc', title: 'अम्ल, क्षारक एवं लवण - Full Chapter | Class 10 Science Chapter 2', channelTitle: 'Magnet Brains', durationFormatted: '1h 50m' },
       },
       {
@@ -292,7 +292,7 @@ export const INDIAN_NCERT_CURRICULUM_DATABASE: Record<string, IndianSubjectCurri
         summaryHindi: 'धातुओं एवं अधातुओं के भौतिक व रासायनिक गुणधर्म, सक्रियता श्रेणी, आयनिक यौगिकों का निर्माण व गुणधर्म, तथा धातु कर्म के मूलभूत सिद्धांत।',
         keyTopicsEnglish: ['Reactivity Series', 'Ionic Bond Formation (NaCl, MgCl2)', 'Extraction of Metals (Roasting & Calcination)', 'Corrosion Prevention'],
         keyTopicsHindi: ['सक्रियता श्रेणी', 'आयनिक आबंध', 'धातु निष्कर्षण (भर्जन एवं निस्तापन)', 'संक्षारण से सुरक्षा'],
-        englishVideo: { youtubeVideoId: '1BHDPBFuI08', title: 'Metals and Non-Metals in One Shot | Class 10 Science Foundation', channelTitle: 'Physics Wallah Foundation', durationFormatted: '1h 40m' },
+        englishVideo: { youtubeVideoId: 'YV1BFWi-AWY', title: 'Metals and Non Metals Complete Chapter | Class 10 Science | NCERT Covered', channelTitle: 'Next Toppers (Prashant Kirad)', durationFormatted: '1h 45m' },
         hindiVideo: { youtubeVideoId: '53MKKyspwdc', title: 'धातु एवं अधातु - Full Chapter | Class 10 Science Chapter 3', channelTitle: 'Magnet Brains', durationFormatted: '1h 35m' },
       },
       {
@@ -305,7 +305,7 @@ export const INDIAN_NCERT_CURRICULUM_DATABASE: Record<string, IndianSubjectCurri
         summaryHindi: 'कार्बन में सहसंयोजी आबंध, कार्बन की सर्वतोमुखी प्रकृति (श्रृंखलन, चतुःसंयोजकता), समजातीय श्रेणी, प्रकार्यात्मक समूह और नामकरण।',
         keyTopicsEnglish: ['Covalent Bonding & Lewis Dot Structures', 'Saturated & Unsaturated Hydrocarbons', 'Homologous Series', 'Ethanol & Ethanoic Acid'],
         keyTopicsHindi: ['सहसंयोजी आबंध', 'संतृप्त एवं असंतृप्त हाइड्रोकार्बन', 'समजातीय श्रेणी', 'एथेनॉल एवं एथेनोइक अम्ल'],
-        englishVideo: { youtubeVideoId: 'qpT9emB3E7U', title: 'Carbon and its Compounds | Complete Chapter | Vedantu 10th', channelTitle: 'Vedantu CBSE 10th', durationFormatted: '2h 15m' },
+        englishVideo: { youtubeVideoId: '7pGHWkSRFU4', title: 'Carbon and its Compounds Complete Chapter | Class 10th Science', channelTitle: 'Next Toppers (Prashant Kirad)', durationFormatted: '2h 10m' },
         hindiVideo: { youtubeVideoId: '53MKKyspwdc', title: 'कार्बन एवं उसके यौगिक - Full Chapter | Class 10 Science Chapter 4', channelTitle: 'Magnet Brains', durationFormatted: '2h 00m' },
       },
       {
@@ -318,7 +318,7 @@ export const INDIAN_NCERT_CURRICULUM_DATABASE: Record<string, IndianSubjectCurri
         summaryHindi: 'पोषण (स्वपोषी एवं विषमपोषी), श्वसन (वायवीय एवं अवायवीय), मानव तथा पादपों में परिवहन तंत्र, तथा उत्सर्जन तंत्र (वृक्क व नेफ्रॉन)।',
         keyTopicsEnglish: ['Photosynthesis & Digestive System', 'Aerobic vs Anaerobic Respiration', 'Human Heart & Double Circulation', 'Nephron Structure & Excretion'],
         keyTopicsHindi: ['प्रकाश संश्लेषण एवं पाचन तंत्र', 'श्वसन प्रक्रिया', 'मानव हृदय एवं दोहरा परिसंचरण', 'नेफ्रॉन की संरचना एवं उत्सर्जन'],
-        englishVideo: { youtubeVideoId: 'gvGFHb5_S3M', title: 'Life Processes in One Shot: FULL CHAPTER | Warrior Series', channelTitle: 'Physics Wallah Foundation', durationFormatted: '3h 05m' },
+        englishVideo: { youtubeVideoId: 'CTFuXmQsVdA', title: 'Life Processes - Lecture 1 | Abhay Batch Class 10 Science', channelTitle: 'Next Toppers (Prashant Kirad)', durationFormatted: '2h 15m' },
         hindiVideo: { youtubeVideoId: '8zTVsWI1SnE', title: 'जैव प्रक्रम (Life Processes) - Maha Marathon | Class 10 Science', channelTitle: 'Vedantu CBSE 10th', durationFormatted: '2h 45m' },
       },
       {
@@ -370,7 +370,7 @@ export const INDIAN_NCERT_CURRICULUM_DATABASE: Record<string, IndianSubjectCurri
         summaryHindi: 'गोलीय दर्पणों द्वारा प्रकाश का परावर्तन, किरण आरेख, दर्पण सूत्र, अपवर्तन के नियम, स्नेल का नियम, लेंस सूत्र और लेंस की क्षमता।',
         keyTopicsEnglish: ['Concave & Convex Mirrors Ray Diagrams', 'Mirror Formula & Magnification', 'Refraction & Snell’s Law', 'Lens Formula & Power (P = 1/f)'],
         keyTopicsHindi: ['गोलीय दर्पण किरण आरेख', 'दर्पण सूत्र एवं आवर्धन', 'अपवर्तन एवं स्नेल का नियम', 'लेंस सूत्र एवं लेंस की क्षमता'],
-        englishVideo: { youtubeVideoId: '8Rwv2hvdZFo', title: 'Light - Reflection & Refraction | Complete Chapter | Prashant Kirad', channelTitle: 'Exphub 9th & 10th', durationFormatted: '2h 20m' },
+        englishVideo: { youtubeVideoId: '8Rwv2hvdZFo', title: 'Light - Reflection & Refraction Complete Chapter | Class 10 Science', channelTitle: 'Next Toppers (Prashant Kirad)', durationFormatted: '2h 20m' },
         hindiVideo: { youtubeVideoId: 'ZnwBLQkqgvw', title: 'Light - Reflection and Refraction | Complete Chapter in ONE SHOT', channelTitle: 'Physics Wallah Foundation', durationFormatted: '2h 30m' },
       },
       {
@@ -383,7 +383,7 @@ export const INDIAN_NCERT_CURRICULUM_DATABASE: Record<string, IndianSubjectCurri
         summaryHindi: 'मानव नेत्र की संरचना, दृष्टि दोष (निकट दृष्टि, दूर दृष्टि, जरा-दूरदृष्टि) एवं उनका निवारण, प्रिज्म द्वारा प्रकाश का विक्षेपण, तथा वायुमंडलीय अपवर्तन।',
         keyTopicsEnglish: ['Myopia & Hypermetropia Correction', 'Dispersion of White Light through Glass Prism', 'Atmospheric Refraction (Twinkling of Stars)', 'Tyndall Effect & Scattering of Light'],
         keyTopicsHindi: ['दृष्टि दोष एवं उनका निवारण', 'प्रिज्म द्वारा प्रकाश का विक्षेपण', 'तारों का टिमटिमाना', 'टिंडल प्रभाव एवं प्रकाश का प्रकीर्णन'],
-        englishVideo: { youtubeVideoId: '8Rwv2hvdZFo', title: 'Human Eye and Colourful World One Shot | Exphub', channelTitle: 'Exphub 9th & 10th', durationFormatted: '1h 20m' },
+        englishVideo: { youtubeVideoId: '8Rwv2hvdZFo', title: 'Human Eye and Colourful World One Shot | Class 10 Science', channelTitle: 'Next Toppers (Prashant Kirad)', durationFormatted: '1h 20m' },
         hindiVideo: { youtubeVideoId: 'ZnwBLQkqgvw', title: 'मानव नेत्र तथा रंगबिरंगा संसार - Full Chapter | Class 10 Science', channelTitle: 'Physics Wallah Foundation', durationFormatted: '1h 15m' },
       },
       {
@@ -396,8 +396,8 @@ export const INDIAN_NCERT_CURRICULUM_DATABASE: Record<string, IndianSubjectCurri
         summaryHindi: 'विद्युत धारा एवं परिपथ, विभवांतर, ओम का नियम, प्रतिरोध को प्रभावित करने वाले कारक, श्रेणीक्रम एवं पार्श्वक्रम संयोजन, जूल का तापन नियम और विद्युत शक्ति।',
         keyTopicsEnglish: ['Ohm’s Law (V = IR)', 'Factors on Which Resistance Depends (R = ρl/A)', 'Series & Parallel Combinations', 'Joule’s Heating Effect (H = I²Rt) & Power (P = VI)'],
         keyTopicsHindi: ['ओम का नियम', 'प्रतिरोध एवं प्रतिरोधकता', 'श्रेणीक्रम एवं पार्श्वक्रम संयोजन', 'जूल का तापन नियम एवं विद्युत शक्ति'],
-        englishVideo: { youtubeVideoId: '9l8ZonAw3Ks', title: 'Electricity in One Shot: FULL CHAPTER | Warrior Series', channelTitle: 'Physics Wallah Foundation', durationFormatted: '2h 45m' },
-        hindiVideo: { youtubeVideoId: 'EJcnBv691cY', title: 'Electricity Class 10 || Complete CHAPTER IN ONE SHOT || Alakh Pandey', channelTitle: 'Alakh Pandey - Class 9th & 10th', durationFormatted: '2h 35m' },
+        englishVideo: { youtubeVideoId: 'J3DvsZfYEfs', title: 'Electricity Complete Chapter | Class 10 Science | NCERT Covered', channelTitle: 'Next Toppers (Prashant Kirad)', durationFormatted: '2h 15m' },
+        hindiVideo: { youtubeVideoId: 'EJcnBv691cY', title: 'Electricity Class 10 || Complete CHAPTER IN ONE SHOT || Alakh Pandey', channelTitle: 'Physics Wallah (Alakh Pandey)', durationFormatted: '2h 35m' },
       },
       {
         chapterNumber: 12,
@@ -439,8 +439,8 @@ export const INDIAN_NCERT_CURRICULUM_DATABASE: Record<string, IndianSubjectCurri
     subjectNameEnglish: 'Social Science (SST)',
     subjectNameHindi: 'सामाजिक विज्ञान',
     boardAuthority: 'Central Board of Secondary Education (CBSE) / NCERT / State Boards',
-    ncertBookEnglish: 'NCERT Social Science (History, Geography, Democratic Politics, Economics)',
-    ncertBookHindi: 'एनसीईआरटी सामाजिक विज्ञान (इतिहास, भूगोल, लोकतांत्रिक राजनीति, अर्थशास्त्र)',
+    ncertBookEnglish: 'NCERT Democratic Politics-II, India & Contemporary World-II, Contemporary India-II, Understanding Economic Development',
+    ncertBookHindi: 'एनसीईआरटी लोकतांत्रिक राजनीति-२, भारत और समकालीन विश्व-२, समकालीन भारत-२, आर्थिक विकास की समझ',
     totalChapters: 15,
     chapters: [
       {
