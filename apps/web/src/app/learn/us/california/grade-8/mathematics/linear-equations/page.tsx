@@ -138,7 +138,7 @@ export default function LinearEquationsLessonPage() {
         data: {
           variant: 'WARNING',
           title: 'Special Cases: No Solution vs. Infinitely Many Solutions',
-          text: 'Sometimes the variable cancels out entirely!\n• No Solution (Contradiction): If you arrive at an impossible statement like 0 = 8 or -7 = 9, no value of x can make it true.\n• Infinitely Many Solutions (Identity): If both sides are identical (like 5 = 5 or 2x = 2x), any real number is a valid solution.',
+          text: 'Sometimes the variable terms cancel out entirely!\n• No Solution (Contradiction): If you arrive at an impossible statement such as 0 = 8 or -7 = 9, no real number satisfies the equation.\n• Infinitely Many Solutions (Identity): If you arrive at a statement that is always true such as 5 = 5 or 2x = 2x, every real number is a valid solution.',
         },
       },
       {
@@ -146,9 +146,9 @@ export default function LinearEquationsLessonPage() {
         type: 'COMMON_MISTAKE' as const,
         order_index: 7,
         data: {
-          title: 'Watch Out: Distributing Negative Signs',
-          mistake: 'Writing -(3x - 5) as -3x - 5',
-          correction: 'The negative sign multiplies every term inside: -(3x - 5) = -3x + 5',
+          title: 'The Negative Sign Distribution Trap',
+          mistake: 'Writing -(3x - 5) as -3x - 5.',
+          correction: 'The negative sign multiplies EVERY term inside: -(3x - 5) = -3x + 5.',
         },
       },
       {
@@ -156,57 +156,45 @@ export default function LinearEquationsLessonPage() {
         type: 'SUMMARY' as const,
         order_index: 8,
         data: {
-          text: 'Every linear equation simplifies into one of three structural forms: (1) x = a (one solution), (2) a = b where a != b (no solution), or (3) a = a (infinitely many solutions).',
+          text: 'Every linear equation simplifies into one of three structural outcomes: (1) x = a (one unique solution), (2) a = b where a ≠ b (no solution), or (3) a = a (infinitely many solutions).',
         },
       },
     ],
     practiceQuestions: [
       {
         id: 'q_prac_1',
-        objective_id: 'obj_ca8_math_8_ee_c_7',
-        type: 'MCQ' as const,
-        prompt: 'Solve for x: 5x - 8 = 22',
-        explanation: 'Add 8 to both sides to get 5x = 30. Then divide both sides by 5 to find x = 6.',
-        difficulty_level: 1 as const,
-        created_at: '',
-        updated_at: '',
+        type: 'MULTIPLE_CHOICE' as const,
+        prompt: 'Solve for x: 4x + 7 = 2x + 19',
+        explanation: 'Subtract 2x from both sides to get 2x + 7 = 19. Subtract 7 to get 2x = 12. Divide by 2 to get x = 6.',
         options: [
-          { id: 'opt_p1_1', question_id: 'q_prac_1', text: 'x = 6', is_correct: true, feedback: 'Correct! 5(6) - 8 = 30 - 8 = 22.', order_index: 1 },
-          { id: 'opt_p1_2', question_id: 'q_prac_1', text: 'x = 2.8', is_correct: false, feedback: 'Did you subtract 8 instead of adding 8?', order_index: 2 },
-          { id: 'opt_p1_3', question_id: 'q_prac_1', text: 'x = 5', is_correct: false, feedback: 'Remember to add 8 before dividing by 5.', order_index: 3 },
-          { id: 'opt_p1_4', question_id: 'q_prac_1', text: 'x = 30', is_correct: false, feedback: 'You forgot to divide by 5.', order_index: 4 },
+          { id: 'opt_p1_a', question_id: 'q_prac_1', text: 'x = 6', is_correct: true, feedback: 'Correct! Step-by-step subtraction and division isolates x = 6.', order_index: 1 },
+          { id: 'opt_p1_b', question_id: 'q_prac_1', text: 'x = 13', is_correct: false, feedback: 'Did you forget to divide by 2 after subtracting 7?', order_index: 2 },
+          { id: 'opt_p1_c', question_id: 'q_prac_1', text: 'x = 4', is_correct: false, feedback: 'Check: 4(4) + 7 = 23, but 2(4) + 19 = 27. They do not match.', order_index: 3 },
+          { id: 'opt_p1_d', question_id: 'q_prac_1', text: 'x = -6', is_correct: false, feedback: 'Watch the signs when subtracting 2x and 7.', order_index: 4 },
         ],
       },
       {
         id: 'q_prac_2',
-        objective_id: 'obj_ca8_math_8_ee_c_7',
-        type: 'MCQ' as const,
-        prompt: 'Solve for x: 3(x + 4) = 21',
-        explanation: 'Distribute 3: 3x + 12 = 21. Subtract 12: 3x = 9. Divide by 3: x = 3.',
-        difficulty_level: 2 as const,
-        created_at: '',
-        updated_at: '',
+        type: 'MULTIPLE_CHOICE' as const,
+        prompt: 'Solve for x: 2(3x - 1) = 6x - 2',
+        explanation: 'Expand the left side: 6x - 2 = 6x - 2. Since both sides are identical for all x, this equation has infinitely many solutions (an identity).',
         options: [
-          { id: 'opt_p2_1', question_id: 'q_prac_2', text: 'x = 3', is_correct: true, feedback: 'Great job! 3(3 + 4) = 3(7) = 21.', order_index: 1 },
-          { id: 'opt_p2_2', question_id: 'q_prac_2', text: 'x = 7', is_correct: false, feedback: '7 is the value of (x + 4), not x.', order_index: 2 },
-          { id: 'opt_p2_3', question_id: 'q_prac_2', text: 'x = 5', is_correct: false, feedback: 'Check your subtraction after distributing.', order_index: 3 },
-          { id: 'opt_p2_4', question_id: 'q_prac_2', text: 'x = 1', is_correct: false, feedback: 'Remember that 3 multiplies both x and 4.', order_index: 4 },
+          { id: 'opt_p2_a', question_id: 'q_prac_2', text: 'x = 0', is_correct: false, feedback: 'While x = 0 is a solution, it is not the ONLY solution.', order_index: 1 },
+          { id: 'opt_p2_b', question_id: 'q_prac_2', text: 'Infinitely many solutions', is_correct: true, feedback: 'Spot on! Both sides are identical expressions, so any real number satisfies it.', order_index: 2 },
+          { id: 'opt_p2_c', question_id: 'q_prac_2', text: 'No solution', is_correct: false, feedback: 'No solution occurs only when you reach a contradiction like 0 = 5.', order_index: 3 },
+          { id: 'opt_p2_d', question_id: 'q_prac_2', text: 'x = 2', is_correct: false, feedback: 'Expand both sides to compare the resulting equations.', order_index: 4 },
         ],
       },
       {
         id: 'q_prac_3',
-        objective_id: 'obj_ca8_math_8_ee_c_7',
-        type: 'MCQ' as const,
-        prompt: 'Classify the equation: 4x + 6 = 4x - 2',
-        explanation: 'Subtracting 4x from both sides gives 6 = -2, which is impossible. Hence, no solution exists.',
-        difficulty_level: 3 as const,
-        created_at: '',
-        updated_at: '',
+        type: 'MULTIPLE_CHOICE' as const,
+        prompt: 'Solve for x: 5x - 3 = 5x + 7',
+        explanation: 'Subtracting 5x from both sides yields -3 = 7, which is a mathematical impossibility. Therefore, there is no solution.',
         options: [
-          { id: 'opt_p3_1', question_id: 'q_prac_3', text: 'No solution', is_correct: true, feedback: 'Exactly! 6 = -2 is never true, so no value of x satisfies the equation.', order_index: 1 },
-          { id: 'opt_p3_2', question_id: 'q_prac_3', text: 'One solution: x = 0', is_correct: false, feedback: '4(0)+6 = 6, but 4(0)-2 = -2. They are not equal.', order_index: 2 },
-          { id: 'opt_p3_3', question_id: 'q_prac_3', text: 'Infinitely many solutions', is_correct: false, feedback: 'Infinitely many solutions occur only when both sides are identical identities (e.g. 6 = 6).', order_index: 3 },
-          { id: 'opt_p3_4', question_id: 'q_prac_3', text: 'x = 4', is_correct: false, feedback: 'The variable terms cancel each other out completely.', order_index: 4 },
+          { id: 'opt_p3_a', question_id: 'q_prac_3', text: 'x = 10', is_correct: false, feedback: 'Substitute 10: 50 - 3 = 47, but 50 + 7 = 57. Not equal.', order_index: 1 },
+          { id: 'opt_p3_b', question_id: 'q_prac_3', text: 'No solution', is_correct: true, feedback: 'Correct! The variable terms cancel leaving the contradiction -3 = 7.', order_index: 2 },
+          { id: 'opt_p3_c', question_id: 'q_prac_3', text: 'x = 0', is_correct: false, feedback: 'When x = 0, -3 ≠ 7.', order_index: 3 },
+          { id: 'opt_p3_d', question_id: 'q_prac_3', text: 'Infinitely many solutions', is_correct: false, feedback: 'This statement is NEVER true, so it cannot have infinite solutions.', order_index: 4 },
         ],
       },
     ],
@@ -217,57 +205,57 @@ export default function LinearEquationsLessonPage() {
       questions: [
         {
           id: 'q_quiz_1',
-          type: 'MCQ',
-          prompt: 'Solve for m: 4m - 7 = 2m + 11',
+          type: 'MULTIPLE_CHOICE',
+          prompt: 'Solve: 5(x - 2) = 3x + 4',
           options: [
-            { id: 'opt_q1_1', question_id: 'q_quiz_1', text: 'm = 9', order_index: 1 },
-            { id: 'opt_q1_2', question_id: 'q_quiz_1', text: 'm = 2', order_index: 2 },
-            { id: 'opt_q1_3', question_id: 'q_quiz_1', text: 'm = 18', order_index: 3 },
-            { id: 'opt_q1_4', question_id: 'q_quiz_1', text: 'm = -9', order_index: 4 },
+            { id: 'opt_q1_a', question_id: 'q_quiz_1', text: 'x = 7', order_index: 1 },
+            { id: 'opt_q1_b', question_id: 'q_quiz_1', text: 'x = 3', order_index: 2 },
+            { id: 'opt_q1_c', question_id: 'q_quiz_1', text: 'x = 1', order_index: 3 },
+            { id: 'opt_q1_d', question_id: 'q_quiz_1', text: 'x = 14', order_index: 4 },
           ],
         },
         {
           id: 'q_quiz_2',
-          type: 'MCQ',
-          prompt: 'Solve for y: 2(3y - 1) = 4y + 8',
+          type: 'MULTIPLE_CHOICE',
+          prompt: 'How many solutions does 4(2x + 1) = 8x + 4 have?',
           options: [
-            { id: 'opt_q2_1', question_id: 'q_quiz_2', text: 'y = 5', order_index: 1 },
-            { id: 'opt_q2_2', question_id: 'q_quiz_2', text: 'y = 3', order_index: 2 },
-            { id: 'opt_q2_3', question_id: 'q_quiz_2', text: 'y = 10', order_index: 3 },
-            { id: 'opt_q2_4', question_id: 'q_quiz_2', text: 'y = 4', order_index: 4 },
+            { id: 'opt_q2_a', question_id: 'q_quiz_2', text: 'Exactly one solution (x = 1)', order_index: 1 },
+            { id: 'opt_q2_b', question_id: 'q_quiz_2', text: 'No solution', order_index: 2 },
+            { id: 'opt_q2_c', question_id: 'q_quiz_2', text: 'Infinitely many solutions', order_index: 3 },
+            { id: 'opt_q2_d', question_id: 'q_quiz_2', text: 'Exactly two solutions', order_index: 4 },
           ],
         },
         {
           id: 'q_quiz_3',
-          type: 'MCQ',
-          prompt: 'Which of the following equations has infinitely many solutions?',
+          type: 'MULTIPLE_CHOICE',
+          prompt: 'How many solutions does 3x + 5 = 3x - 2 have?',
           options: [
-            { id: 'opt_q3_1', question_id: 'q_quiz_3', text: '5(x + 2) = 5x + 10', order_index: 1 },
-            { id: 'opt_q3_2', question_id: 'q_quiz_3', text: '5x + 2 = 5x + 10', order_index: 2 },
-            { id: 'opt_q3_3', question_id: 'q_quiz_3', text: '5x = 10', order_index: 3 },
-            { id: 'opt_q3_4', question_id: 'q_quiz_3', text: '5(x + 2) = 10', order_index: 4 },
+            { id: 'opt_q3_a', question_id: 'q_quiz_3', text: 'No solution', order_index: 1 },
+            { id: 'opt_q3_b', question_id: 'q_quiz_3', text: 'Infinitely many solutions', order_index: 2 },
+            { id: 'opt_q3_c', question_id: 'q_quiz_3', text: 'x = 0', order_index: 3 },
+            { id: 'opt_q3_d', question_id: 'q_quiz_3', text: 'x = 7', order_index: 4 },
           ],
         },
         {
           id: 'q_quiz_4',
-          type: 'MCQ',
-          prompt: 'Solve for p: -2(p - 3) = 16',
+          type: 'MULTIPLE_CHOICE',
+          prompt: 'Solve: -2(x - 5) + 3 = 17',
           options: [
-            { id: 'opt_q4_1', question_id: 'q_quiz_4', text: 'p = -5', order_index: 1 },
-            { id: 'opt_q4_2', question_id: 'q_quiz_4', text: 'p = 5', order_index: 2 },
-            { id: 'opt_q4_3', question_id: 'q_quiz_4', text: 'p = -11', order_index: 3 },
-            { id: 'opt_q4_4', question_id: 'q_quiz_4', text: 'p = -8', order_index: 4 },
+            { id: 'opt_q4_a', question_id: 'q_quiz_4', text: 'x = -2', order_index: 1 },
+            { id: 'opt_q4_b', question_id: 'q_quiz_4', text: 'x = 2', order_index: 2 },
+            { id: 'opt_q4_c', question_id: 'q_quiz_4', text: 'x = -5', order_index: 3 },
+            { id: 'opt_q4_d', question_id: 'q_quiz_4', text: 'x = 5', order_index: 4 },
           ],
         },
         {
           id: 'q_quiz_5',
-          type: 'MCQ',
-          prompt: 'Solve for w: (1/2)w + 3 = 7',
+          type: 'MULTIPLE_CHOICE',
+          prompt: 'Which step is mathematically valid when solving 7x - 4 = 2x + 11?',
           options: [
-            { id: 'opt_q5_1', question_id: 'q_quiz_5', text: 'w = 8', order_index: 1 },
-            { id: 'opt_q5_2', question_id: 'q_quiz_5', text: 'w = 2', order_index: 2 },
-            { id: 'opt_q5_3', question_id: 'q_quiz_5', text: 'w = 14', order_index: 3 },
-            { id: 'opt_q5_4', question_id: 'q_quiz_5', text: 'w = 5', order_index: 4 },
+            { id: 'opt_q5_a', question_id: 'q_quiz_5', text: 'Subtract 2x from both sides to get 5x - 4 = 11', order_index: 1 },
+            { id: 'opt_q5_b', question_id: 'q_quiz_5', text: 'Subtract 4 from both sides to get 7x = 2x + 7', order_index: 2 },
+            { id: 'opt_q5_c', question_id: 'q_quiz_5', text: 'Divide only the left side by 7', order_index: 3 },
+            { id: 'opt_q5_d', question_id: 'q_quiz_5', text: 'Add 2x to both sides to get 9x - 4 = 11', order_index: 4 },
           ],
         },
       ],
@@ -275,54 +263,82 @@ export default function LinearEquationsLessonPage() {
   };
 
   return (
-    <div style={{ maxWidth: '1000px', margin: '40px auto', padding: '0 24px' }}>
-      {/* Breadcrumbs */}
-      <nav style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '0.85rem', color: 'var(--text-muted)', marginBottom: '24px', flexWrap: 'wrap' }}>
-        <Link href="/" style={{ color: 'var(--text-secondary)' }}>USA</Link>
+    <div style={{ maxWidth: '1040px', margin: '0 auto', padding: '32px 24px' }}>
+      {/* Breadcrumb Trail */}
+      <nav style={{
+        display: 'flex',
+        alignItems: 'center',
+        gap: '8px',
+        fontSize: '0.86rem',
+        color: '#64748b',
+        fontWeight: 600,
+        marginBottom: '24px',
+        flexWrap: 'wrap',
+      }}>
+        <Link href="/" style={{ color: 'var(--accent-primary)', textDecoration: 'none' }}>
+          Home
+        </Link>
         <span>/</span>
-        <span style={{ color: 'var(--text-secondary)' }}>California</span>
+        <span>USA</span>
         <span>/</span>
-        <span style={{ color: 'var(--text-secondary)' }}>Grade 8</span>
+        <span>California</span>
         <span>/</span>
-        <span style={{ color: 'var(--text-secondary)' }}>Mathematics</span>
+        <span>Public Schools</span>
         <span>/</span>
-        <span style={{ color: 'var(--text-primary)', fontWeight: 600 }}>Linear Equations</span>
+        <span>Grade 8</span>
+        <span>/</span>
+        <span style={{ color: '#0f172a', fontWeight: 700 }}>Mathematics</span>
       </nav>
 
-      {/* Official Standard Header Card */}
-      <div className="glass-panel" style={{ padding: '32px', marginBottom: '32px' }} id="lesson-header-card">
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', flexWrap: 'wrap', gap: '16px', marginBottom: '16px' }}>
+      {/* Lesson Hero Header Card (StudentClass Elevated White Card) */}
+      <div
+        className="student-card"
+        style={{
+          padding: '36px',
+          marginBottom: '32px',
+          border: '1.5px solid var(--border-subtle)',
+        }}
+      >
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', flexWrap: 'wrap', gap: '20px', marginBottom: '20px' }}>
           <div>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '10px' }}>
+            <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap', marginBottom: '12px' }}>
               <span className="badge badge-standard">{lessonData.standardCode}</span>
-              <span className="badge badge-verified">✓ {lessonData.authority}</span>
+              <span className="badge badge-verified">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
+                  <polyline points="20 6 9 17 4 12"></polyline>
+                </svg>
+                {lessonData.authority}
+              </span>
+              <span className="badge badge-curriculum">Grade 8</span>
             </div>
-            <h1 style={{ fontSize: 'clamp(1.8rem, 3.5vw, 2.4rem)', fontWeight: 800, marginBottom: '8px' }}>
+
+            <h1 style={{ fontSize: 'clamp(1.8rem, 3.5vw, 2.4rem)', fontWeight: 800, color: '#0f172a', letterSpacing: '-0.025em', marginBottom: '8px' }}>
               {lessonData.title}
             </h1>
-            <p style={{ fontSize: '0.9rem', color: 'var(--text-muted)' }}>
-              Official Academic Year: <strong>{lessonData.academicYear}</strong> • Verified: <strong>{lessonData.lastVerified}</strong>
+            <p style={{ fontSize: '0.9rem', color: '#64748b' }}>
+              Official Academic Year: <strong style={{ color: '#334155' }}>{lessonData.academicYear}</strong> • Last Verified: <strong style={{ color: '#334155' }}>{lessonData.lastVerified}</strong>
             </p>
           </div>
 
           {/* Mastery Badge */}
           <div style={{
-            padding: '12px 18px',
-            borderRadius: 'var(--radius-md)',
-            background: isMastered ? 'var(--accent-emerald-subtle)' : 'var(--bg-secondary)',
-            border: isMastered ? '2px solid var(--accent-emerald)' : '1px solid var(--border-subtle)',
+            padding: '14px 20px',
+            borderRadius: '16px',
+            background: isMastered ? '#ecfdf5' : '#f8fafc',
+            border: isMastered ? '2px solid #10b981' : '1.5px solid #e2e8f0',
             textAlign: 'center',
+            boxShadow: '0 2px 8px rgba(0,0,0,0.03)',
           }}>
-            <div style={{ fontSize: '0.75rem', fontWeight: 700, textTransform: 'uppercase', color: isMastered ? 'var(--accent-emerald)' : 'var(--text-muted)' }}>
+            <div style={{ fontSize: '0.74rem', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.04em', color: isMastered ? '#047857' : '#64748b' }}>
               Mastery Status
             </div>
-            <div style={{ fontSize: '1rem', fontWeight: 800, color: isMastered ? 'var(--accent-emerald)' : 'var(--text-secondary)', marginTop: '2px' }}>
-              {isMastered ? '★ MASTERED' : 'Not Mastered Yet'}
+            <div style={{ fontSize: '1rem', fontWeight: 800, color: isMastered ? '#065f46' : '#1e293b', marginTop: '2px' }}>
+              {isMastered ? '★ MASTERED' : 'In Progress'}
             </div>
           </div>
         </div>
 
-        <div style={{ borderTop: '1px solid var(--border-subtle)', paddingTop: '16px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '12px' }}>
+        <div style={{ borderTop: '1px solid #f1f5f9', paddingTop: '20px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '14px' }}>
           <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
             <span className="badge badge-curriculum">Linear Equation</span>
             <span className="badge badge-curriculum">Distributive Property</span>
@@ -334,76 +350,60 @@ export default function LinearEquationsLessonPage() {
             href={lessonData.sourceUrl}
             target="_blank"
             rel="noopener noreferrer"
-            style={{ fontSize: '0.82rem', color: 'var(--accent-primary)', fontWeight: 600 }}
+            style={{ fontSize: '0.84rem', color: 'var(--accent-primary)', fontWeight: 700, display: 'inline-flex', alignItems: 'center', gap: '4px' }}
           >
             Official Framework Document ↗
           </Link>
         </div>
       </div>
 
-      {/* Tabs Navigation */}
-      <div style={{
-        display: 'flex',
-        gap: '12px',
-        borderBottom: '1px solid var(--border-subtle)',
-        marginBottom: '32px',
-      }}>
-        <button
-          onClick={() => setActiveTab('LESSON')}
-          id="tab-lesson"
-          style={{
-            padding: '12px 24px',
-            fontFamily: 'var(--font-heading)',
-            fontSize: '1rem',
-            fontWeight: 700,
-            background: 'transparent',
-            border: 'none',
-            color: activeTab === 'LESSON' ? 'var(--accent-primary)' : 'var(--text-secondary)',
-            borderBottom: activeTab === 'LESSON' ? '3px solid var(--accent-primary)' : '3px solid transparent',
-            cursor: 'pointer',
-            transition: 'all 0.2s',
-          }}
-        >
-          1. Lesson & Videos
-        </button>
+      {/* Segmented Pill Tabs Navigation (StudentClass Style) */}
+      <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '36px' }}>
+        <div className="pill-tab-bar">
+          <button
+            onClick={() => setActiveTab('LESSON')}
+            className={`pill-tab-item ${activeTab === 'LESSON' ? 'active' : ''}`}
+            id="tab-lesson"
+          >
+            <span>📖 Lesson & Videos</span>
+          </button>
 
-        <button
-          onClick={() => setActiveTab('PRACTICE')}
-          id="tab-practice"
-          style={{
-            padding: '12px 24px',
-            fontFamily: 'var(--font-heading)',
-            fontSize: '1rem',
-            fontWeight: 700,
-            background: 'transparent',
-            border: 'none',
-            color: activeTab === 'PRACTICE' ? 'var(--accent-primary)' : 'var(--text-secondary)',
-            borderBottom: activeTab === 'PRACTICE' ? '3px solid var(--accent-primary)' : '3px solid transparent',
-            cursor: 'pointer',
-            transition: 'all 0.2s',
-          }}
-        >
-          2. Interactive Practice ({lessonData.practiceQuestions.length})
-        </button>
+          <button
+            onClick={() => setActiveTab('PRACTICE')}
+            className={`pill-tab-item ${activeTab === 'PRACTICE' ? 'active' : ''}`}
+            id="tab-practice"
+          >
+            <span>✏️ Interactive Practice</span>
+            <span style={{
+              background: activeTab === 'PRACTICE' ? 'var(--accent-primary-tint)' : '#e2e8f0',
+              color: activeTab === 'PRACTICE' ? 'var(--accent-primary)' : '#475569',
+              padding: '2px 8px',
+              borderRadius: '9999px',
+              fontSize: '0.75rem',
+              fontWeight: 800,
+            }}>
+              {lessonData.practiceQuestions.length}
+            </span>
+          </button>
 
-        <button
-          onClick={() => setActiveTab('QUIZ')}
-          id="tab-quiz"
-          style={{
-            padding: '12px 24px',
-            fontFamily: 'var(--font-heading)',
-            fontSize: '1rem',
-            fontWeight: 700,
-            background: 'transparent',
-            border: 'none',
-            color: activeTab === 'QUIZ' ? 'var(--accent-primary)' : 'var(--text-secondary)',
-            borderBottom: activeTab === 'QUIZ' ? '3px solid var(--accent-primary)' : '3px solid transparent',
-            cursor: 'pointer',
-            transition: 'all 0.2s',
-          }}
-        >
-          3. Mastery Quiz ({lessonData.quiz.questions.length})
-        </button>
+          <button
+            onClick={() => setActiveTab('QUIZ')}
+            className={`pill-tab-item ${activeTab === 'QUIZ' ? 'active' : ''}`}
+            id="tab-quiz"
+          >
+            <span>🏆 Mastery Quiz</span>
+            <span style={{
+              background: activeTab === 'QUIZ' ? 'var(--accent-primary-tint)' : '#e2e8f0',
+              color: activeTab === 'QUIZ' ? 'var(--accent-primary)' : '#475569',
+              padding: '2px 8px',
+              borderRadius: '9999px',
+              fontSize: '0.75rem',
+              fontWeight: 800,
+            }}>
+              {lessonData.quiz.questions.length}
+            </span>
+          </button>
+        </div>
       </div>
 
       {/* Tab 1: Lesson Content */}
@@ -412,14 +412,15 @@ export default function LinearEquationsLessonPage() {
           <VideoPlayer videos={lessonData.videos} />
           <ContentBlocks blocks={lessonData.blocks} />
 
-          <div style={{ textAlign: 'center', marginTop: '40px' }}>
+          <div style={{ textAlign: 'center', marginTop: '48px', marginBottom: '48px' }}>
             <button
               onClick={() => setActiveTab('PRACTICE')}
               className="btn btn-primary"
               id="btn-proceed-to-practice"
-              style={{ padding: '14px 28px', fontSize: '1.05rem' }}
+              style={{ padding: '14px 32px', fontSize: '1.05rem', gap: '10px' }}
             >
-              Start Interactive Practice Questions →
+              <span>Start Interactive Practice Questions</span>
+              <span>→</span>
             </button>
           </div>
         </div>
@@ -432,14 +433,15 @@ export default function LinearEquationsLessonPage() {
             practiceId="prac_ca8_math_linear_equations"
             questions={lessonData.practiceQuestions}
           />
-          <div style={{ textAlign: 'center', marginTop: '20px' }}>
+          <div style={{ textAlign: 'center', marginTop: '24px', marginBottom: '48px' }}>
             <button
               onClick={() => setActiveTab('QUIZ')}
               className="btn btn-primary"
               id="btn-proceed-to-quiz"
-              style={{ padding: '14px 28px', fontSize: '1.05rem' }}
+              style={{ padding: '14px 32px', fontSize: '1.05rem', gap: '10px' }}
             >
-              Proceed to Mastery Quiz →
+              <span>Proceed to Mastery Quiz</span>
+              <span>→</span>
             </button>
           </div>
         </div>
@@ -456,39 +458,34 @@ export default function LinearEquationsLessonPage() {
         />
       )}
 
-      {/* Next Lesson Recommendation Banner */}
-      <div
-        className="glass-panel"
-        style={{
-          marginTop: '60px',
-          padding: '28px',
-          display: 'flex',
-          justifyContent: 'space-between',
-          alignItems: 'center',
-          flexWrap: 'wrap',
-          gap: '20px',
-          borderLeft: '4px solid var(--accent-primary)',
-        }}
-        id="next-lesson-cta-banner"
-      >
+      {/* Next Lesson Recommendation Card */}
+      <div className="student-card" style={{
+        padding: '32px',
+        backgroundColor: '#ffffff',
+        display: 'flex',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        flexWrap: 'wrap',
+        gap: '20px',
+        marginTop: '32px',
+        border: '1.5px solid var(--border-subtle)',
+      }}>
         <div>
-          <div style={{ fontSize: '0.8rem', fontWeight: 700, textTransform: 'uppercase', color: 'var(--accent-primary)', marginBottom: '4px' }}>
+          <span style={{ fontSize: '0.78rem', fontWeight: 800, textTransform: 'uppercase', color: 'var(--accent-primary)', letterSpacing: '0.04em' }}>
             Next in California Grade 8 Mathematics
-          </div>
-          <h3 style={{ fontSize: '1.25rem', fontWeight: 700 }}>
-            Graphing Proportional Relationships & Unit Rate
-          </h3>
-          <span className="badge badge-standard" style={{ marginTop: '6px' }}>
-            CCSS.MATH.CONTENT.8.EE.B.5
           </span>
+          <h4 style={{ fontSize: '1.2rem', fontWeight: 800, color: '#0f172a', margin: '4px 0' }}>
+            Graphing Proportional Relationships & Unit Rate
+          </h4>
+          <span className="badge badge-standard">CCSS.MATH.CONTENT.8.EE.B.5</span>
         </div>
 
         <Link
-          href="/learn/us/california/grade-8/mathematics/linear-equations"
+          href="/"
           className="btn btn-secondary"
-          id="btn-next-lesson"
+          style={{ padding: '10px 22px', fontSize: '0.9rem' }}
         >
-          Next Lesson ↗
+          View Full Curriculum Tree →
         </Link>
       </div>
     </div>

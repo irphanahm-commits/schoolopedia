@@ -15,7 +15,7 @@ export function VideoPlayer({ videos }: VideoPlayerProps) {
 
   if (!videos || videos.length === 0) {
     return (
-      <div className="glass-panel" style={{ padding: '32px', textAlign: 'center', color: 'var(--text-secondary)' }}>
+      <div className="student-card" style={{ padding: '32px', textAlign: 'center', color: 'var(--text-secondary)' }}>
         No video resources available for this lesson. Please refer to the written explanation below.
       </div>
     );
@@ -25,27 +25,27 @@ export function VideoPlayer({ videos }: VideoPlayerProps) {
   const { video, mapping } = current;
 
   return (
-    <div className="glass-panel" style={{ overflow: 'hidden', marginBottom: '32px' }} id="video-lesson-section">
+    <div className="student-card" style={{ overflow: 'hidden', marginBottom: '36px' }} id="video-lesson-section">
       {/* Video Switcher Bar */}
       <div style={{
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'space-between',
-        padding: '14px 20px',
-        backgroundColor: 'rgba(17, 24, 39, 0.95)',
+        padding: '16px 24px',
+        backgroundColor: '#f8fafc',
         borderBottom: '1px solid var(--border-subtle)',
         flexWrap: 'wrap',
         gap: '12px',
       }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-          <span style={{ fontSize: '0.85rem', fontWeight: 700, color: 'var(--text-secondary)', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
+          <span style={{ fontSize: '0.82rem', fontWeight: 800, color: 'var(--accent-primary)', textTransform: 'uppercase', letterSpacing: '0.04em' }}>
             Resource:
           </span>
           <span className={`badge ${mapping.role === 'PRIMARY' ? 'badge-verified' : 'badge-curriculum'}`}>
             {mapping.role === 'PRIMARY' ? '★ Primary Recommended' : 'Alternate Explanation'}
           </span>
-          <span style={{ fontSize: '0.88rem', color: 'var(--text-muted)' }}>
-            via {video.channel_title}
+          <span style={{ fontSize: '0.88rem', color: '#64748b', fontWeight: 600 }}>
+            by {video.channel_title}
           </span>
         </div>
 
@@ -57,7 +57,7 @@ export function VideoPlayer({ videos }: VideoPlayerProps) {
                 key={item.video.id}
                 onClick={() => setSelectedIndex(idx)}
                 className={`btn ${idx === selectedIndex ? 'btn-primary' : 'btn-secondary'}`}
-                style={{ padding: '6px 12px', fontSize: '0.8rem' }}
+                style={{ padding: '7px 16px', fontSize: '0.82rem', borderRadius: 'var(--radius-full)' }}
                 id={`btn-select-video-${idx}`}
               >
                 {item.mapping.role === 'PRIMARY' ? 'Option 1 (Khan Academy)' : 'Option 2 (Math Antics)'}
@@ -68,7 +68,7 @@ export function VideoPlayer({ videos }: VideoPlayerProps) {
       </div>
 
       {/* Responsive Video Container */}
-      <div style={{ position: 'relative', paddingBottom: '56.25%', height: 0, overflow: 'hidden', backgroundColor: '#000000' }}>
+      <div style={{ position: 'relative', paddingBottom: '56.25%', height: 0, overflow: 'hidden', backgroundColor: '#0f172a' }}>
         <iframe
           src={`https://www.youtube-nocookie.com/embed/${video.youtube_video_id}?rel=0&modestbranding=1`}
           title={video.title}
@@ -87,28 +87,39 @@ export function VideoPlayer({ videos }: VideoPlayerProps) {
       </div>
 
       {/* Video Quality & Provenance Info */}
-      <div style={{ padding: '16px 20px', backgroundColor: 'var(--bg-secondary)', display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '12px' }}>
+      <div style={{
+        padding: '18px 24px',
+        backgroundColor: '#ffffff',
+        display: 'flex',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        flexWrap: 'wrap',
+        gap: '12px',
+        borderTop: '1px solid var(--border-subtle)',
+      }}>
         <div>
-          <h4 style={{ fontSize: '0.95rem', fontWeight: 600, color: 'var(--text-primary)' }}>
+          <h4 style={{ fontSize: '1.02rem', fontWeight: 800, color: '#0f172a', marginBottom: '4px' }}>
             {video.title}
           </h4>
-          <p style={{ fontSize: '0.82rem', color: 'var(--text-muted)' }}>
+          <p style={{ fontSize: '0.85rem', color: '#64748b' }}>
             {mapping.curation_notes || 'Carefully evaluated for grade-appropriateness and standards alignment.'}
           </p>
         </div>
 
         {video.quality_score && (
-          <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-            <span style={{ fontSize: '0.78rem', color: 'var(--text-secondary)' }}>Curriculum Fit:</span>
-            <span style={{
-              fontSize: '0.82rem',
-              fontWeight: 700,
-              color: 'var(--accent-emerald)',
-              background: 'var(--accent-emerald-subtle)',
-              padding: '2px 8px',
-              borderRadius: '4px',
-              border: '1px solid rgba(16, 185, 129, 0.3)',
-            }}>
+          <div style={{
+            display: 'flex',
+            alignItems: 'center',
+            gap: '8px',
+            backgroundColor: '#ecfdf5',
+            padding: '6px 14px',
+            borderRadius: 'var(--radius-full)',
+            border: '1px solid #a7f3d0',
+          }}>
+            <span style={{ fontSize: '0.78rem', color: '#047857', fontWeight: 700, textTransform: 'uppercase' }}>
+              Quality Rating:
+            </span>
+            <span style={{ fontSize: '0.92rem', fontWeight: 800, color: '#065f46' }}>
               {video.quality_score.total_score}/100
             </span>
           </div>

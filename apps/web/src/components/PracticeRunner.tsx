@@ -2,11 +2,27 @@
 
 import React, { useState } from 'react';
 import { API_BASE_URL } from '@/lib/api';
-import { Question } from '@schoolopedia/types';
+
+export interface PracticeOption {
+  id: string;
+  question_id: string;
+  text: string;
+  is_correct?: boolean;
+  feedback?: string;
+  order_index: number;
+}
+
+export interface PracticeQuestion {
+  id: string;
+  type: string;
+  prompt: string;
+  explanation: string;
+  options: PracticeOption[];
+}
 
 interface PracticeRunnerProps {
   practiceId: string;
-  questions: Question[];
+  questions: PracticeQuestion[];
 }
 
 export function PracticeRunner({ practiceId, questions }: PracticeRunnerProps) {
@@ -17,7 +33,7 @@ export function PracticeRunner({ practiceId, questions }: PracticeRunnerProps) {
 
   if (!questions || questions.length === 0) {
     return (
-      <div className="glass-panel" style={{ padding: '24px', textAlign: 'center', color: 'var(--text-muted)' }}>
+      <div className="student-card" style={{ padding: '24px', textAlign: 'center', color: 'var(--text-muted)' }}>
         No practice questions loaded.
       </div>
     );
@@ -71,42 +87,49 @@ export function PracticeRunner({ practiceId, questions }: PracticeRunnerProps) {
   };
 
   return (
-    <div className="glass-panel" style={{ padding: '32px', marginBottom: '32px' }} id="interactive-practice-section">
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px' }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-          <span className="badge badge-curriculum">Practice Mode</span>
-          <span style={{ fontSize: '0.88rem', color: 'var(--text-secondary)' }}>
-            Question {currentIndex + 1} of {questions.length}
+    <div className="student-card" style={{ padding: '36px', marginBottom: '40px' }} id="interactive-practice-section">
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '24px', flexWrap: 'wrap', gap: '10px' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+          <span className="badge badge-curriculum">Practice Question</span>
+          <span style={{ fontSize: '0.92rem', fontWeight: 700, color: 'var(--accent-primary)' }}>
+            {currentIndex + 1} of {questions.length}
           </span>
         </div>
-        <span style={{ fontSize: '0.8rem', color: 'var(--accent-emerald)', fontWeight: 600 }}>
-          Immediate Feedback
-        </span>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+          <span style={{ width: '8px', height: '8px', borderRadius: '50%', background: '#10b981' }}></span>
+          <span style={{ fontSize: '0.82rem', color: '#047857', fontWeight: 700 }}>
+            Step-by-step Feedback
+          </span>
+        </div>
       </div>
 
       {/* Question Prompt */}
-      <h3 style={{ fontSize: '1.2rem', marginBottom: '20px', lineHeight: '1.5' }}>
+      <h3 style={{ fontSize: '1.25rem', fontWeight: 800, color: '#0f172a', marginBottom: '24px', lineHeight: 1.5 }}>
         {currentQ.prompt}
       </h3>
 
       {/* Options Grid */}
-      <div style={{ display: 'flex', flexDirection: 'column', gap: '12px', marginBottom: '24px' }}>
+      <div style={{ display: 'flex', flexDirection: 'column', gap: '14px', marginBottom: '28px' }}>
         {currentQ.options.map((opt) => {
           const isSelected = selectedOptionId === opt.id;
-          let optionBorder = '1px solid var(--border-subtle)';
-          let optionBg = 'rgba(15, 23, 42, 0.6)';
+          let optionBorder = '1.5px solid #e2e8f0';
+          let optionBg = '#ffffff';
+          let textColor = '#1e293b';
 
           if (isAnswerSubmitted) {
             if (opt.is_correct) {
-              optionBorder = '2px solid var(--accent-emerald)';
-              optionBg = 'var(--accent-emerald-subtle)';
+              optionBorder = '2px solid #10b981';
+              optionBg = '#ecfdf5';
+              textColor = '#064e3b';
             } else if (isSelected && !opt.is_correct) {
-              optionBorder = '2px solid var(--accent-rose)';
-              optionBg = 'var(--accent-rose-subtle)';
+              optionBorder = '2px solid #ef4444';
+              optionBg = '#fff1f2';
+              textColor = '#881337';
             }
           } else if (isSelected) {
             optionBorder = '2px solid var(--accent-primary)';
-            optionBg = 'rgba(99, 102, 241, 0.15)';
+            optionBg = 'var(--accent-primary-tint)';
+            textColor = 'var(--accent-primary)';
           }
 
           return (
@@ -119,31 +142,35 @@ export function PracticeRunner({ practiceId, questions }: PracticeRunnerProps) {
                 display: 'flex',
                 alignItems: 'center',
                 gap: '14px',
-                padding: '14px 18px',
-                borderRadius: 'var(--radius-md)',
+                padding: '16px 20px',
+                borderRadius: '14px',
                 backgroundColor: optionBg,
                 border: optionBorder,
-                color: 'var(--text-primary)',
+                color: textColor,
                 fontFamily: 'var(--font-mono)',
                 fontSize: '1rem',
+                fontWeight: isSelected ? 700 : 500,
                 textAlign: 'left',
                 cursor: isAnswerSubmitted ? 'default' : 'pointer',
                 transition: 'all 0.2s ease',
+                boxShadow: isSelected ? '0 4px 12px rgba(79, 70, 229, 0.08)' : '0 1px 3px rgba(0,0,0,0.02)',
               }}
             >
               <span style={{
-                width: '24px',
-                height: '24px',
+                width: '26px',
+                height: '26px',
                 borderRadius: '50%',
-                border: isSelected ? '2px solid var(--accent-primary)' : '1px solid var(--border-subtle)',
+                border: isSelected ? '2px solid var(--accent-primary)' : '1.5px solid #cbd5e1',
+                backgroundColor: isSelected ? 'var(--accent-primary)' : '#ffffff',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
-                fontSize: '0.78rem',
+                fontSize: '0.8rem',
                 fontWeight: 700,
-                color: isSelected ? 'var(--accent-primary)' : 'var(--text-muted)',
+                color: '#ffffff',
+                flexShrink: 0,
               }}>
-                {isSelected ? '●' : '○'}
+                {isSelected ? '✓' : ''}
               </span>
               <span>{opt.text}</span>
             </button>
@@ -158,35 +185,35 @@ export function PracticeRunner({ practiceId, questions }: PracticeRunnerProps) {
           disabled={!selectedOptionId}
           className="btn btn-primary"
           id="btn-check-practice"
-          style={{ opacity: selectedOptionId ? 1 : 0.5 }}
+          style={{ opacity: selectedOptionId ? 1 : 0.5, padding: '12px 28px' }}
         >
           Check Answer
         </button>
       ) : (
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '18px' }}>
           {/* Feedback Box */}
           <div
             className={`callout ${feedback?.isCorrect ? 'callout-success' : 'callout-mistake'}`}
             style={{ margin: 0 }}
           >
-            <div style={{ fontWeight: 700, fontSize: '1rem', marginBottom: '6px' }}>
-              {feedback?.isCorrect ? '🎉 Correct!' : '❌ Keep Trying'}
+            <div style={{ fontWeight: 800, fontSize: '1.05rem', marginBottom: '6px' }}>
+              {feedback?.isCorrect ? '🎉 Correct! Well done!' : '❌ Not quite right yet'}
             </div>
-            <p style={{ fontSize: '0.92rem', marginBottom: '8px' }}>{feedback?.message}</p>
-            <div style={{ fontSize: '0.88rem', opacity: 0.9, borderTop: '1px solid rgba(255,255,255,0.1)', paddingTop: '8px' }}>
-              <strong>Step-by-step:</strong> {feedback?.explanation}
+            <p style={{ fontSize: '0.94rem', marginBottom: '10px', lineHeight: 1.6 }}>{feedback?.message}</p>
+            <div style={{ fontSize: '0.9rem', borderTop: '1px solid rgba(0,0,0,0.08)', paddingTop: '10px' }}>
+              <strong>Step-by-step breakdown:</strong> {feedback?.explanation}
             </div>
           </div>
 
           {currentIndex < questions.length - 1 ? (
-            <button onClick={handleNext} className="btn btn-primary" id="btn-next-practice">
+            <button onClick={handleNext} className="btn btn-primary" id="btn-next-practice" style={{ alignSelf: 'flex-start', padding: '12px 28px' }}>
               Next Practice Question →
             </button>
           ) : (
-            <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '12px', padding: '12px 0' }}>
               <span className="badge badge-verified">Practice Completed</span>
-              <span style={{ fontSize: '0.9rem', color: 'var(--text-secondary)' }}>
-                Ready to prove your understanding? Take the Mastery Quiz below!
+              <span style={{ fontSize: '0.92rem', color: 'var(--text-secondary)', fontWeight: 600 }}>
+                You have completed all practice questions! Ready to take the Mastery Quiz?
               </span>
             </div>
           )}
