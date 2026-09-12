@@ -14,6 +14,7 @@ export interface SearchEntry {
   badgeColor: string;
   url: string;
   keywords: string;
+  thumbnailUrl?: string;
 }
 
 const CAREERS_INDEX = [
@@ -137,6 +138,7 @@ export function SearchModal({ isOpen, onClose }: SearchModalProps) {
 
     // 2. Lessons (11 catalogued with verified content)
     for (const l of Object.values(LESSONS_CATALOGUE)) {
+      const primaryVideo = l.videos?.[0];
       entries.push({
         id: `les_${l.slug}`,
         category: 'lesson',
@@ -146,6 +148,7 @@ export function SearchModal({ isOpen, onClose }: SearchModalProps) {
         badgeColor: '#059669',
         url: `/learn/${l.countryCode}/${l.jurisdictionSlug}/${l.gradeSlug}/${l.subjectSlug}/${l.slug}`,
         keywords: `${l.title} ${l.subjectName} ${l.gradeName} ${l.standardCode} ${l.summary} ${l.whyItMatters} ${l.slug}`,
+        thumbnailUrl: primaryVideo ? `https://img.youtube.com/vi/${primaryVideo.youtubeVideoId}/hqdefault.jpg` : undefined,
       });
     }
 
@@ -438,6 +441,18 @@ export function SearchModal({ isOpen, onClose }: SearchModalProps) {
                       }}
                       onMouseEnter={() => setSelectedIndex(index)}
                     >
+                      {item.thumbnailUrl && (
+                        <div style={{ position: 'relative', width: '64px', height: '40px', borderRadius: '8px', overflow: 'hidden', flexShrink: 0, marginRight: '14px', marginTop: '2px' }}>
+                          <img
+                            src={item.thumbnailUrl}
+                            alt=""
+                            style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                          />
+                          <div style={{ position: 'absolute', inset: 0, background: 'rgba(0,0,0,0.35)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#ffffff', fontSize: '0.7rem' }}>
+                            ▶
+                          </div>
+                        </div>
+                      )}
                       <div style={{ flex: 1, paddingRight: '16px' }}>
                         <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '4px' }}>
                           <span style={{ fontWeight: 800, color: '#0f172a', fontSize: '0.98rem' }}>

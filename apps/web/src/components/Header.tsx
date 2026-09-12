@@ -9,96 +9,13 @@ interface HeaderProps {
   onOpenSearch?: () => void;
 }
 
-export interface CurriculumOption {
-  countryCode: string;
-  countryName: string;
-  flag: string;
-  jurisdictionSlug: string;
-  jurisdictionName: string;
-  gradeLabel: string;
-  standardCode: string;
-  defaultUrl: string;
-}
 
-export const TIER1_OPTIONS: CurriculumOption[] = [
-  {
-    countryCode: 'US',
-    countryName: 'United States',
-    flag: '🇺🇸',
-    jurisdictionSlug: 'california',
-    jurisdictionName: 'California (CDE)',
-    gradeLabel: 'Grade 8',
-    standardCode: 'CCSS.MATH.8.EE.C.7',
-    defaultUrl: '/learn/us/california/grade-8/mathematics/linear-equations'
-  },
-  {
-    countryCode: 'US',
-    countryName: 'United States',
-    flag: '🇺🇸',
-    jurisdictionSlug: 'texas',
-    jurisdictionName: 'Texas (TEA / TEKS)',
-    gradeLabel: 'Grade 8',
-    standardCode: 'TEKS.MATH.8.8.C',
-    defaultUrl: '/learn/us/texas/grade-8/mathematics/linear-equations'
-  },
-  {
-    countryCode: 'GB',
-    countryName: 'United Kingdom',
-    flag: '🇬🇧',
-    jurisdictionSlug: 'england',
-    jurisdictionName: 'England (DfE / KS3)',
-    gradeLabel: 'Year 8',
-    standardCode: 'UK.NC.KS3.ALG',
-    defaultUrl: '/learn/gb/england/grade-8/mathematics/linear-equations'
-  },
-  {
-    countryCode: 'CA',
-    countryName: 'Canada',
-    flag: '🇨🇦',
-    jurisdictionSlug: 'ontario',
-    jurisdictionName: 'Ontario (MoE)',
-    gradeLabel: 'Grade 8',
-    standardCode: 'ON.CURR.MATH.GR8',
-    defaultUrl: '/learn/ca/ontario/grade-8/mathematics/linear-equations'
-  },
-  {
-    countryCode: 'AU',
-    countryName: 'Australia',
-    flag: '🇦🇺',
-    jurisdictionSlug: 'nsw',
-    jurisdictionName: 'NSW / ACARA v9',
-    gradeLabel: 'Year 8',
-    standardCode: 'AC9M8A03',
-    defaultUrl: '/learn/au/nsw/grade-8/mathematics/linear-equations'
-  },
-  {
-    countryCode: 'NZ',
-    countryName: 'New Zealand',
-    flag: '🇳🇿',
-    jurisdictionSlug: 'national',
-    jurisdictionName: 'New Zealand Curriculum',
-    gradeLabel: 'Level 4/5',
-    standardCode: 'NZC.MATH.L5',
-    defaultUrl: '/learn/nz/national/grade-8/mathematics/linear-equations'
-  }
-];
 
 export function Header({ onOpenSearch }: HeaderProps) {
   const router = useRouter();
-  const [isSelectorOpen, setIsSelectorOpen] = useState(false);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
-  const [selectedContext, setSelectedContext] = useState<CurriculumOption>(TIER1_OPTIONS[0]);
 
   useEffect(() => {
-    try {
-      const saved = localStorage.getItem('schoolopedia_curriculum_context');
-      if (saved) {
-        const parsed = JSON.parse(saved);
-        const match = TIER1_OPTIONS.find(o => o.jurisdictionSlug === parsed.jurisdictionSlug);
-        if (match) setSelectedContext(match);
-      }
-    } catch (_) {}
-
     const handleKeyDown = (e: KeyboardEvent) => {
       if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
         e.preventDefault();
@@ -108,15 +25,6 @@ export function Header({ onOpenSearch }: HeaderProps) {
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, []);
-
-  const handleSelect = (option: CurriculumOption) => {
-    setSelectedContext(option);
-    setIsSelectorOpen(false);
-    try {
-      localStorage.setItem('schoolopedia_curriculum_context', JSON.stringify(option));
-    } catch (_) {}
-    router.push(option.defaultUrl);
-  };
 
   return (
     <>
@@ -221,34 +129,29 @@ export function Header({ onOpenSearch }: HeaderProps) {
           </nav>
         </div>
 
-        {/* Right Controls: Country Switcher, Search, Profile */}
-        <div style={{ display: 'flex', alignItems: 'center', gap: '14px' }}>
-          {/* Dynamic Jurisdiction Selector Pill */}
-          <button
-            onClick={() => setIsSelectorOpen(true)}
-            id="curriculum-switcher-btn"
+        {/* Right Controls: Search, Explore link, Profile */}
+        <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+          <Link
+            href="/learn"
             style={{
-              display: 'flex',
+              display: 'inline-flex',
               alignItems: 'center',
-              gap: '8px',
-              backgroundColor: '#eef2ff',
-              border: '1px solid #c7d2fe',
-              color: '#4338ca',
-              borderRadius: 'var(--radius-full)',
+              gap: '6px',
+              backgroundColor: '#EEF2FF',
+              border: '1px solid #C7D2FE',
+              color: '#4338CA',
+              borderRadius: '9999px',
               padding: '6px 14px',
               fontSize: '0.82rem',
               fontWeight: 700,
-              cursor: 'pointer',
+              textDecoration: 'none',
               transition: 'all 0.2s ease',
             }}
+            id="header-all-curricula-btn"
           >
-            <span>{selectedContext.flag}</span>
-            <span>{selectedContext.jurisdictionName}</span>
-            <span style={{ opacity: 0.6 }}>• {selectedContext.gradeLabel}</span>
-            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
-              <polyline points="6 9 12 15 18 9"></polyline>
-            </svg>
-          </button>
+            <span>🌐</span>
+            <span>All 78 Curricula</span>
+          </Link>
 
           {/* Search Trigger */}
           <button
@@ -353,132 +256,6 @@ export function Header({ onOpenSearch }: HeaderProps) {
           </div>
         </div>
       </header>
-
-      {/* Tier 1 Curriculum Jurisdiction Selector Modal */}
-      {isSelectorOpen && (
-        <div style={{
-          position: 'fixed',
-          inset: 0,
-          zIndex: 60,
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          backgroundColor: 'rgba(15, 23, 42, 0.4)',
-          backdropFilter: 'blur(4px)',
-          padding: '16px',
-        }} onClick={() => setIsSelectorOpen(false)}>
-          <div style={{
-            width: '100%',
-            maxWidth: '560px',
-            backgroundColor: '#ffffff',
-            borderRadius: '24px',
-            boxShadow: '0 20px 40px -8px rgba(15, 23, 42, 0.16)',
-            border: '1px solid var(--border-subtle)',
-            overflow: 'hidden',
-          }} onClick={e => e.stopPropagation()}>
-            <div style={{
-              padding: '24px 28px 16px',
-              borderBottom: '1px solid var(--border-subtle)',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'space-between',
-            }}>
-              <div>
-                <h3 style={{ fontSize: '1.25rem', fontWeight: 800, color: '#0f172a', margin: 0 }}>
-                  Select Curriculum System
-                </h3>
-                <p style={{ margin: '4px 0 0', fontSize: '0.85rem', color: 'var(--text-secondary)' }}>
-                  Tier 1 countries & verified official education authorities
-                </p>
-              </div>
-              <button
-                onClick={() => setIsSelectorOpen(false)}
-                style={{
-                  width: '32px',
-                  height: '32px',
-                  borderRadius: '50%',
-                  border: '1px solid var(--border-subtle)',
-                  background: '#f8fafc',
-                  cursor: 'pointer',
-                  fontSize: '1rem',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  color: '#64748b',
-                }}
-              >
-                ✕
-              </button>
-            </div>
-
-            <div style={{ padding: '16px 24px', maxHeight: '420px', overflowY: 'auto' }}>
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
-                {TIER1_OPTIONS.map((opt, i) => {
-                  const isSelected = opt.jurisdictionSlug === selectedContext.jurisdictionSlug;
-                  return (
-                    <button
-                      key={i}
-                      onClick={() => handleSelect(opt)}
-                      style={{
-                        display: 'flex',
-                        alignItems: 'center',
-                        justifyContent: 'space-between',
-                        padding: '14px 18px',
-                        borderRadius: '16px',
-                        border: isSelected ? '2px solid #4f46e5' : '1px solid #e2e8f0',
-                        backgroundColor: isSelected ? '#f5f7ff' : '#ffffff',
-                        cursor: 'pointer',
-                        textAlign: 'left',
-                        transition: 'all 0.15s ease',
-                      }}
-                    >
-                      <div style={{ display: 'flex', alignItems: 'center', gap: '14px' }}>
-                        <span style={{ fontSize: '1.8rem' }}>{opt.flag}</span>
-                        <div>
-                          <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                            <span style={{ fontSize: '0.98rem', fontWeight: 700, color: '#0f172a' }}>
-                              {opt.jurisdictionName}
-                            </span>
-                            <span style={{
-                              fontSize: '0.75rem',
-                              padding: '2px 8px',
-                              borderRadius: '6px',
-                              background: '#ecfdf5',
-                              color: '#065f46',
-                              fontWeight: 700,
-                            }}>
-                              {opt.gradeLabel}
-                            </span>
-                          </div>
-                          <span style={{ fontSize: '0.8rem', color: '#64748b' }}>
-                            {opt.countryName} • Framework: {opt.standardCode}
-                          </span>
-                        </div>
-                      </div>
-                      {isSelected ? (
-                        <span style={{ color: '#4f46e5', fontWeight: 800, fontSize: '1.2rem' }}>✓</span>
-                      ) : (
-                        <span style={{ color: '#94a3b8', fontSize: '0.85rem' }}>Select →</span>
-                      )}
-                    </button>
-                  );
-                })}
-              </div>
-            </div>
-
-            <div style={{
-              padding: '14px 24px',
-              backgroundColor: '#f8fafc',
-              borderTop: '1px solid var(--border-subtle)',
-              fontSize: '0.78rem',
-              color: '#64748b',
-              textAlign: 'center',
-            }}>
-              🔒 Verified against official state education standards (CDE, TEKS, DfE, Ontario MoE, ACARA, NZC)
-            </div>
-          </div>
-        </div>
-      )}
 
       {/* Embedded Search Modal */}
       <SearchModal isOpen={isSearchOpen} onClose={() => setIsSearchOpen(false)} />

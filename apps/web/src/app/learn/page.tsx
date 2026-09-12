@@ -10,6 +10,20 @@ import {
   JurisdictionInfo
 } from '@/lib/curriculum-data';
 
+const COURSE_SAMPLE_VIDEOS: Record<string, string> = {
+  'fractions-decimals': 'f15zA0PhSek',
+  'earth-systems': 'f15zA0PhSek',
+  'linear-equations': 'Qyd_v3DGzTM',
+  'quadratic-equations': '3ayhvAI3IeY',
+  'photosynthesis-plants': 'kqtD5dpn9C8',
+  'chemical-bonds': '8IlzKri08kk',
+  'newtons-laws': 'kKKM8Y-u7ds',
+  'cell-biology': '0RRVV4Diomg',
+  'python-programming': 'kqtD5dpn9C8',
+  'constitutional-civics': '0bf3CwYCxXw',
+  'persuasive-writing': 'HAnw168huqA',
+};
+
 export default function LearnPage() {
   const [selectedCountry, setSelectedCountry] = useState<string>('us');
   const [selectedJurisdictionSlug, setSelectedJurisdictionSlug] = useState<string>('california');
@@ -410,6 +424,48 @@ export default function LearnPage() {
                   }}
                 >
                   <div>
+                    {COURSE_SAMPLE_VIDEOS[course.sampleLessonSlug] && (
+                      <div
+                        style={{
+                          position: 'relative',
+                          width: '100%',
+                          paddingBottom: '52%',
+                          borderRadius: '12px',
+                          overflow: 'hidden',
+                          marginBottom: '1rem',
+                          backgroundColor: '#0F172A',
+                          boxShadow: '0 2px 8px rgba(0,0,0,0.08)',
+                        }}
+                      >
+                        <img
+                          src={`https://img.youtube.com/vi/${COURSE_SAMPLE_VIDEOS[course.sampleLessonSlug]}/hqdefault.jpg`}
+                          alt={course.title}
+                          style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', objectFit: 'cover' }}
+                        />
+                        <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to top, rgba(15,23,42,0.7) 0%, transparent 60%)' }} />
+                        <div
+                          style={{
+                            position: 'absolute',
+                            top: '8px',
+                            left: '8px',
+                            padding: '3px 8px',
+                            borderRadius: '6px',
+                            backgroundColor: 'rgba(15, 23, 42, 0.8)',
+                            backdropFilter: 'blur(4px)',
+                            color: '#FFFFFF',
+                            fontSize: '0.7rem',
+                            fontWeight: 700,
+                            display: 'flex',
+                            alignItems: 'center',
+                            gap: '4px',
+                          }}
+                        >
+                          <span>🎬</span>
+                          <span>Video Masterclass</span>
+                        </div>
+                      </div>
+                    )}
+
                     {/* Course Category & Grade Badges */}
                     <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem' }}>
                       <span style={{
