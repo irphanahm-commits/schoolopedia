@@ -4,7 +4,8 @@ import { notFound } from 'next/navigation';
 import { VideoPlayer } from '@/components/VideoPlayer';
 import { PracticeRunner } from '@/components/PracticeRunner';
 import { QuizRunner } from '@/components/QuizRunner';
-import { LESSONS_CATALOGUE, LessonData, getJurisdiction, TIER1_JURISDICTIONS } from '@/lib/curriculum-data';
+import { LESSONS_CATALOGUE, LessonData, getJurisdiction, TIER1_JURISDICTIONS, STANDARD_COURSES } from '@/lib/curriculum-data';
+import { getLessonOrTopic, getCourseSyllabus } from '@/lib/syllabus-data';
 
 interface DynamicLessonPageProps {
   params: Promise<{
@@ -17,7 +18,6 @@ interface DynamicLessonPageProps {
 }
 
 export async function generateStaticParams() {
-  const lessons = Object.values(LESSONS_CATALOGUE);
   const paramsList: Array<{
     country: string;
     jurisdiction: string;
@@ -26,15 +26,44 @@ export async function generateStaticParams() {
     slug: string;
   }> = [];
 
+  const seen = new Set<string>();
+
   for (const j of TIER1_JURISDICTIONS) {
-    for (const l of lessons) {
-      paramsList.push({
-        country: j.countryCode,
-        jurisdiction: j.slug,
-        grade: l.gradeSlug,
-        subject: l.subjectSlug,
-        slug: l.slug,
-      });
+    // 1. Core catalog lessons
+    for (const l of Object.values(LESSONS_CATALOGUE)) {
+      const key = `${j.countryCode}:${j.slug}:${l.gradeSlug}:${l.subjectSlug}:${l.slug}`;
+      if (!seen.has(key)) {
+        seen.add(key);
+        paramsList.push({
+          country: j.countryCode,
+          jurisdiction: j.slug,
+          grade: l.gradeSlug,
+          subject: l.subjectSlug,
+          slug: l.slug,
+        });
+      }
+    }
+
+    // 2. All course syllabus topics
+    for (const c of STANDARD_COURSES) {
+      const syllabus = getCourseSyllabus(c.gradeSlug, c.subjectSlug);
+      if (syllabus) {
+        for (const unit of syllabus.units) {
+          for (const topic of unit.topics) {
+            const key = `${j.countryCode}:${j.slug}:${c.gradeSlug}:${c.subjectSlug}:${topic.slug}`;
+            if (!seen.has(key)) {
+              seen.add(key);
+              paramsList.push({
+                country: j.countryCode,
+                jurisdiction: j.slug,
+                grade: c.gradeSlug,
+                subject: c.subjectSlug,
+                slug: topic.slug,
+              });
+            }
+          }
+        }
+      }
     }
   }
 
@@ -43,7 +72,7 @@ export async function generateStaticParams() {
 
 export default async function UniversalLessonPage({ params }: DynamicLessonPageProps) {
   const resolvedParams = await params;
-  const lesson: LessonData | undefined = LESSONS_CATALOGUE[resolvedParams.slug];
+  const lesson: LessonData | undefined = getLessonOrTopic(resolvedParams.slug);
 
   if (!lesson) {
     notFound();

@@ -3,6 +3,7 @@ import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { LESSONS_CATALOGUE, STANDARD_COURSES, getJurisdiction, TIER1_JURISDICTIONS } from '@/lib/curriculum-data';
 import { getCourseSyllabus } from '@/lib/syllabus-data';
+import { TopicVideoPlayButton } from '@/components/TopicVideoPlayButton';
 
 interface CourseSyllabusProps {
   params: Promise<{
@@ -209,8 +210,8 @@ export default async function CourseSyllabusPage({ params }: CourseSyllabusProps
                 {/* Topics in this Unit */}
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
                   {unit.topics.map(topic => {
-                    const hasActiveLesson = topic.hasInteractiveLesson && topic.activeLessonSlug;
-                    const targetSlug = hasActiveLesson ? topic.activeLessonSlug : currentLesson.slug;
+                    const topicSlug = topic.slug;
+                    const lessonUrl = `/learn/${resolvedParams.country}/${resolvedParams.jurisdiction}/${resolvedParams.grade}/${resolvedParams.subject}/${topicSlug}`;
 
                     return (
                       <div
@@ -221,8 +222,8 @@ export default async function CourseSyllabusPage({ params }: CourseSyllabusProps
                           alignItems: 'center',
                           padding: '16px 20px',
                           borderRadius: '14px',
-                          border: hasActiveLesson ? '1.5px solid #c7d2fe' : '1px solid #f1f5f9',
-                          backgroundColor: hasActiveLesson ? '#f5f7ff' : '#ffffff',
+                          border: '1.5px solid #c7d2fe',
+                          backgroundColor: '#f8faff',
                           transition: 'all 0.2s ease',
                           gap: '16px',
                           flexWrap: 'wrap'
@@ -233,8 +234,8 @@ export default async function CourseSyllabusPage({ params }: CourseSyllabusProps
                             width: '36px',
                             height: '36px',
                             borderRadius: '10px',
-                            backgroundColor: hasActiveLesson ? '#4f46e5' : '#f1f5f9',
-                            color: hasActiveLesson ? '#ffffff' : '#475569',
+                            backgroundColor: '#4f46e5',
+                            color: '#ffffff',
                             display: 'flex',
                             alignItems: 'center',
                             justifyContent: 'center',
@@ -249,58 +250,74 @@ export default async function CourseSyllabusPage({ params }: CourseSyllabusProps
                               <span style={{ fontWeight: 800, color: '#0f172a', fontSize: '1rem' }}>
                                 {topic.title}
                               </span>
-                              {hasActiveLesson ? (
-                                <span style={{
-                                  fontSize: '0.7rem',
-                                  fontWeight: 800,
-                                  padding: '2px 8px',
-                                  borderRadius: '6px',
-                                  backgroundColor: '#10b981',
-                                  color: '#ffffff',
-                                }}>
-                                  ⚡ Interactive Masterclass Live
-                                </span>
-                              ) : (
-                                <span style={{
-                                  fontSize: '0.7rem',
-                                  fontWeight: 700,
-                                  padding: '2px 8px',
-                                  borderRadius: '6px',
-                                  backgroundColor: '#f1f5f9',
-                                  color: '#475569',
-                                }}>
-                                  ✓ Standard Aligned
-                                </span>
-                              )}
+                              <span style={{
+                                fontSize: '0.7rem',
+                                fontWeight: 800,
+                                padding: '2px 8px',
+                                borderRadius: '6px',
+                                backgroundColor: '#10b981',
+                                color: '#ffffff',
+                              }}>
+                                ⚡ Video Masterclass Aligned
+                              </span>
+                              <span style={{
+                                fontSize: '0.7rem',
+                                fontWeight: 700,
+                                padding: '2px 8px',
+                                borderRadius: '6px',
+                                backgroundColor: '#f1f5f9',
+                                color: '#475569',
+                              }}>
+                                ✓ Standard Aligned
+                              </span>
                             </div>
                             <div style={{ fontSize: '0.8rem', color: '#64748b', marginBottom: '4px' }}>
                               <strong>{topic.standardCode}</strong> — {topic.standardTitle}
                             </div>
-                            <div style={{ fontSize: '0.82rem', color: '#475569', lineHeight: 1.4 }}>
+                            <div style={{ fontSize: '0.82rem', color: '#475569', lineHeight: 1.4, marginBottom: '6px' }}>
                               {topic.summary}
                             </div>
+                            {topic.video && (
+                              <div style={{ fontSize: '0.75rem', color: '#4f46e5', display: 'flex', alignItems: 'center', gap: '6px' }}>
+                                <span>📺 Featured Masterclass: <strong>{topic.video.title}</strong> by {topic.video.channelTitle} ({topic.video.durationFormatted})</span>
+                              </div>
+                            )}
                           </div>
                         </div>
 
-                        <div style={{ flexShrink: 0 }}>
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '10px', flexShrink: 0, flexWrap: 'wrap' }}>
+                          {topic.video && (
+                            <TopicVideoPlayButton
+                              video={topic.video}
+                              topic={{
+                                title: topic.title,
+                                topicNumber: topic.topicNumber,
+                                standardCode: topic.standardCode,
+                                gradeLabel: syllabus ? syllabus.gradeName : currentLesson.gradeName,
+                                subjectLabel: syllabus ? syllabus.subjectName : currentLesson.subjectName,
+                                lessonUrl: lessonUrl,
+                                summary: topic.summary,
+                              }}
+                            />
+                          )}
                           <Link
-                            href={`/learn/${resolvedParams.country}/${resolvedParams.jurisdiction}/${resolvedParams.grade}/${resolvedParams.subject}/${targetSlug}`}
+                            href={lessonUrl}
                             style={{
                               display: 'inline-flex',
                               alignItems: 'center',
                               gap: '6px',
                               padding: '8px 16px',
                               borderRadius: '10px',
-                              backgroundColor: hasActiveLesson ? '#4f46e5' : '#ffffff',
-                              border: hasActiveLesson ? 'none' : '1px solid #c7d2fe',
-                              color: hasActiveLesson ? '#ffffff' : '#4f46e5',
+                              backgroundColor: '#4f46e5',
+                              border: 'none',
+                              color: '#ffffff',
                               fontWeight: 700,
                               fontSize: '0.82rem',
                               textDecoration: 'none',
-                              boxShadow: hasActiveLesson ? '0 2px 8px rgba(79, 70, 229, 0.25)' : 'none'
+                              boxShadow: '0 2px 8px rgba(79, 70, 229, 0.25)'
                             }}
                           >
-                            {hasActiveLesson ? 'Open Lesson →' : 'Explore Concept →'}
+                            Open Lesson & Drills →
                           </Link>
                         </div>
                       </div>
