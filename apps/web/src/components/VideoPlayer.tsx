@@ -139,6 +139,31 @@ export function VideoPlayer({ videos }: VideoPlayerProps) {
           >
             <span>⛶</span>
           </button>
+
+          {/* Direct YouTube Link */}
+          <a
+            href={`https://www.youtube.com/watch?v=${video.youtube_video_id}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            style={{
+              display: 'inline-flex',
+              alignItems: 'center',
+              gap: '4px',
+              padding: '6px 10px',
+              borderRadius: 'var(--radius-full)',
+              backgroundColor: '#FFFFFF',
+              border: '1px solid var(--border-subtle)',
+              color: '#475569',
+              fontSize: '0.78rem',
+              fontWeight: 700,
+              textDecoration: 'none',
+              transition: 'all 0.15s ease',
+            }}
+            title="Open video directly on YouTube"
+            id="btn-lesson-youtube-external"
+          >
+            <span>YouTube ↗</span>
+          </a>
         </div>
       </div>
 

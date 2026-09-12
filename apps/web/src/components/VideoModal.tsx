@@ -235,6 +235,30 @@ export function VideoModal({ video: propVideo, onClose: propOnClose }: VideoModa
               <span className="hide-on-tiny-screen">Full</span>
             </button>
 
+            <a
+              href={`https://www.youtube.com/watch?v=${activeVideo.youtubeVideoId}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: '5px',
+                padding: '6px 10px',
+                borderRadius: '8px',
+                backgroundColor: 'rgba(255, 255, 255, 0.08)',
+                border: '1px solid rgba(255, 255, 255, 0.12)',
+                color: '#E2E8F0',
+                textDecoration: 'none',
+                fontSize: '0.78rem',
+                fontWeight: 700,
+                transition: 'all 0.15s ease',
+              }}
+              title="Open video directly on YouTube"
+              id="btn-video-youtube-external"
+            >
+              <span>YouTube ↗</span>
+            </a>
+
             <button
               onClick={handleClose}
               style={{
