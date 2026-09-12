@@ -262,8 +262,77 @@ export default function LinearEquationsLessonPage() {
     },
   };
 
+  const courseSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'Course',
+    name: 'Grade 8 Mathematics: Solving Linear Equations in One Variable',
+    description: 'Master solving multi-step linear equations with rational number coefficients, using the distributive property, and determining whether equations have one solution, infinitely many solutions, or no solution.',
+    provider: {
+      '@type': 'Organization',
+      name: 'Schoolopedia',
+      sameAs: 'https://schoolopedia.com',
+    },
+    isAccessibleForFree: true,
+  };
+
+  const faqSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: [
+      {
+        '@type': 'Question',
+        name: 'What is a linear equation in one variable?',
+        acceptedAnswer: {
+          '@type': 'Answer',
+          text: 'A linear equation in one variable is an algebraic statement where the variable is raised only to the first power (such as ax + b = c). Solving it requires applying inverse operations equally to both sides to isolate the variable.',
+        },
+      },
+      {
+        '@type': 'Question',
+        name: 'What curriculum standard covers Grade 8 linear equations in California?',
+        acceptedAnswer: {
+          '@type': 'Answer',
+          text: 'It is aligned with CCSS.MATH.CONTENT.8.EE.C.7 under the California Department of Education Mathematics Framework.',
+        },
+      },
+      {
+        '@type': 'Question',
+        name: 'How do you determine if an equation has infinite solutions?',
+        acceptedAnswer: {
+          '@type': 'Answer',
+          text: 'If simplifying both sides yields an identity where the variables cancel out and both sides are equal (such as 5 = 5 or 0 = 0), the equation is true for all real numbers and has infinitely many solutions.',
+        },
+      },
+    ],
+  };
+
+  const videoSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'VideoObject',
+    name: 'Introduction to solving an equation with variables on both sides',
+    description: 'Khan Academy instructional masterclass explaining how to solve multi-step linear equations with variables on both sides.',
+    thumbnailUrl: 'https://img.youtube.com/vi/f15zA0PhSek/hqdefault.jpg',
+    uploadDate: '2026-01-01T00:00:00Z',
+    duration: 'PT8M5S',
+    embedUrl: 'https://www.youtube-nocookie.com/embed/f15zA0PhSek',
+  };
+
   return (
     <div style={{ maxWidth: '1040px', margin: '0 auto', padding: '32px 24px' }}>
+      {/* AEO / AI Crawler Structured Data */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(courseSchema) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(videoSchema) }}
+      />
+
       {/* Breadcrumb Trail */}
       <nav style={{
         display: 'flex',
@@ -354,6 +423,39 @@ export default function LinearEquationsLessonPage() {
           >
             Official Framework Document ↗
           </Link>
+        </div>
+      </div>
+
+      {/* AEO / Quick Knowledge Snapshot for Learners & Search Engines */}
+      <div
+        id="aeo-direct-answer"
+        style={{
+          background: 'linear-gradient(135deg, #f8fafc 0%, #eef2ff 100%)',
+          border: '1.5px solid #c7d2fe',
+          borderRadius: '18px',
+          padding: '24px 28px',
+          marginBottom: '32px',
+        }}
+      >
+        <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '10px' }}>
+          <span style={{ fontSize: '1.2rem' }}>⚡</span>
+          <h2 style={{ fontSize: '1.05rem', fontWeight: 800, color: '#1e1b4b', margin: 0 }}>
+            Direct Definition & Core Mathematical Rule (Fast Facts)
+          </h2>
+        </div>
+        <p style={{ fontSize: '0.92rem', color: '#334155', lineHeight: 1.6, margin: '0 0 12px 0' }}>
+          A <strong>linear equation in one variable</strong> is an algebraic equality where the variable has an exponent of 1 (e.g., <code>ax + b = c</code>). Solving it requires applying inverse operations (addition/subtraction, multiplication/division) equally to both sides to isolate the variable.
+        </p>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: '12px', fontSize: '0.84rem' }}>
+          <div style={{ background: '#ffffff', padding: '10px 14px', borderRadius: '12px', border: '1px solid #e0e7ff' }}>
+            <strong style={{ color: '#4338ca' }}>1 Solution (x = a)</strong>: Intersecting lines with a single unique numerical value.
+          </div>
+          <div style={{ background: '#ffffff', padding: '10px 14px', borderRadius: '12px', border: '1px solid #e0e7ff' }}>
+            <strong style={{ color: '#047857' }}>Infinite Solutions (a = a)</strong>: Identity equation; true for all real numbers.
+          </div>
+          <div style={{ background: '#ffffff', padding: '10px 14px', borderRadius: '12px', border: '1px solid #e0e7ff' }}>
+            <strong style={{ color: '#b91c1c' }}>No Solution (a = b)</strong>: Contradiction equation (e.g. 0 = 5); parallel lines.
+          </div>
         </div>
       </div>
 

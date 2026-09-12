@@ -1,0 +1,33 @@
+# Schoolopedia — The Curriculum-Aware Education Encyclopedia
+
+> Schoolopedia is a free, curriculum-aware living education encyclopedia built for all 78 Tier 1 education jurisdictions across the USA, United Kingdom, Canada, Australia, and New Zealand. It guides learners along official national and state frameworks through verified lesson sequences, curated video masterclasses, interactive practice, and server-validated mastery.
+
+## Core Pillars
+- [Curriculum Hub](https://schoolopedia.com/learn): K–12 standards-aligned learning pathways for 78 jurisdictions across 5 core subjects: Mathematics, Science, English Language Arts, Social Studies & Civics, and Computer Science & AI.
+- [Institution & Campus Directory](https://schoolopedia.com/explore): Official profiles for Tier 1 universities and research centers (UC Berkeley, University of Oxford, University of Toronto, University of Melbourne, University of Auckland).
+- [Career Pathways & Skills](https://schoolopedia.com/guidance): Non-deterministic education-to-career navigation connecting concepts to technical and cognitive skills.
+- [Verified Opportunities](https://schoolopedia.com/opportunities): Source-backed scholarships, apprenticeships, and summer programs with time-aware deadlines.
+- [Living Curriculum Updates](https://schoolopedia.com/blog): Track state and national curriculum framework revisions, standards alignment notes, and pedagogical guides.
+
+## Canonical First Vertical Slice
+- Target: United States → California → Public School System → 2026–27 Academic Year → Grade 8 → Mathematics → Linear Equations in One Variable
+- Official Authority: California Department of Education (CDE)
+- Standard Code: CCSS.MATH.CONTENT.8.EE.C.7 / TEKS 8.8.C / AC9M8A03
+- URL: https://schoolopedia.com/learn/us/california/grade-8/mathematics/linear-equations
+
+## 78 Tier 1 Jurisdictions Covered
+1. United States (51): All 50 states + Washington D.C. (CCSS, Texas TEKS, Florida B.E.S.T., Virginia SOL, NY NextGen, etc.)
+2. United Kingdom (4): England (DfE / National Curriculum KS1–4), Scotland (CfE / SQA), Wales (Curriculum for Wales), Northern Ireland (CCEA)
+3. Canada (13): 10 Provinces (Ontario MoE, British Columbia MoE, Alberta Education, Quebec MEQ, etc.) + 3 Territories
+4. Australia (8): 6 States (NSW NESA, Victoria VCAA, Queensland QCAA, WA SCSA, SA SACE, Tasmania TASC) + 2 Mainland Territories (ACARA v9.0)
+5. New Zealand (2 Pathways): English-Medium (The New Zealand Curriculum - NZC) and Māori-Medium (Te Marautanga o Aotearoa - TMoA)
+
+## Provenance & Trust Principles
+- Trust is demonstrated, not claimed.
+- Published educational curriculum versions are immutable.
+- External videos and educational resources have verified primary and backup sources with automated 6-hour health checks.
+- AI is strictly non-authoritative: AI suggests mappings and practice problems, but canonical standards are grounded directly in official state/national frameworks.
+- 100% Free Forever: Built on zero-cost edge infrastructure ($0/month budget).
+
+## Optional Extended Documentation
+- [Full Curriculum & LLM Reference](https://schoolopedia.com/llms-full.txt): Detailed breakdown of all 78 jurisdictions, standards mappings, and entity schemas.

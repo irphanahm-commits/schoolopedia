@@ -1,0 +1,52 @@
+# Schoolopedia — Comprehensive Architecture, Curriculum Graph & LLM Reference
+
+## System Invariants & Architectural Rules
+1. Zero-Cost-First Architecture: Runs within the Cloudflare Free Tier using D1 (SQLite at the edge), KV (caching), R2 (snapshots), and Workers.
+2. Canonical Data Model: D1 is the sole source of canonical truth. Published curriculum versions are immutable.
+3. Provenance Hierarchy:
+   - Tier 1: Official State/National Department of Education frameworks (CDE, DfE, ACARA, MoE).
+   - Tier 2: Institutional authorities and professional subject bodies (NCTM, Royal Society of Chemistry).
+   - Tier 3: Curated open educational resources (Khan Academy, Math Antics, CrashCourse).
+   - Tier 4: Community and teacher contributions (segregated from canonical standards).
+   - AI is NOT a source tier; AI output is computation only.
+4. Server Authority: Mastery evaluations, quiz scoring, and user state mutations are calculated server-side; client input is never trusted without validation.
+
+## Complete 78 Jurisdictions Registry
+### United States (51)
+- Alabama, Alaska, Arizona, Arkansas, California (CDE), Colorado, Connecticut, Delaware, Florida (FLDOE B.E.S.T.), Georgia, Hawaii, Idaho, Illinois, Indiana, Iowa, Kansas, Kentucky, Louisiana, Maine, Maryland, Massachusetts, Michigan, Minnesota, Mississippi, Missouri, Montana, Nebraska, Nevada, New Hampshire, New Jersey, New Mexico, New York (NYSED NextGen), North Carolina, North Dakota, Ohio, Oklahoma, Oregon, Pennsylvania, Rhode Island, South Carolina, South Dakota, Tennessee, Texas (TEA TEKS), Utah, Vermont, Virginia (VDOE SOL), Washington (OSPI), West Virginia, Wisconsin, Wyoming, Washington D.C.
+
+### United Kingdom (4)
+- England: Department for Education (DfE) National Curriculum (Key Stages 1–4, GCSE)
+- Scotland: Curriculum for Excellence (CfE) & Scottish Qualifications Authority (SQA Nationals & Highers)
+- Wales: Curriculum for Wales (Cwricwlwm i Gymru)
+- Northern Ireland: Council for the Curriculum, Examinations & Assessment (CCEA)
+
+### Canada (13)
+- Alberta Education, British Columbia Ministry of Education, Manitoba Education, New Brunswick Department of Education, Newfoundland & Labrador Department of Education, Northwest Territories Department of Education, Nova Scotia Department of Education, Nunavut Department of Education, Ontario Ministry of Education, Prince Edward Island Department of Education, Quebec Ministère de l'Éducation, Saskatchewan Ministry of Education, Yukon Department of Education.
+
+### Australia (8)
+- Australian Curriculum, Assessment and Reporting Authority (ACARA v9.0)
+- New South Wales: NESA
+- Victoria: VCAA
+- Queensland: QCAA
+- Western Australia: SCSA
+- South Australia: SACE Board
+- Tasmania: TASC
+- Australian Capital Territory: BSSS
+- Northern Territory Department of Education
+
+### New Zealand (2 Pathways)
+- English-Medium: Ministry of Education The New Zealand Curriculum (NZC)
+- Māori-Medium: Te Marautanga o Aotearoa (TMoA)
+
+## Core Subject Taxonomies
+1. Mathematics: Arithmetic, Pre-Algebra, Algebra 1, Geometry, Algebra 2, Pre-Calculus, Calculus, Statistics & Probability.
+2. Science: Elementary Integrated Science, Life Science / Biology, Chemistry, Physics, Earth & Space Science.
+3. English Language Arts: Foundational Literacy, Informational Text, Literature Analysis, Writing & Composition, Speaking & Listening.
+4. Social Studies & Civics: Community & Culture, Civics & Government, World History, Geography, Economics.
+5. Computer Science & AI: Algorithms & Computational Thinking, Python Programming, Web & App Development, Data & Machine Learning Literacy, Cyber Ethics & Digital Citizenship.
+
+## Machine-Readable Entity Schemas
+- Course / Lesson: Uses schema.org/Course, schema.org/LearningResource, and schema.org/VideoObject.
+- Questions & Answers: Uses schema.org/FAQPage for Answer Engine extraction.
+- University / College: Uses schema.org/CollegeOrUniversity and schema.org/EducationalOccupationalProgram.

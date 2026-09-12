@@ -115,17 +115,19 @@ export default function LearnPage() {
         </div>
 
         {/* Country Selector Tabs */}
-        <div style={{
-          display: 'flex',
-          gap: '0.5rem',
-          padding: '0.5rem',
-          backgroundColor: '#FFFFFF',
-          borderRadius: '16px',
-          boxShadow: '0 4px 12px -2px rgba(79, 70, 229, 0.05)',
-          border: '1px solid #E2E8F0',
-          marginBottom: '2rem',
-          overflowX: 'auto'
-        }}>
+        <div
+          className="horizontal-scroll-row"
+          style={{
+            gap: '0.5rem',
+            padding: '0.5rem',
+            backgroundColor: '#FFFFFF',
+            borderRadius: '16px',
+            boxShadow: '0 4px 12px -2px rgba(79, 70, 229, 0.05)',
+            border: '1px solid #E2E8F0',
+            marginBottom: '2rem',
+            maxWidth: '100%',
+          }}
+        >
           {TIER1_COUNTRIES.map(country => {
             const isActive = selectedCountry === country.code;
             return (
@@ -145,6 +147,7 @@ export default function LearnPage() {
                   fontSize: '0.9375rem',
                   cursor: 'pointer',
                   whiteSpace: 'nowrap',
+                  flexShrink: 0,
                   transition: 'all 0.15s ease'
                 }}
               >
@@ -400,7 +403,7 @@ export default function LearnPage() {
 
           <div style={{
             display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fill, minmax(360px, 1fr))',
+            gridTemplateColumns: 'repeat(auto-fill, minmax(min(100%, 280px), 1fr))',
             gap: '1.5rem'
           }}>
             {filteredCourses.map(course => {

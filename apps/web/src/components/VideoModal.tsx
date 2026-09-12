@@ -1,33 +1,57 @@
 'use client';
 
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 import Link from 'next/link';
+import { useVideoPlayer, VideoModalItem } from '@/lib/VideoContext';
 
-export interface VideoModalItem {
-  youtubeVideoId: string;
-  title: string;
-  channelTitle: string;
-  durationFormatted: string;
-  gradeLabel: string;
-  subjectLabel: string;
-  standardCode: string;
-  lessonUrl: string;
-  summary?: string;
-}
+export type { VideoModalItem };
 
 interface VideoModalProps {
-  video: VideoModalItem | null;
-  onClose: () => void;
+  video?: VideoModalItem | null;
+  onClose?: () => void;
 }
 
-export function VideoModal({ video, onClose }: VideoModalProps) {
+export function VideoModal({ video: propVideo, onClose: propOnClose }: VideoModalProps = {}) {
+  const context = useVideoPlayer();
+  const playerRef = useRef<HTMLDivElement>(null);
+
+  // Support both context-driven and direct prop usage
+  const activeVideo = propVideo !== undefined ? propVideo : context.activeVideo;
+  const isModalOpen = propVideo !== undefined ? Boolean(propVideo) : context.playerMode === 'modal';
+
+  const handleClose = () => {
+    if (propOnClose) {
+      propOnClose();
+    } else {
+      context.closeVideo();
+    }
+  };
+
+  const handleMinimizeToFloating = () => {
+    if (propVideo) {
+      // If props were passed directly, initialize into context
+      context.playVideo(propVideo, 'floating');
+      propOnClose?.();
+    } else {
+      context.setPlayerMode('floating');
+    }
+  };
+
+  const handleFullscreen = () => {
+    context.enterFullscreen(playerRef.current);
+  };
+
+  const handlePictureInPicture = () => {
+    handleMinimizeToFloating();
+  };
+
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') {
-        onClose();
+      if (e.key === 'Escape' && isModalOpen) {
+        handleClose();
       }
     };
-    if (video) {
+    if (isModalOpen) {
       window.addEventListener('keydown', handleKeyDown);
       document.body.style.overflow = 'hidden';
     }
@@ -35,12 +59,13 @@ export function VideoModal({ video, onClose }: VideoModalProps) {
       window.removeEventListener('keydown', handleKeyDown);
       document.body.style.overflow = 'unset';
     };
-  }, [video, onClose]);
+  }, [isModalOpen]);
 
-  if (!video) return null;
+  if (!isModalOpen || !activeVideo) return null;
 
   return (
     <div
+      className="video-modal-backdrop"
       style={{
         position: 'fixed',
         inset: 0,
@@ -48,48 +73,56 @@ export function VideoModal({ video, onClose }: VideoModalProps) {
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
-        backgroundColor: 'rgba(15, 23, 42, 0.75)',
+        backgroundColor: 'rgba(15, 23, 42, 0.78)',
         backdropFilter: 'blur(8px)',
         WebkitBackdropFilter: 'blur(8px)',
-        padding: '20px',
+        padding: '16px',
         animation: 'fadeIn 0.2s ease-out',
       }}
-      onClick={onClose}
+      onClick={handleClose}
       id="video-preview-modal-backdrop"
     >
       <div
+        ref={playerRef}
+        className="video-modal-container"
         style={{
           width: '100%',
           maxWidth: '860px',
+          maxHeight: '92vh',
           backgroundColor: '#0F172A',
           borderRadius: '24px',
-          boxShadow: '0 25px 60px -12px rgba(0, 0, 0, 0.5)',
-          overflow: 'hidden',
-          border: '1px solid rgba(255, 255, 255, 0.1)',
+          boxShadow: '0 25px 60px -12px rgba(0, 0, 0, 0.6)',
+          overflowY: 'auto',
+          WebkitOverflowScrolling: 'touch',
+          border: '1px solid rgba(255, 255, 255, 0.12)',
           display: 'flex',
           flexDirection: 'column',
+          position: 'relative',
         }}
         onClick={(e) => e.stopPropagation()}
         id="video-preview-modal"
       >
-        {/* Modal Top Header Bar */}
+        {/* Modal Top Header Bar with Multi-Controls */}
         <div
+          className="video-modal-header"
           style={{
-            padding: '16px 24px',
+            padding: '14px 20px',
             backgroundColor: '#1E293B',
             borderBottom: '1px solid rgba(255, 255, 255, 0.08)',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'space-between',
             gap: '12px',
+            flexWrap: 'wrap',
           }}
         >
-          <div style={{ display: 'flex', alignItems: 'center', gap: '10px', flexWrap: 'wrap' }}>
+          {/* Badges */}
+          <div style={{ display: 'flex', alignItems: 'center', gap: '8px', flexWrap: 'wrap', flex: 1, minWidth: '180px' }}>
             <span
               style={{
                 fontSize: '0.72rem',
                 fontWeight: 800,
-                padding: '3px 10px',
+                padding: '3px 9px',
                 borderRadius: '6px',
                 backgroundColor: '#38BDF8',
                 color: '#0369A1',
@@ -97,63 +130,151 @@ export function VideoModal({ video, onClose }: VideoModalProps) {
                 letterSpacing: '0.04em',
               }}
             >
-              {video.gradeLabel}
+              {activeVideo.gradeLabel}
             </span>
             <span
               style={{
                 fontSize: '0.72rem',
                 fontWeight: 700,
-                padding: '3px 10px',
+                padding: '3px 9px',
                 borderRadius: '6px',
                 backgroundColor: '#334155',
                 color: '#E2E8F0',
               }}
             >
-              {video.subjectLabel}
+              {activeVideo.subjectLabel}
             </span>
             <span
               style={{
-                fontSize: '0.72rem',
+                fontSize: '0.7rem',
                 fontWeight: 700,
-                padding: '3px 10px',
+                padding: '3px 8px',
                 borderRadius: '6px',
                 backgroundColor: 'rgba(79, 70, 229, 0.25)',
                 color: '#A5B4FC',
                 border: '1px solid rgba(165, 180, 252, 0.2)',
+                maxWidth: '220px',
+                overflow: 'hidden',
+                textOverflow: 'ellipsis',
+                whiteSpace: 'nowrap',
               }}
+              title={`Standard: ${activeVideo.standardCode}`}
             >
-              Standard: {video.standardCode}
+              Standard: {activeVideo.standardCode}
             </span>
           </div>
 
-          <button
-            onClick={onClose}
-            style={{
-              width: '32px',
-              height: '32px',
-              borderRadius: '50%',
-              backgroundColor: 'rgba(255, 255, 255, 0.1)',
-              border: 'none',
-              color: '#94A3B8',
-              cursor: 'pointer',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              fontSize: '1rem',
-              transition: 'all 0.15s ease',
-            }}
-            id="btn-close-video-modal"
-          >
-            ✕
-          </button>
+          {/* Player Mode Actions: PiP, Floating Window, Fullscreen, Close */}
+          <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+            <button
+              onClick={handleMinimizeToFloating}
+              style={{
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: '5px',
+                padding: '6px 12px',
+                borderRadius: '8px',
+                backgroundColor: 'rgba(255, 255, 255, 0.08)',
+                border: '1px solid rgba(255, 255, 255, 0.12)',
+                color: '#E2E8F0',
+                cursor: 'pointer',
+                fontSize: '0.78rem',
+                fontWeight: 700,
+                transition: 'all 0.15s ease',
+              }}
+              title="Minimize into draggable floating miniplayer"
+              id="btn-video-float-mode"
+            >
+              <span>🪟</span>
+              <span className="hide-on-tiny-screen">Floating</span>
+            </button>
+
+            <button
+              onClick={handlePictureInPicture}
+              style={{
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: '5px',
+                padding: '6px 10px',
+                borderRadius: '8px',
+                backgroundColor: 'rgba(255, 255, 255, 0.08)',
+                border: '1px solid rgba(255, 255, 255, 0.12)',
+                color: '#E2E8F0',
+                cursor: 'pointer',
+                fontSize: '0.78rem',
+                fontWeight: 700,
+                transition: 'all 0.15s ease',
+              }}
+              title="Picture-in-Picture mode"
+              id="btn-video-pip-mode"
+            >
+              <span>🖼️</span>
+              <span className="hide-on-tiny-screen">PiP</span>
+            </button>
+
+            <button
+              onClick={handleFullscreen}
+              style={{
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: '5px',
+                padding: '6px 10px',
+                borderRadius: '8px',
+                backgroundColor: 'rgba(255, 255, 255, 0.08)',
+                border: '1px solid rgba(255, 255, 255, 0.12)',
+                color: '#E2E8F0',
+                cursor: 'pointer',
+                fontSize: '0.78rem',
+                fontWeight: 700,
+                transition: 'all 0.15s ease',
+              }}
+              title="Enter Fullscreen"
+              id="btn-video-fullscreen-mode"
+            >
+              <span>⛶</span>
+              <span className="hide-on-tiny-screen">Full</span>
+            </button>
+
+            <button
+              onClick={handleClose}
+              style={{
+                width: '34px',
+                height: '34px',
+                borderRadius: '50%',
+                backgroundColor: 'rgba(255, 255, 255, 0.1)',
+                border: 'none',
+                color: '#CBD5E1',
+                cursor: 'pointer',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                fontSize: '1rem',
+                fontWeight: 700,
+                transition: 'all 0.15s ease',
+              }}
+              title="Close modal"
+              id="btn-close-video-modal"
+            >
+              ✕
+            </button>
+          </div>
         </div>
 
         {/* 16:9 Video Player */}
-        <div style={{ position: 'relative', paddingBottom: '56.25%', height: 0, backgroundColor: '#000000' }}>
+        <div
+          id="video-player-fullscreen-target"
+          style={{
+            position: 'relative',
+            width: '100%',
+            paddingBottom: '56.25%',
+            height: 0,
+            backgroundColor: '#000000',
+          }}
+        >
           <iframe
-            src={`https://www.youtube-nocookie.com/embed/${video.youtubeVideoId}?autoplay=1&rel=0&modestbranding=1`}
-            title={video.title}
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            src={`https://www.youtube-nocookie.com/embed/${activeVideo.youtubeVideoId}?autoplay=1&rel=0&modestbranding=1`}
+            title={activeVideo.title}
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
             allowFullScreen
             style={{
               position: 'absolute',
@@ -168,50 +289,52 @@ export function VideoModal({ video, onClose }: VideoModalProps) {
         </div>
 
         {/* Modal Info & CTA Footer */}
-        <div style={{ padding: '20px 24px', backgroundColor: '#0F172A' }}>
+        <div className="video-modal-footer" style={{ padding: '20px', backgroundColor: '#0F172A' }}>
           <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', gap: '20px', flexWrap: 'wrap' }}>
-            <div style={{ flex: 1, minWidth: '280px' }}>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '6px' }}>
+            <div style={{ flex: 1, minWidth: 'min(100%, 260px)' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '6px', flexWrap: 'wrap' }}>
                 <span style={{ fontSize: '0.82rem', color: '#38BDF8', fontWeight: 700 }}>
-                  ▶ {video.channelTitle}
+                  ▶ {activeVideo.channelTitle}
                 </span>
                 <span style={{ color: '#475569' }}>•</span>
                 <span style={{ fontSize: '0.8rem', color: '#94A3B8', fontWeight: 600 }}>
-                  ⏱ {video.durationFormatted}
+                  ⏱ {activeVideo.durationFormatted}
                 </span>
                 <span style={{ color: '#475569' }}>•</span>
                 <span style={{ fontSize: '0.8rem', color: '#10B981', fontWeight: 700 }}>
                   ★ 100% Curated
                 </span>
               </div>
-              <h3 style={{ fontSize: '1.2rem', fontWeight: 800, color: '#F8FAFC', margin: '0 0 8px 0', lineHeight: 1.3 }}>
-                {video.title}
+              <h3 style={{ fontSize: '1.15rem', fontWeight: 800, color: '#F8FAFC', margin: '0 0 8px 0', lineHeight: 1.35 }}>
+                {activeVideo.title}
               </h3>
-              {video.summary && (
+              {activeVideo.summary && (
                 <p style={{ fontSize: '0.86rem', color: '#94A3B8', lineHeight: 1.5, margin: 0 }}>
-                  {video.summary}
+                  {activeVideo.summary}
                 </p>
               )}
             </div>
 
-            <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '12px', width: '100%', maxWidth: '280px' }}>
               <Link
-                href={video.lessonUrl}
-                onClick={onClose}
+                href={activeVideo.lessonUrl}
+                onClick={handleClose}
                 style={{
+                  width: '100%',
                   display: 'inline-flex',
                   alignItems: 'center',
+                  justifyContent: 'center',
                   gap: '8px',
                   backgroundColor: '#4F46E5',
                   color: '#FFFFFF',
-                  padding: '12px 20px',
+                  padding: '12px 18px',
                   borderRadius: '12px',
                   fontWeight: 700,
-                  fontSize: '0.9rem',
+                  fontSize: '0.88rem',
                   textDecoration: 'none',
                   boxShadow: '0 4px 14px rgba(79, 70, 229, 0.4)',
                   transition: 'all 0.2s ease',
-                  whiteSpace: 'nowrap',
+                  textAlign: 'center',
                 }}
                 id="btn-modal-open-lesson"
               >

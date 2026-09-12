@@ -210,7 +210,7 @@ export default function ExplorePage() {
         </div>
 
         {/* Institutions Grid */}
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(360px, 1fr))', gap: '24px' }}>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(min(100%, 280px), 1fr))', gap: '24px' }}>
           {filtered.map((inst, idx) => (
             <div
               key={idx}

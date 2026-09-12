@@ -10,7 +10,10 @@
     "lint": "turbo run lint",
     "test": "node --experimental-strip-types --test tests/unit/*.test.ts",
     "typecheck": "turbo run typecheck",
-    "clean": "turbo run clean"
+    "clean": "turbo run clean",
+    "deploy:api": "wrangler deploy",
+    "deploy:web": "wrangler deploy --config apps/web/wrangler.toml",
+    "deploy": "turbo run build && wrangler deploy && wrangler deploy --config apps/web/wrangler.toml"
   },
   "devDependencies": {
     "@types/node": "^22.13.9",

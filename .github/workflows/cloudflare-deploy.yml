@@ -1,6 +1,8 @@
-name: Cloudflare Manual Deployment
+name: Cloudflare Continuous Deployment
 
 on:
+  push:
+    branches: [main]
   workflow_dispatch:
 
 jobs:
@@ -16,13 +18,11 @@ jobs:
         with:
           version: 12.4.1
       - run: pnpm install
-      - run: pnpm build
       - name: Deploy API
         uses: cloudflare/wrangler-action@v3
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          workingDirectory: workers/api
           command: deploy
 
   deploy-web:

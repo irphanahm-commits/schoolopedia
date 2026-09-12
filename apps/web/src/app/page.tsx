@@ -9,7 +9,7 @@ import {
   getJurisdictionsByCountry,
 } from '@/lib/curriculum-data';
 import { SearchModal } from '@/components/SearchModal';
-import { VideoModal, VideoModalItem } from '@/components/VideoModal';
+import { useVideoPlayer, VideoModalItem } from '@/lib/VideoContext';
 
 const COURSE_SAMPLE_VIDEOS: Record<string, string> = {
   'fractions-decimals': 'f15zA0PhSek',
@@ -98,7 +98,7 @@ export default function HomePage() {
   const [activeCountryCode, setActiveCountryCode] = useState<string>('us');
   const [activeGradeBand, setActiveGradeBand] = useState<'all' | 'elementary' | 'middle' | 'high'>('all');
   const [isSearchOpen, setIsSearchOpen] = useState(false);
-  const [activeVideo, setActiveVideo] = useState<VideoModalItem | null>(null);
+  const { playVideo } = useVideoPlayer();
 
   // Active country jurisdictions
   const activeJurisdictions = getJurisdictionsByCountry(activeCountryCode);
@@ -126,7 +126,6 @@ export default function HomePage() {
   return (
     <div style={{ backgroundColor: '#F8FAFC', minHeight: '100vh' }}>
       <SearchModal isOpen={isSearchOpen} onClose={() => setIsSearchOpen(false)} />
-      <VideoModal video={activeVideo} onClose={() => setActiveVideo(null)} />
 
       {/* Hero Section */}
       <section
@@ -274,48 +273,12 @@ export default function HomePage() {
 
         {/* Hero Video Masterclass Spotlight Card */}
         <div
-          onClick={() => setActiveVideo(FEATURED_VIDEOS[0])}
-          style={{
-            marginTop: '18px',
-            marginBottom: '32px',
-            width: '100%',
-            maxWidth: '920px',
-            borderRadius: '24px',
-            background: 'linear-gradient(135deg, #0F172A 0%, #1E1B4B 60%, #312E81 100%)',
-            border: '1px solid rgba(129, 140, 248, 0.3)',
-            boxShadow: '0 16px 40px -10px rgba(15, 23, 42, 0.35)',
-            padding: '16px 22px',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'space-between',
-            gap: '20px',
-            cursor: 'pointer',
-            transition: 'all 0.2s ease',
-            color: '#FFFFFF',
-          }}
-          onMouseEnter={(e) => {
-            e.currentTarget.style.transform = 'translateY(-2px)';
-            e.currentTarget.style.boxShadow = '0 20px 48px -8px rgba(79, 70, 229, 0.45)';
-          }}
-          onMouseLeave={(e) => {
-            e.currentTarget.style.transform = 'translateY(0)';
-            e.currentTarget.style.boxShadow = '0 16px 40px -10px rgba(15, 23, 42, 0.35)';
-          }}
+          onClick={() => playVideo(FEATURED_VIDEOS[0])}
+          className="hero-video-spotlight-card"
           id="hero-video-spotlight-card"
         >
           {/* Thumbnail Preview with Glowing Play Badge */}
-          <div
-            style={{
-              position: 'relative',
-              width: '190px',
-              height: '108px',
-              borderRadius: '16px',
-              overflow: 'hidden',
-              flexShrink: 0,
-              boxShadow: '0 6px 18px rgba(0, 0, 0, 0.4)',
-              backgroundColor: '#000000',
-            }}
-          >
+          <div className="hero-video-thumb-container">
             <img
               src="https://img.youtube.com/vi/Qyd_v3DGzTM/hqdefault.jpg"
               alt="Linear Equations Masterclass"
@@ -388,6 +351,7 @@ export default function HomePage() {
 
           {/* Quick Play CTA Pill */}
           <div
+            className="hero-spotlight-cta-pill"
             style={{
               display: 'inline-flex',
               alignItems: 'center',
@@ -409,6 +373,7 @@ export default function HomePage() {
 
         {/* Key Metrics Strip */}
         <div
+          className="metrics-strip-grid"
           style={{
             display: 'grid',
             gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
@@ -422,23 +387,23 @@ export default function HomePage() {
             boxShadow: '0 4px 20px rgba(15, 23, 42, 0.04)',
           }}
         >
-          <div style={{ textAlign: 'center' }}>
+          <div className="metrics-strip-item" style={{ textAlign: 'center' }}>
             <div style={{ fontSize: '1.8rem', fontWeight: 850, color: '#4F46E5', letterSpacing: '-0.03em' }}>78</div>
             <div style={{ fontSize: '0.82rem', fontWeight: 700, color: '#0F172A', marginTop: '2px' }}>Education Jurisdictions</div>
             <div style={{ fontSize: '0.75rem', color: '#64748B' }}>USA, UK, CA, AU, NZ</div>
           </div>
-          <div style={{ textAlign: 'center', borderLeft: '1px solid #F1F5F9' }}>
+          <div className="metrics-strip-item" style={{ textAlign: 'center', borderLeft: '1px solid #F1F5F9' }}>
             <div style={{ fontSize: '1.8rem', fontWeight: 850, color: '#059669', letterSpacing: '-0.03em' }}>K–12</div>
             <div style={{ fontSize: '0.82rem', fontWeight: 700, color: '#0F172A', marginTop: '2px' }}>Full Grade Spectrum</div>
             <div style={{ fontSize: '0.75rem', color: '#64748B' }}>Elementary, Middle, High</div>
           </div>
-          <div style={{ textAlign: 'center', borderLeft: '1px solid #F1F5F9' }}>
+          <div className="metrics-strip-item" style={{ textAlign: 'center', borderLeft: '1px solid #F1F5F9' }}>
             <div style={{ fontSize: '1.8rem', fontWeight: 850, color: '#0284C7', letterSpacing: '-0.03em' }}>5 Core</div>
             <div style={{ fontSize: '0.82rem', fontWeight: 700, color: '#0F172A', marginTop: '2px' }}>Academic Disciplines</div>
             <div style={{ fontSize: '0.75rem', color: '#64748B' }}>Math, Sci, ELA, Civics, CS</div>
           </div>
-          <div style={{ textAlign: 'center', borderLeft: '1px solid #F1F5F9' }}>
-            <div style={{ fontSize: '1.8rem', fontWeight: 850, color: '#D97706', letterSpacing: '-0.03em' }}>₹0 / Free</div>
+          <div className="metrics-strip-item" style={{ textAlign: 'center', borderLeft: '1px solid #F1F5F9' }}>
+            <div style={{ fontSize: '1.8rem', fontWeight: 850, color: '#D97706', letterSpacing: '-0.03em' }}>100% Free</div>
             <div style={{ fontSize: '0.82rem', fontWeight: 700, color: '#0F172A', marginTop: '2px' }}>Public Knowledge Good</div>
             <div style={{ fontSize: '0.75rem', color: '#64748B' }}>No Ads • No Paywalls</div>
           </div>
@@ -623,7 +588,18 @@ export default function HomePage() {
           </div>
 
           {/* Grade Band Filter Buttons */}
-          <div style={{ display: 'flex', gap: '8px', backgroundColor: '#FFFFFF', padding: '4px', borderRadius: '12px', border: '1px solid #E2E8F0' }}>
+          <div
+            className="horizontal-scroll-row"
+            style={{
+              gap: '6px',
+              backgroundColor: '#FFFFFF',
+              padding: '4px',
+              borderRadius: '12px',
+              border: '1px solid #E2E8F0',
+              maxWidth: '100%',
+              whiteSpace: 'nowrap',
+            }}
+          >
             {(['all', 'elementary', 'middle', 'high'] as const).map((band) => (
               <button
                 key={band}
@@ -639,6 +615,8 @@ export default function HomePage() {
                   cursor: 'pointer',
                   textTransform: 'capitalize',
                   transition: 'all 0.15s ease',
+                  flexShrink: 0,
+                  whiteSpace: 'nowrap',
                 }}
               >
                 {band === 'all' ? 'All Grades' : `${band} School`}
@@ -651,7 +629,7 @@ export default function HomePage() {
         <div
           style={{
             display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
+            gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 260px), 1fr))',
             gap: '20px',
           }}
         >
@@ -800,7 +778,7 @@ export default function HomePage() {
         </div>
 
         {/* Video Cards Grid */}
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: '24px' }}>
+        <div className="responsive-grid-cards">
           {FEATURED_VIDEOS.map((v) => (
             <div
               key={v.youtubeVideoId}
@@ -818,7 +796,7 @@ export default function HomePage() {
             >
               {/* Thumbnail with Play Overlay */}
               <div
-                onClick={() => setActiveVideo(v)}
+                onClick={() => playVideo(v)}
                 style={{
                   position: 'relative',
                   width: '100%',
@@ -931,7 +909,7 @@ export default function HomePage() {
                 {/* Actions */}
                 <div style={{ display: 'flex', gap: '8px', paddingTop: '14px', borderTop: '1px solid #F1F5F9' }}>
                   <button
-                    onClick={() => setActiveVideo(v)}
+                    onClick={() => playVideo(v)}
                     style={{
                       flex: 1,
                       display: 'flex',
@@ -991,7 +969,7 @@ export default function HomePage() {
           Featured Master Lessons
         </h2>
 
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: '24px' }}>
+        <div className="responsive-grid-cards">
           {/* Elementary Lesson Card */}
           <div
             style={{
@@ -1006,7 +984,7 @@ export default function HomePage() {
             }}
           >
             <div
-              onClick={() => setActiveVideo(FEATURED_VIDEOS[1])}
+              onClick={() => playVideo(FEATURED_VIDEOS[1])}
               style={{ position: 'relative', width: '100%', paddingBottom: '52%', backgroundColor: '#0F172A', cursor: 'pointer' }}
             >
               <img
@@ -1074,7 +1052,7 @@ export default function HomePage() {
             }}
           >
             <div
-              onClick={() => setActiveVideo(FEATURED_VIDEOS[0])}
+              onClick={() => playVideo(FEATURED_VIDEOS[0])}
               style={{ position: 'relative', width: '100%', paddingBottom: '52%', backgroundColor: '#0F172A', cursor: 'pointer' }}
             >
               <img
@@ -1142,7 +1120,7 @@ export default function HomePage() {
             }}
           >
             <div
-              onClick={() => setActiveVideo(FEATURED_VIDEOS[2])}
+              onClick={() => playVideo(FEATURED_VIDEOS[2])}
               style={{ position: 'relative', width: '100%', paddingBottom: '52%', backgroundColor: '#0F172A', cursor: 'pointer' }}
             >
               <img
@@ -1209,7 +1187,7 @@ export default function HomePage() {
           </p>
         </div>
 
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: '24px' }}>
+        <div className="responsive-grid-cards">
           {/* Pillar 1: Guidance */}
           <Link
             href="/guidance"

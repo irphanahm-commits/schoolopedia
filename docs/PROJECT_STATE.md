@@ -105,3 +105,56 @@ All user interfaces strictly follow the **StudentClass EdTech Light-Theme**:
 | **Constitutional Civics (Civics)** | Grade 8 | CrashCourse US Government | `0bf3CwYCxXw` | `bO7FQsCcbD8` |
 | **Python Programming (CS)** | Grade 8/9 | Programming with Mosh | `kqtD5dpn9C8` | `f15zA0PhSek` |
 | **Rhetoric & Writing (ELA)** | Grade 10 | Stanford GSB / CrashCourse | `HAnw168huqA` | `0bf3CwYCxXw` |
+
+---
+
+## 7. SEO, AIO (AI Optimization) & AEO (Answer Engine Optimization)
+
+Schoolopedia is engineered as a primary source for both human search engines and AI answer engines (ChatGPT, Perplexity, Claude, Gemini):
+
+### AI Discovery Files:
+- `/llms.txt`: Machine-readable markdown index of Schoolopedia's jurisdictional coverage, authority sources, zero-hallucination standards, and API endpoints.
+- `/llms-full.txt`: Comprehensive system architecture and curriculum schema specification for LLM crawler indexing.
+
+### Metadata & Indexing Directives:
+- `/robots.txt`: Managed statically via `src/app/robots.ts` (`force-static`). Allows all standard search engines and AI crawlers (`GPTBot`, `PerplexityBot`, `ClaudeBot`, `Google-Extended`). Blocks non-public `/admin` and internal API worker endpoints.
+- `/sitemap.xml`: Dynamically generated via `src/app/sitemap.ts` (`force-static`). Recursively maps root portals, curriculum hubs, all **78 Tier 1 Jurisdictions** (US, UK, CA, AU, NZ), and published educational blog articles.
+
+### Structured Schema (JSON-LD) & Direct Answer Blocks:
+- Root layout embeds schema.org `WebSite`, `SearchAction`, and `EducationalOrganization` metadata.
+- Curriculum lesson pages embed `schema.org/Course`, `schema.org/LearningResource`, `schema.org/VideoObject`, and `schema.org/FAQPage`.
+- **AEO Direct Answer / Fast Facts**: Curriculum pages feature an extractable direct answer callout box containing a single-sentence definition, key formulas, and primary applications to guarantee search engine featured snippet citations.
+
+---
+
+## 8. Educational Updates & Blogging Engine
+
+Located at `/blog` and `/blog/[slug]`:
+- **Static Pre-Rendering**: High-speed, zero-cost delivery via Next.js `generateStaticParams`.
+- **Article Registry**: Managed in `src/data/blogPosts.ts` with structured metadata (title, summary, date, author, category, read time, canonical slug, full markdown content).
+- **Categories**: Policy & Standards, System Architecture, Curriculum Insights, EdTech Innovation.
+- **Search & Filter**: Client-side instant keyword search and category pill filtering.
+- **Schema & Provenance**: Every article features `schema.org/BlogPosting` JSON-LD, publication provenance, and an actionable "Key Takeaways" summary callout.
+
+---
+
+## 9. Governed Admin Operations Console
+
+Located at `/admin` (non-CRUD, governed domain operations per Master Spec Sections 52–58):
+- **Executive Overview (`/admin`)**: Real-time health KPIs (D1 connection status, total standards indexed, official sources tracked, queue backlog, sync freshness).
+- **Curriculum Version Control (`/admin/curriculum`)**: Diff comparison between draft revisions and canonical curriculum standards before immutable publishing.
+- **Official Source Registry (`/admin/sources`)**: Health monitor for education department authorities (CDE, TEA, DfE, ACARA, Ontario MoE). Features live HTTP HEAD health probes and R2 snapshot verification.
+- **Learner Issue Triage (`/admin/reports`)**: Community-reported curriculum errors and video playback issues queue with one-click resolution.
+- **Outbox Job Sweeper (`/admin/jobs`)**: Background event dispatch status with manual trigger for outbox event sweeps.
+- **Append-Only Audit Log (`/admin/audit`)**: Cryptographically timestamped ledger of all administrative curriculum modifications.
+
+---
+
+## 10. Automated Ingestion & Sweeper Crons
+
+The Cloudflare Edge Worker (`workers/api/src/index.ts`) runs an automated scheduled handler (`scheduled()`) that:
+- Periodically executes an HTTP HEAD sweep on all registered official authority URLs.
+- Updates latency and availability status in D1 table `official_sources`.
+- Dispatches unhandled outbox events in table `outbox_events`.
+- Exposes secure administrative endpoints (`/api/v1/admin/overview`, `/api/v1/admin/sources/sweep`, `/api/v1/admin/reports/:id/resolve`) guarded by administrative token authentication.
+

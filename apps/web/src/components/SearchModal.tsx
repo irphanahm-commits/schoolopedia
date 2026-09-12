@@ -272,9 +272,10 @@ export function SearchModal({ isOpen, onClose }: SearchModalProps) {
         display: 'flex',
         alignItems: 'flex-start',
         justifyContent: 'center',
-        paddingTop: '8vh',
-        paddingLeft: '16px',
-        paddingRight: '16px',
+        paddingTop: '6vh',
+        paddingLeft: '12px',
+        paddingRight: '12px',
+        boxSizing: 'border-box',
       }}
       onClick={onClose}
       id="search-modal-backdrop"
@@ -284,10 +285,11 @@ export function SearchModal({ isOpen, onClose }: SearchModalProps) {
           width: '100%',
           maxWidth: '680px',
           backgroundColor: '#ffffff',
-          borderRadius: '24px',
+          borderRadius: '20px',
           boxShadow: '0 25px 50px -12px rgba(15, 23, 42, 0.25), 0 0 0 1px rgba(15, 23, 42, 0.08)',
           overflow: 'hidden',
           animation: 'fadeIn 0.15s ease-out',
+          boxSizing: 'border-box',
         }}
         onClick={(e) => e.stopPropagation()}
         id="search-modal-container"
@@ -295,22 +297,24 @@ export function SearchModal({ isOpen, onClose }: SearchModalProps) {
         {/* Search Input Field */}
         <div
           style={{
-            padding: '20px 24px',
+            padding: '14px 16px',
             borderBottom: '1px solid #f1f5f9',
             display: 'flex',
             alignItems: 'center',
-            gap: '14px',
+            gap: '10px',
             backgroundColor: '#ffffff',
+            boxSizing: 'border-box',
+            width: '100%',
           }}
         >
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#4f46e5" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#4f46e5" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" style={{ flexShrink: 0 }}>
             <circle cx="11" cy="11" r="8"></circle>
             <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
           </svg>
           <input
             ref={inputRef}
             type="text"
-            placeholder="Search all 78 jurisdictions, lessons, topics, careers, universities..."
+            placeholder="Search curricula, lessons, universities..."
             value={query}
             onChange={(e) => {
               setQuery(e.target.value);
@@ -318,12 +322,14 @@ export function SearchModal({ isOpen, onClose }: SearchModalProps) {
             }}
             id="search-modal-input"
             style={{
+              flex: 1,
+              minWidth: 0,
               width: '100%',
               background: 'transparent',
               border: 'none',
               outline: 'none',
               color: '#0f172a',
-              fontSize: '1.1rem',
+              fontSize: '1rem',
               fontWeight: 600,
             }}
           />
@@ -342,6 +348,7 @@ export function SearchModal({ isOpen, onClose }: SearchModalProps) {
                 justifyContent: 'center',
                 color: '#64748b',
                 fontSize: '0.75rem',
+                flexShrink: 0,
               }}
             >
               ✕
@@ -350,14 +357,15 @@ export function SearchModal({ isOpen, onClose }: SearchModalProps) {
           <button
             onClick={onClose}
             style={{
-              padding: '6px 12px',
-              fontSize: '0.78rem',
+              padding: '6px 10px',
+              fontSize: '0.76rem',
               borderRadius: '8px',
               border: '1px solid #e2e8f0',
               backgroundColor: '#f8fafc',
               color: '#64748b',
               fontWeight: 700,
               cursor: 'pointer',
+              flexShrink: 0,
             }}
           >
             ESC

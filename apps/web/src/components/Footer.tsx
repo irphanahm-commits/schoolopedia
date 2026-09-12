@@ -42,7 +42,7 @@ export function Footer() {
             The Curriculum-Aware Education Encyclopedia. Learn what you need today. Discover what you can become tomorrow.
           </p>
           <div style={{ display: 'flex', alignItems: 'center', gap: '8px', flexWrap: 'wrap' }}>
-            <span className="badge badge-verified">₹0 Free Forever</span>
+            <span className="badge badge-verified">100% Free Forever</span>
             <span className="badge badge-curriculum">CCSS Aligned</span>
           </div>
         </div>
@@ -98,13 +98,17 @@ export function Footer() {
         color: 'var(--text-muted)',
         fontSize: '0.85rem',
       }}>
-        <p>© 2026 Schoolopedia. Built on Cloudflare Zero-Cost Edge Architecture.</p>
-        <div style={{ display: 'flex', gap: '20px', fontWeight: 500 }}>
+        <p>© 2026 Schoolopedia. Built on Cloudflare Zero-Cost Edge Architecture. 100% Free Forever.</p>
+        <div style={{ display: 'flex', flexWrap: 'wrap', gap: '14px', alignItems: 'center', fontWeight: 600 }}>
+          <Link href="/blog" style={{ color: 'var(--accent-primary)', textDecoration: 'none' }}>Blog & Updates</Link>
+          <span>•</span>
+          <Link href="/admin" style={{ color: 'var(--text-secondary)', textDecoration: 'none' }}>Admin Console</Link>
+          <span>•</span>
+          <Link href="/sitemap.xml" style={{ color: 'var(--text-secondary)', textDecoration: 'none' }}>Sitemap</Link>
+          <span>•</span>
+          <Link href="/llms.txt" style={{ color: 'var(--text-secondary)', textDecoration: 'none' }}>LLMs.txt</Link>
+          <span>•</span>
           <span>Privacy-First</span>
-          <span>•</span>
-          <span>No Ads</span>
-          <span>•</span>
-          <span>No Paywalls</span>
         </div>
       </div>
     </footer>
