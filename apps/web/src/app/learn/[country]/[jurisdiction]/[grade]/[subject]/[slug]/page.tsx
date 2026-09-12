@@ -27,9 +27,12 @@ export async function generateStaticParams() {
   }> = [];
 
   const seen = new Set<string>();
+  const FLAGSHIP_JURISDICTIONS = new Set(['california', 'texas', 'new-york', 'florida', 'england', 'ontario', 'nsw']);
 
   for (const j of TIER1_JURISDICTIONS) {
-    // 1. Core catalog lessons
+    const isFlagship = FLAGSHIP_JURISDICTIONS.has(j.slug);
+
+    // 1. Core catalog lessons for all jurisdictions
     for (const l of Object.values(LESSONS_CATALOGUE)) {
       const key = `${j.countryCode}:${j.slug}:${l.gradeSlug}:${l.subjectSlug}:${l.slug}`;
       if (!seen.has(key)) {
@@ -50,16 +53,19 @@ export async function generateStaticParams() {
       if (syllabus) {
         for (const unit of syllabus.units) {
           for (const topic of unit.topics) {
-            const key = `${j.countryCode}:${j.slug}:${c.gradeSlug}:${c.subjectSlug}:${topic.slug}`;
-            if (!seen.has(key)) {
-              seen.add(key);
-              paramsList.push({
-                country: j.countryCode,
-                jurisdiction: j.slug,
-                grade: c.gradeSlug,
-                subject: c.subjectSlug,
-                slug: topic.slug,
-              });
+            // Pre-render all topics for flagship jurisdictions and primary sample lessons for all jurisdictions
+            if (isFlagship || topic.slug === c.sampleLessonSlug) {
+              const key = `${j.countryCode}:${j.slug}:${c.gradeSlug}:${c.subjectSlug}:${topic.slug}`;
+              if (!seen.has(key)) {
+                seen.add(key);
+                paramsList.push({
+                  country: j.countryCode,
+                  jurisdiction: j.slug,
+                  grade: c.gradeSlug,
+                  subject: c.subjectSlug,
+                  slug: topic.slug,
+                });
+              }
             }
           }
         }

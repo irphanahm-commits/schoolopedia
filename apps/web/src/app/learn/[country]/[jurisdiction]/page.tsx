@@ -49,13 +49,16 @@ export default async function JurisdictionOverviewPage({ params }: JurisdictionO
   const middleCourses = STANDARD_COURSES.filter(c => c.gradeBand === 'middle-school');
   const highCourses = STANDARD_COURSES.filter(c => c.gradeBand === 'high-school');
 
-  const renderCourseSection = (title: string, subtitle: string, courses: CourseCardData[]) => (
-    <div style={{ marginBottom: '2.5rem' }}>
-      <div style={{ marginBottom: '1rem' }}>
-        <h3 style={{ fontSize: '1.25rem', fontWeight: 800, color: '#0F172A', margin: 0 }}>
-          {title}
+  const renderCourseSection = (id: string, title: string, subtitle: string, courses: CourseCardData[]) => (
+    <div id={id} style={{ marginBottom: '3rem', scrollMarginTop: '20px' }}>
+      <div style={{ marginBottom: '1.25rem' }}>
+        <h3 style={{ fontSize: '1.35rem', fontWeight: 800, color: '#0F172A', margin: 0, display: 'flex', alignItems: 'center', gap: '8px' }}>
+          <span>{title}</span>
+          <span style={{ fontSize: '0.8rem', fontWeight: 700, padding: '2px 8px', borderRadius: '12px', backgroundColor: '#EEF2FF', color: '#4338CA' }}>
+            {courses.length} Courses
+          </span>
         </h3>
-        <p style={{ fontSize: '0.875rem', color: '#64748B', margin: '0.25rem 0 0 0' }}>
+        <p style={{ fontSize: '0.9rem', color: '#64748B', margin: '0.35rem 0 0 0' }}>
           {subtitle}
         </p>
       </div>
@@ -243,10 +246,77 @@ export default async function JurisdictionOverviewPage({ params }: JurisdictionO
           </div>
         </div>
 
+        {/* Grade-Level Quick Filter Pills */}
+        <div style={{ display: 'flex', gap: '10px', marginBottom: '2rem', flexWrap: 'wrap', alignItems: 'center' }}>
+          <span style={{ fontSize: '0.85rem', fontWeight: 700, color: '#64748B' }}>
+            Jump to Grade Band:
+          </span>
+          <a
+            href="#elementary"
+            style={{
+              display: 'inline-flex',
+              alignItems: 'center',
+              gap: '6px',
+              padding: '6px 14px',
+              borderRadius: '20px',
+              backgroundColor: '#FFFFFF',
+              border: '1px solid #C7D2FE',
+              color: '#4338CA',
+              fontSize: '0.82rem',
+              fontWeight: 700,
+              textDecoration: 'none',
+              boxShadow: '0 1px 3px rgba(0,0,0,0.05)',
+            }}
+          >
+            <span>🎒 Elementary (Grades 1–5)</span>
+            <span style={{ backgroundColor: '#EEF2FF', padding: '1px 6px', borderRadius: '10px', fontSize: '0.75rem' }}>{elementaryCourses.length}</span>
+          </a>
+          <a
+            href="#middle-school"
+            style={{
+              display: 'inline-flex',
+              alignItems: 'center',
+              gap: '6px',
+              padding: '6px 14px',
+              borderRadius: '20px',
+              backgroundColor: '#FFFFFF',
+              border: '1px solid #BAE6FD',
+              color: '#0369A1',
+              fontSize: '0.82rem',
+              fontWeight: 700,
+              textDecoration: 'none',
+              boxShadow: '0 1px 3px rgba(0,0,0,0.05)',
+            }}
+          >
+            <span>🏫 Middle School (Grades 6–8)</span>
+            <span style={{ backgroundColor: '#E0F2FE', padding: '1px 6px', borderRadius: '10px', fontSize: '0.75rem' }}>{middleCourses.length}</span>
+          </a>
+          <a
+            href="#high-school"
+            style={{
+              display: 'inline-flex',
+              alignItems: 'center',
+              gap: '6px',
+              padding: '6px 14px',
+              borderRadius: '20px',
+              backgroundColor: '#FFFFFF',
+              border: '1px solid #FBCFE8',
+              color: '#BE185D',
+              fontSize: '0.82rem',
+              fontWeight: 700,
+              textDecoration: 'none',
+              boxShadow: '0 1px 3px rgba(0,0,0,0.05)',
+            }}
+          >
+            <span>🎓 High School (Grades 9–12)</span>
+            <span style={{ backgroundColor: '#FCE7F3', padding: '1px 6px', borderRadius: '10px', fontSize: '0.75rem' }}>{highCourses.length}</span>
+          </a>
+        </div>
+
         {/* Multi-Grade Progression Sections */}
-        {renderCourseSection('Elementary Education (Grades 1–5)', 'Core foundational skills in arithmetic, scientific inquiry, and reading literacy.', elementaryCourses)}
-        {renderCourseSection('Middle School Education (Grades 6–8 / Junior Secondary)', 'Rigorous algebraic reasoning, cellular biology, computational thinking, and democratic governance.', middleCourses)}
-        {renderCourseSection('High School Education (Grades 9–12 / GCSE / A-Levels / AP)', 'College-preparatory coursework in Algebra 1, Biology, Chemistry, Physics, Rhetoric, and AI.', highCourses)}
+        {renderCourseSection('elementary', 'Elementary Education (Grades 1–5)', 'Core foundational skills in arithmetic, scientific inquiry, and reading literacy.', elementaryCourses)}
+        {renderCourseSection('middle-school', 'Middle School Education (Grades 6–8 / Junior Secondary)', 'Rigorous algebraic reasoning, cellular biology, computational thinking, and democratic governance.', middleCourses)}
+        {renderCourseSection('high-school', 'High School Education (Grades 9–12 / GCSE / A-Levels / AP)', 'College-preparatory coursework in Algebra 1, Biology, Chemistry, Physics, Rhetoric, and AI.', highCourses)}
       </div>
     </div>
   );

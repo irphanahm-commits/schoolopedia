@@ -79,6 +79,40 @@ export default async function CourseSyllabusPage({ params }: CourseSyllabusProps
           <span>{syllabus ? syllabus.subjectName : currentLesson.subjectName}</span>
         </nav>
 
+        {/* Grade-Level Subject Switcher */}
+        <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '24px', overflowX: 'auto', paddingBottom: '4px' }}>
+          <span style={{ fontSize: '0.8rem', fontWeight: 700, color: 'var(--text-muted)', whiteSpace: 'nowrap' }}>
+            {syllabus ? syllabus.gradeName : currentLesson.gradeName} Subjects:
+          </span>
+          {STANDARD_COURSES.filter(c => c.gradeSlug === resolvedParams.grade).map(gc => {
+            const isCurrent = gc.subjectSlug === resolvedParams.subject;
+            return (
+              <Link
+                key={gc.slug}
+                href={`/learn/${resolvedParams.country}/${resolvedParams.jurisdiction}/${gc.gradeSlug}/${gc.subjectSlug}`}
+                style={{
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  gap: '6px',
+                  padding: '6px 14px',
+                  borderRadius: '20px',
+                  fontSize: '0.82rem',
+                  fontWeight: isCurrent ? 800 : 600,
+                  backgroundColor: isCurrent ? '#4f46e5' : '#ffffff',
+                  color: isCurrent ? '#ffffff' : '#475569',
+                  border: isCurrent ? '1px solid #4f46e5' : '1px solid #e2e8f0',
+                  textDecoration: 'none',
+                  whiteSpace: 'nowrap',
+                  boxShadow: isCurrent ? '0 2px 8px rgba(79, 70, 229, 0.25)' : 'none',
+                  transition: 'all 0.15s ease',
+                }}
+              >
+                <span>{gc.subject}</span>
+              </Link>
+            );
+          })}
+        </div>
+
         {/* Course Syllabus Hero */}
         <div style={{
           backgroundColor: '#ffffff',

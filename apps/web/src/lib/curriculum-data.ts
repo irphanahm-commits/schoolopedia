@@ -207,7 +207,133 @@ export const TIER1_COUNTRIES = [
 // -----------------------------------------------------------------------------
 
 export const STANDARD_COURSES: CourseCardData[] = [
-  // --- Elementary (Grades 1-5) ---
+  // ===========================================================================
+  // Elementary School (Grades 1–5)
+  // ===========================================================================
+  // Grade 1
+  {
+    slug: 'math-grade-1',
+    subject: 'Mathematics',
+    subjectSlug: 'mathematics',
+    grade: 'Grade 1 (Elementary)',
+    gradeSlug: 'grade-1',
+    gradeBand: 'elementary',
+    title: 'Grade 1 Mathematics: Counting, Place Value & Addition Within 20',
+    standardCode: 'CCSS.MATH.1.OA.C.6 / TEKS 1.3.D',
+    lessonCount: 20,
+    sampleLessonSlug: 'addition-within-20',
+    isLive: true
+  },
+  {
+    slug: 'science-grade-1',
+    subject: 'Science',
+    subjectSlug: 'science',
+    grade: 'Grade 1 (Elementary)',
+    gradeSlug: 'grade-1',
+    gradeBand: 'elementary',
+    title: 'Grade 1 Science: Living Things, Plant Growth & Sun Patterns',
+    standardCode: 'NGSS.1-LS1-1 / TEKS 1.9.A',
+    lessonCount: 16,
+    sampleLessonSlug: 'plant-growth',
+    isLive: true
+  },
+  {
+    slug: 'english-grade-1',
+    subject: 'English Language Arts',
+    subjectSlug: 'english',
+    grade: 'Grade 1 (Elementary)',
+    gradeSlug: 'grade-1',
+    gradeBand: 'elementary',
+    title: 'Grade 1 ELA: Phonics Foundations, Sight Words & Early Stories',
+    standardCode: 'CCSS.ELA.RF.1.3 / TEKS 1.2.B',
+    lessonCount: 18,
+    sampleLessonSlug: 'phonics-foundations',
+    isLive: true
+  },
+
+  // Grade 2
+  {
+    slug: 'math-grade-2',
+    subject: 'Mathematics',
+    subjectSlug: 'mathematics',
+    grade: 'Grade 2 (Elementary)',
+    gradeSlug: 'grade-2',
+    gradeBand: 'elementary',
+    title: 'Grade 2 Mathematics: Multi-Digit Addition, Subtraction & Measurement',
+    standardCode: 'CCSS.MATH.2.NBT.B.5 / TEKS 2.4.C',
+    lessonCount: 22,
+    sampleLessonSlug: 'multi-digit-addition',
+    isLive: true
+  },
+  {
+    slug: 'science-grade-2',
+    subject: 'Science',
+    subjectSlug: 'science',
+    grade: 'Grade 2 (Elementary)',
+    gradeSlug: 'grade-2',
+    gradeBand: 'elementary',
+    title: 'Grade 2 Science: Properties of Matter, Earth Changes & Habitats',
+    standardCode: 'NGSS.2-PS1-1 / TEKS 2.5.A',
+    lessonCount: 18,
+    sampleLessonSlug: 'properties-of-matter',
+    isLive: true
+  },
+  {
+    slug: 'english-grade-2',
+    subject: 'English Language Arts',
+    subjectSlug: 'english',
+    grade: 'Grade 2 (Elementary)',
+    gradeSlug: 'grade-2',
+    gradeBand: 'elementary',
+    title: 'Grade 2 ELA: Sentence Construction, Narrative Sequencing & Vocabulary',
+    standardCode: 'CCSS.ELA.L.2.1 / TEKS 2.11.D',
+    lessonCount: 20,
+    sampleLessonSlug: 'sentence-construction',
+    isLive: true
+  },
+
+  // Grade 3
+  {
+    slug: 'math-grade-3',
+    subject: 'Mathematics',
+    subjectSlug: 'mathematics',
+    grade: 'Grade 3 (Elementary)',
+    gradeSlug: 'grade-3',
+    gradeBand: 'elementary',
+    title: 'Grade 3 Mathematics: Multiplication Concepts, Division & Basic Fractions',
+    standardCode: 'CCSS.MATH.3.OA.A.1 / TEKS 3.4.D',
+    lessonCount: 24,
+    sampleLessonSlug: 'multiplication-concepts',
+    isLive: true
+  },
+  {
+    slug: 'science-grade-3',
+    subject: 'Science',
+    subjectSlug: 'science',
+    grade: 'Grade 3 (Elementary)',
+    gradeSlug: 'grade-3',
+    gradeBand: 'elementary',
+    title: 'Grade 3 Science: Forces and Interactions, Weather & Life Cycles',
+    standardCode: 'NGSS.3-PS2-1 / TEKS 3.6.B',
+    lessonCount: 18,
+    sampleLessonSlug: 'forces-interactions',
+    isLive: true
+  },
+  {
+    slug: 'english-grade-3',
+    subject: 'English Language Arts',
+    subjectSlug: 'english',
+    grade: 'Grade 3 (Elementary)',
+    gradeSlug: 'grade-3',
+    gradeBand: 'elementary',
+    title: 'Grade 3 ELA: Paragraph Architecture, Informational Reading & Main Ideas',
+    standardCode: 'CCSS.ELA.RI.3.2 / TEKS 3.9.D',
+    lessonCount: 20,
+    sampleLessonSlug: 'paragraph-architecture',
+    isLive: true
+  },
+
+  // Grade 4
   {
     slug: 'math-grade-4',
     subject: 'Mathematics',
@@ -215,10 +341,10 @@ export const STANDARD_COURSES: CourseCardData[] = [
     grade: 'Grade 4 (Elementary)',
     gradeSlug: 'grade-4',
     gradeBand: 'elementary',
-    title: 'Grade 4 Mathematics: Fractions, Decimals & Measurement',
-    standardCode: 'CCSS.MATH.4.NF.A.1',
-    lessonCount: 22,
-    sampleLessonSlug: 'fractions-decimals',
+    title: 'Grade 4 Mathematics: Multi-Digit Operations, Fractions & Decimals',
+    standardCode: 'CCSS.MATH.4.NF.A.1 / TEKS 4.3.C',
+    lessonCount: 26,
+    sampleLessonSlug: 'place-value-structure',
     isLive: true
   },
   {
@@ -228,25 +354,149 @@ export const STANDARD_COURSES: CourseCardData[] = [
     grade: 'Grade 4 (Elementary)',
     gradeSlug: 'grade-4',
     gradeBand: 'elementary',
-    title: 'Grade 4 Science: Earth Systems, Energy & Ecosystems',
-    standardCode: 'NGSS.4-ESS2-1',
-    lessonCount: 18,
+    title: 'Grade 4 Science: Earth Systems, Weathering, Energy Waves & Sound',
+    standardCode: 'NGSS.4-ESS2-1 / TEKS 4.7.B',
+    lessonCount: 22,
     sampleLessonSlug: 'earth-systems',
     isLive: true
   },
-
-  // --- Middle School (Grades 6-8) ---
   {
-    slug: 'math-grade-8',
+    slug: 'english-grade-4',
+    subject: 'English Language Arts',
+    subjectSlug: 'english',
+    grade: 'Grade 4 (Elementary)',
+    gradeSlug: 'grade-4',
+    gradeBand: 'elementary',
+    title: 'Grade 4 ELA: Parts of Speech, Punctuation Mastery & Research Writing',
+    standardCode: 'CCSS.ELA.L.4.1 / TEKS 4.11.D',
+    lessonCount: 20,
+    sampleLessonSlug: 'parts-of-speech',
+    isLive: true
+  },
+  {
+    slug: 'civics-grade-4',
+    subject: 'Social Studies & Civics',
+    subjectSlug: 'civics',
+    grade: 'Grade 4 (Elementary)',
+    gradeSlug: 'grade-4',
+    gradeBand: 'elementary',
+    title: 'Grade 4 Social Studies: Regional Geography, Early Peoples & State History',
+    standardCode: 'C3.GEO.1.3-5 / TEKS 4.6.A',
+    lessonCount: 18,
+    sampleLessonSlug: 'regional-geography',
+    isLive: true
+  },
+
+  // Grade 5
+  {
+    slug: 'math-grade-5',
     subject: 'Mathematics',
     subjectSlug: 'mathematics',
-    grade: 'Grade 8 / Year 9 / Level 5',
-    gradeSlug: 'grade-8',
-    gradeBand: 'middle-school',
-    title: 'Grade 8 Mathematics: Linear Equations & Algebra Foundations',
-    standardCode: 'CCSS.MATH.8.EE.C.7 / TEKS 8.8.C / AC9M8A03',
+    grade: 'Grade 5 (Elementary)',
+    gradeSlug: 'grade-5',
+    gradeBand: 'elementary',
+    title: 'Grade 5 Mathematics: Fraction Multiplication, Decimals & 3D Volume',
+    standardCode: 'CCSS.MATH.5.NF.B.4 / TEKS 5.3.I',
     lessonCount: 24,
-    sampleLessonSlug: 'linear-equations',
+    sampleLessonSlug: 'fraction-multiplication',
+    isLive: true
+  },
+  {
+    slug: 'science-grade-5',
+    subject: 'Science',
+    subjectSlug: 'science',
+    grade: 'Grade 5 (Elementary)',
+    gradeSlug: 'grade-5',
+    gradeBand: 'elementary',
+    title: 'Grade 5 Science: Ecosystem Dynamics, Food Webs & The Water Cycle',
+    standardCode: 'NGSS.5-LS2-1 / TEKS 5.9.B',
+    lessonCount: 20,
+    sampleLessonSlug: 'ecosystem-dynamics',
+    isLive: true
+  },
+  {
+    slug: 'english-grade-5',
+    subject: 'English Language Arts',
+    subjectSlug: 'english',
+    grade: 'Grade 5 (Elementary)',
+    gradeSlug: 'grade-5',
+    gradeBand: 'elementary',
+    title: 'Grade 5 ELA: Citing Text Evidence, Persuasive Essays & Word Nuance',
+    standardCode: 'CCSS.ELA.RI.5.1 / TEKS 5.6.G',
+    lessonCount: 20,
+    sampleLessonSlug: 'citing-text-evidence',
+    isLive: true
+  },
+
+  // ===========================================================================
+  // Middle School (Grades 6–8)
+  // ===========================================================================
+  // Grade 6
+  {
+    slug: 'math-grade-6',
+    subject: 'Mathematics',
+    subjectSlug: 'mathematics',
+    grade: 'Grade 6 / Year 7',
+    gradeSlug: 'grade-6',
+    gradeBand: 'middle-school',
+    title: 'Grade 6 Mathematics: Ratios, Unit Rates, Expressions & Equations',
+    standardCode: 'CCSS.MATH.6.RP.A.1 / TEKS 6.4.B',
+    lessonCount: 26,
+    sampleLessonSlug: 'ratios-and-rates',
+    isLive: true
+  },
+  {
+    slug: 'science-grade-6',
+    subject: 'Science',
+    subjectSlug: 'science',
+    grade: 'Grade 6 / Year 7',
+    gradeSlug: 'grade-6',
+    gradeBand: 'middle-school',
+    title: 'Earth & Space Science: Plate Tectonics, Weather Patterns & Solar System',
+    standardCode: 'NGSS.MS-ESS2-1 / UK.NC.KS3.PHYS',
+    lessonCount: 22,
+    sampleLessonSlug: 'solar-system',
+    isLive: true
+  },
+  {
+    slug: 'english-grade-6',
+    subject: 'English Language Arts',
+    subjectSlug: 'english',
+    grade: 'Grade 6 / Year 7',
+    gradeSlug: 'grade-6',
+    gradeBand: 'middle-school',
+    title: 'Grade 6 ELA: Central Themes, Argumentative Writing & Text Analysis',
+    standardCode: 'CCSS.ELA.RL.6.2 / TEKS 6.8.A',
+    lessonCount: 22,
+    sampleLessonSlug: 'central-themes',
+    isLive: true
+  },
+  {
+    slug: 'civics-grade-6',
+    subject: 'Social Studies & Civics',
+    subjectSlug: 'civics',
+    grade: 'Grade 6 / Year 7',
+    gradeSlug: 'grade-6',
+    gradeBand: 'middle-school',
+    title: 'World History: Ancient River Civilizations & Early Societies',
+    standardCode: 'C3.HIST.2.6-8 / TEKS 6.2.A',
+    lessonCount: 20,
+    sampleLessonSlug: 'ancient-civilizations',
+    isLive: true
+  },
+
+  // Grade 7
+  {
+    slug: 'math-grade-7',
+    subject: 'Mathematics',
+    subjectSlug: 'mathematics',
+    grade: 'Grade 7 / Year 8',
+    gradeSlug: 'grade-7',
+    gradeBand: 'middle-school',
+    title: 'Grade 7 Mathematics: Proportional Relationships, Percents & Probability',
+    standardCode: 'CCSS.MATH.7.RP.A.2 / TEKS 7.4.A',
+    lessonCount: 26,
+    sampleLessonSlug: 'proportions-percents',
     isLive: true
   },
   {
@@ -256,10 +506,77 @@ export const STANDARD_COURSES: CourseCardData[] = [
     grade: 'Grade 7 / Year 8',
     gradeSlug: 'grade-7',
     gradeBand: 'middle-school',
-    title: 'Life Science: Cellular Processes & Ecosystem Photosynthesis',
+    title: 'Life Science: Cellular Processes, Genetics & Photosynthesis',
     standardCode: 'NGSS.MS-LS1-6 / UK.NC.KS3.BIO',
-    lessonCount: 20,
+    lessonCount: 24,
     sampleLessonSlug: 'photosynthesis-plants',
+    isLive: true
+  },
+  {
+    slug: 'english-grade-7',
+    subject: 'English Language Arts',
+    subjectSlug: 'english',
+    grade: 'Grade 7 / Year 8',
+    gradeSlug: 'grade-7',
+    gradeBand: 'middle-school',
+    title: 'Grade 7 ELA: Comparative Texts, Rhetorical Structure & Persuasion',
+    standardCode: 'CCSS.ELA.RI.7.5 / TEKS 7.9.B',
+    lessonCount: 22,
+    sampleLessonSlug: 'comparative-texts',
+    isLive: true
+  },
+  {
+    slug: 'civics-grade-7',
+    subject: 'Social Studies & Civics',
+    subjectSlug: 'civics',
+    grade: 'Grade 7 / Year 8',
+    gradeSlug: 'grade-7',
+    gradeBand: 'middle-school',
+    title: 'World History: Medieval to Early Modern Civilizations & Trade Networks',
+    standardCode: 'C3.HIST.3.6-8 / TEKS 7.1.A',
+    lessonCount: 20,
+    sampleLessonSlug: 'medieval-world',
+    isLive: true
+  },
+
+  // Grade 8
+  {
+    slug: 'math-grade-8',
+    subject: 'Mathematics',
+    subjectSlug: 'mathematics',
+    grade: 'Grade 8 / Year 9 / Level 5',
+    gradeSlug: 'grade-8',
+    gradeBand: 'middle-school',
+    title: 'Grade 8 Mathematics: Linear Equations, Slope & Algebra Foundations',
+    standardCode: 'CCSS.MATH.8.EE.C.7 / TEKS 8.8.C',
+    lessonCount: 28,
+    sampleLessonSlug: 'linear-equations',
+    isLive: true
+  },
+  {
+    slug: 'science-grade-8',
+    subject: 'Science',
+    subjectSlug: 'science',
+    grade: 'Grade 8 / Year 9',
+    gradeSlug: 'grade-8',
+    gradeBand: 'middle-school',
+    title: 'Physical Science: Newton’s Laws, Energy Transformation & Chemical Changes',
+    standardCode: 'NGSS.MS-PS2-1 / TEKS 8.6.A',
+    lessonCount: 24,
+    sampleLessonSlug: 'physical-forces',
+    isLive: true
+  },
+  {
+    slug: 'english-grade-8',
+    subject: 'English Language Arts',
+    subjectSlug: 'english',
+    grade: 'Grade 8 / Year 9',
+    gradeSlug: 'grade-8',
+    gradeBand: 'middle-school',
+    title: 'Grade 8 ELA: Dramatic Structure, Literary Analysis & Formal Research',
+    standardCode: 'CCSS.ELA.RL.8.3 / TEKS 8.7.C',
+    lessonCount: 22,
+    sampleLessonSlug: 'literary-analysis',
     isLive: true
   },
   {
@@ -269,9 +586,9 @@ export const STANDARD_COURSES: CourseCardData[] = [
     grade: 'Grade 8 / Middle School',
     gradeSlug: 'grade-8',
     gradeBand: 'middle-school',
-    title: 'Civics & Government: The Constitution, Separation of Powers & Rights',
+    title: 'Civics & Government: The Constitution, Separation of Powers & Bill of Rights',
     standardCode: 'C3.CIV.1.6-8 / TEKS 8.15.D',
-    lessonCount: 18,
+    lessonCount: 22,
     sampleLessonSlug: 'constitutional-civics',
     isLive: true
   },
@@ -282,14 +599,17 @@ export const STANDARD_COURSES: CourseCardData[] = [
     grade: 'Grade 8 / Middle School',
     gradeSlug: 'grade-8',
     gradeBand: 'middle-school',
-    title: 'Computer Science: Python Programming, Control Flow & Logic',
+    title: 'Computer Science: Python Programming, Control Flow & Boolean Logic',
     standardCode: 'CSTA.2-AP-10 / UK.NC.KS3.COMP',
-    lessonCount: 16,
+    lessonCount: 20,
     sampleLessonSlug: 'python-programming',
     isLive: true
   },
 
-  // --- High School (Grades 9-12) ---
+  // ===========================================================================
+  // High School (Grades 9–12)
+  // ===========================================================================
+  // Grade 9
   {
     slug: 'math-grade-9',
     subject: 'Mathematics',
@@ -297,14 +617,14 @@ export const STANDARD_COURSES: CourseCardData[] = [
     grade: 'Grade 9 / Year 10 / GCSE',
     gradeSlug: 'grade-9',
     gradeBand: 'high-school',
-    title: 'Algebra 1: Quadratic Equations, Factoring & Vertex Parabola Models',
+    title: 'Algebra 1: Quadratic Equations, Factoring & Parabola Models',
     standardCode: 'CCSS.MATH.HSA.REI.B.4 / GCSE.MATH.ALG',
-    lessonCount: 26,
+    lessonCount: 28,
     sampleLessonSlug: 'quadratic-equations',
     isLive: true
   },
   {
-    slug: 'science-grade-9-biology',
+    slug: 'science-grade-9',
     subject: 'Science',
     subjectSlug: 'science',
     grade: 'Grade 9 / High School',
@@ -317,7 +637,48 @@ export const STANDARD_COURSES: CourseCardData[] = [
     isLive: true
   },
   {
-    slug: 'science-grade-10-chemistry',
+    slug: 'english-grade-9',
+    subject: 'English Language Arts',
+    subjectSlug: 'english',
+    grade: 'Grade 9 / High School',
+    gradeSlug: 'grade-9',
+    gradeBand: 'high-school',
+    title: 'English 9: Foundations of Literature, Epic Poetry & Expository Essays',
+    standardCode: 'CCSS.ELA.RL.9-10.1 / GCSE.ENG.LIT',
+    lessonCount: 24,
+    sampleLessonSlug: 'literature-foundations',
+    isLive: true
+  },
+  {
+    slug: 'civics-grade-9',
+    subject: 'Social Studies & Civics',
+    subjectSlug: 'civics',
+    grade: 'Grade 9 / High School',
+    gradeSlug: 'grade-9',
+    gradeBand: 'high-school',
+    title: 'World Geography: Physical Landscapes, Demographics & Global Systems',
+    standardCode: 'C3.GEO.2.9-12 / TEKS WG.4.A',
+    lessonCount: 22,
+    sampleLessonSlug: 'world-geography',
+    isLive: true
+  },
+
+  // Grade 10
+  {
+    slug: 'math-grade-10',
+    subject: 'Mathematics',
+    subjectSlug: 'mathematics',
+    grade: 'Grade 10 / High School',
+    gradeSlug: 'grade-10',
+    gradeBand: 'high-school',
+    title: 'Geometry: Euclidean Proofs, Congruence, Similarity & Trigonometry',
+    standardCode: 'CCSS.MATH.HSG.CO.C.9 / TEKS G.5.B',
+    lessonCount: 28,
+    sampleLessonSlug: 'geometry-proofs',
+    isLive: true
+  },
+  {
+    slug: 'science-grade-10',
     subject: 'Science',
     subjectSlug: 'science',
     grade: 'Grade 10 / High School',
@@ -325,21 +686,8 @@ export const STANDARD_COURSES: CourseCardData[] = [
     gradeBand: 'high-school',
     title: 'High School Chemistry: Atomic Theory, Periodic Table & Chemical Bonds',
     standardCode: 'NGSS.HS-PS1-1 / GCSE.CHEM.BONDS',
-    lessonCount: 24,
+    lessonCount: 28,
     sampleLessonSlug: 'chemical-bonds',
-    isLive: true
-  },
-  {
-    slug: 'science-grade-11-physics',
-    subject: 'Science',
-    subjectSlug: 'science',
-    grade: 'Grade 11 / High School',
-    gradeSlug: 'grade-11',
-    gradeBand: 'high-school',
-    title: 'High School Physics: Newton’s Laws of Motion, Momentum & Energy',
-    standardCode: 'NGSS.HS-PS2-1 / GCSE.PHYS.FORCES',
-    lessonCount: 22,
-    sampleLessonSlug: 'newtons-laws',
     isLive: true
   },
   {
@@ -349,10 +697,144 @@ export const STANDARD_COURSES: CourseCardData[] = [
     grade: 'Grade 10 / High School',
     gradeSlug: 'grade-10',
     gradeBand: 'high-school',
-    title: 'High School ELA: Rhetorical Analysis, Persuasive Essays & Logic',
+    title: 'High School ELA: Rhetorical Analysis, Persuasive Essays & Critical Logic',
     standardCode: 'CCSS.ELA-LITERACY.W.9-10.1',
-    lessonCount: 20,
+    lessonCount: 24,
     sampleLessonSlug: 'persuasive-writing',
+    isLive: true
+  },
+  {
+    slug: 'civics-grade-10',
+    subject: 'Social Studies & Civics',
+    subjectSlug: 'civics',
+    grade: 'Grade 10 / High School',
+    gradeSlug: 'grade-10',
+    gradeBand: 'high-school',
+    title: 'Modern World History: Industrialization, Global Alliances & 20th Century Conflicts',
+    standardCode: 'C3.HIST.1.9-12 / TEKS WH.12.A',
+    lessonCount: 24,
+    sampleLessonSlug: 'modern-world-history',
+    isLive: true
+  },
+
+  // Grade 11
+  {
+    slug: 'math-grade-11',
+    subject: 'Mathematics',
+    subjectSlug: 'mathematics',
+    grade: 'Grade 11 / High School',
+    gradeSlug: 'grade-11',
+    gradeBand: 'high-school',
+    title: 'Algebra 2 & Trigonometry: Polynomials, Complex Numbers & Exponential Models',
+    standardCode: 'CCSS.MATH.HSA.CED.A.1 / TEKS 2A.2.A',
+    lessonCount: 30,
+    sampleLessonSlug: 'polynomial-functions',
+    isLive: true
+  },
+  {
+    slug: 'science-grade-11',
+    subject: 'Science',
+    subjectSlug: 'science',
+    grade: 'Grade 11 / High School',
+    gradeSlug: 'grade-11',
+    gradeBand: 'high-school',
+    title: 'High School Physics: Newton’s Laws of Motion, Momentum & Energy Conservation',
+    standardCode: 'NGSS.HS-PS2-1 / GCSE.PHYS.FORCES',
+    lessonCount: 28,
+    sampleLessonSlug: 'newtons-laws',
+    isLive: true
+  },
+  {
+    slug: 'english-grade-11',
+    subject: 'English Language Arts',
+    subjectSlug: 'english',
+    grade: 'Grade 11 / High School',
+    gradeSlug: 'grade-11',
+    gradeBand: 'high-school',
+    title: 'American Literature: Synthesis Research, Foundational Speeches & Literary Movements',
+    standardCode: 'CCSS.ELA.RI.11-12.1 / TEKS 11.8.A',
+    lessonCount: 24,
+    sampleLessonSlug: 'american-literature',
+    isLive: true
+  },
+  {
+    slug: 'civics-grade-11',
+    subject: 'Social Studies & Civics',
+    subjectSlug: 'civics',
+    grade: 'Grade 11 / High School',
+    gradeSlug: 'grade-11',
+    gradeBand: 'high-school',
+    title: 'United States History: Founding Documents, Reconstruction, Civil Rights & Modern Era',
+    standardCode: 'C3.HIST.2.9-12 / TEKS US.9.A',
+    lessonCount: 26,
+    sampleLessonSlug: 'us-history-foundations',
+    isLive: true
+  },
+
+  // Grade 12
+  {
+    slug: 'math-grade-12',
+    subject: 'Mathematics',
+    subjectSlug: 'mathematics',
+    grade: 'Grade 12 / Senior High / AP/IB',
+    gradeSlug: 'grade-12',
+    gradeBand: 'high-school',
+    title: 'Pre-Calculus & Calculus: Functions, Limits, Derivatives & Rate of Change',
+    standardCode: 'CCSS.MATH.HSF.TF.A.1 / AP.CALC.LIM',
+    lessonCount: 32,
+    sampleLessonSlug: 'calculus-limits',
+    isLive: true
+  },
+  {
+    slug: 'science-grade-12',
+    subject: 'Science',
+    subjectSlug: 'science',
+    grade: 'Grade 12 / Senior High / AP/IB',
+    gradeSlug: 'grade-12',
+    gradeBand: 'high-school',
+    title: 'Advanced Science: Environmental Systems, Energy Sustainability & Thermodynamics',
+    standardCode: 'NGSS.HS-ESS3-1 / AP.ENV.ENG',
+    lessonCount: 26,
+    sampleLessonSlug: 'environmental-systems',
+    isLive: true
+  },
+  {
+    slug: 'english-grade-12',
+    subject: 'English Language Arts',
+    subjectSlug: 'english',
+    grade: 'Grade 12 / Senior High / AP/IB',
+    gradeSlug: 'grade-12',
+    gradeBand: 'high-school',
+    title: 'World Literature & Rhetoric: Critical Theoretical Lenses & Capstone Argumentation',
+    standardCode: 'CCSS.ELA.RL.11-12.6 / AP.ENG.LIT',
+    lessonCount: 24,
+    sampleLessonSlug: 'world-literature',
+    isLive: true
+  },
+  {
+    slug: 'civics-grade-12',
+    subject: 'Social Studies & Civics',
+    subjectSlug: 'civics',
+    grade: 'Grade 12 / Senior High / AP/IB',
+    gradeSlug: 'grade-12',
+    gradeBand: 'high-school',
+    title: 'US Government & Economics: Constitutional Law, Civil Liberties & Macroeconomic Policy',
+    standardCode: 'C3.CIV.13.9-12 / AP.GOV.CIV',
+    lessonCount: 26,
+    sampleLessonSlug: 'government-economics',
+    isLive: true
+  },
+  {
+    slug: 'cs-grade-12',
+    subject: 'Computer Science & AI',
+    subjectSlug: 'computer-science',
+    grade: 'Grade 12 / Senior High / AP/IB',
+    gradeSlug: 'grade-12',
+    gradeBand: 'high-school',
+    title: 'Advanced Computer Science & AI: Data Structures, Machine Learning & Algorithmic Ethics',
+    standardCode: 'CSTA.3A-AP-14 / AP.CS.A',
+    lessonCount: 28,
+    sampleLessonSlug: 'ai-data-structures',
     isLive: true
   }
 ];
