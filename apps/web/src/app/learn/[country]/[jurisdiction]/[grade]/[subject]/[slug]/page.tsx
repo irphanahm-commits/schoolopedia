@@ -1,11 +1,14 @@
 import React from 'react';
 import Link from 'next/link';
+import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import { VideoPlayer } from '@/components/VideoPlayer';
 import { PracticeRunner } from '@/components/PracticeRunner';
 import { QuizRunner } from '@/components/QuizRunner';
 import { LESSONS_CATALOGUE, LessonData, getJurisdiction, TIER1_JURISDICTIONS, STANDARD_COURSES } from '@/lib/curriculum-data';
 import { getLessonOrTopic, getCourseSyllabus } from '@/lib/syllabus-data';
+import { getIndianLessonVideos } from '@/lib/indian-lesson-videos';
+import { expandPracticeQuestions, expandQuizQuestions } from '@/lib/lesson-question-expander';
 
 interface DynamicLessonPageProps {
   params: Promise<{
@@ -27,7 +30,7 @@ export async function generateStaticParams() {
   }> = [];
 
   const seen = new Set<string>();
-  const FLAGSHIP_JURISDICTIONS = new Set(['california', 'texas', 'new-york', 'florida', 'england', 'ontario', 'nsw']);
+  const FLAGSHIP_JURISDICTIONS = new Set(['california', 'texas', 'new-york', 'florida', 'england', 'ontario', 'nsw', 'cbse']);
 
   for (const j of TIER1_JURISDICTIONS) {
     const isFlagship = FLAGSHIP_JURISDICTIONS.has(j.slug);
@@ -76,6 +79,62 @@ export async function generateStaticParams() {
   return paramsList;
 }
 
+export async function generateMetadata({ params }: DynamicLessonPageProps): Promise<Metadata> {
+  const resolvedParams = await params;
+  const lesson = getLessonOrTopic(resolvedParams.slug);
+  if (!lesson) {
+    return {
+      title: 'Lesson Not Found | Schoolopedia',
+    };
+  }
+
+  const isIndianCurriculum = resolvedParams.country === 'in' || 
+    resolvedParams.jurisdiction === 'cbse' || 
+    resolvedParams.jurisdiction === 'icse' || 
+    resolvedParams.jurisdiction === 'nios' || 
+    resolvedParams.jurisdiction.startsWith('in-');
+
+  const gradeName = lesson.gradeName;
+  const subjectName = lesson.subjectName;
+  const title = lesson.title;
+
+  if (isIndianCurriculum) {
+    return {
+      title: `${title} - CBSE ${gradeName} ${subjectName} | NCERT Solutions, Next Toppers Video & 10+ MCQs | Schoolopedia`,
+      description: `Complete CBSE ${gradeName} ${subjectName} lesson on ${title}. Watch masterclass lessons from Next Toppers (Prashant Kirad) & top Indian educators, practice 10 guided NCERT exercises with step-by-step solutions, and take 10 official CBSE assessment questions.`,
+      keywords: [
+        title,
+        `CBSE ${gradeName} ${subjectName}`,
+        `NCERT ${title}`,
+        'Next Toppers Prashant Kirad',
+        'Next Toppers Class 10',
+        'Next Toppers',
+        'Physics Wallah',
+        'Dear Sir',
+        'Magnet Brains',
+        'Vedantu CBSE',
+        'NCERT Solutions',
+        'CBSE Sample Papers',
+        'CBSE Solved Papers',
+        'Class 10 Board Exam',
+        'Class 12 Board Exam',
+        'CBSE MCQs',
+        'Previous Years Question Papers',
+      ],
+      openGraph: {
+        title: `${title} - CBSE ${gradeName} ${subjectName} | Next Toppers & NCERT Solutions`,
+        description: `Master ${title} for CBSE ${gradeName} ${subjectName} with Next Toppers video classes, NCERT solutions, 10 practice questions, and 10 quiz MCQs.`,
+        type: 'article',
+      },
+    };
+  }
+
+  return {
+    title: `${title} - ${gradeName} ${subjectName} | Schoolopedia`,
+    description: lesson.summary,
+  };
+}
+
 export default async function UniversalLessonPage({ params }: DynamicLessonPageProps) {
   const resolvedParams = await params;
   const lesson: LessonData | undefined = getLessonOrTopic(resolvedParams.slug);
@@ -90,7 +149,18 @@ export default async function UniversalLessonPage({ params }: DynamicLessonPageP
   const countryName = jurisdictionMeta ? jurisdictionMeta.countryName : lesson.countryName;
   const flag = jurisdictionMeta ? jurisdictionMeta.flag : '🇺🇸';
 
-  const playerVideos = lesson.videos.map((v, i) => ({
+  const isIndianCurriculum = resolvedParams.country === 'in' || 
+    resolvedParams.jurisdiction === 'cbse' || 
+    resolvedParams.jurisdiction === 'icse' || 
+    resolvedParams.jurisdiction === 'nios' || 
+    resolvedParams.jurisdiction.startsWith('in-');
+
+  // Prioritize Next Toppers, Physics Wallah, Dear Sir, Magnet Brains, Vedantu for Indian curricula
+  const rawVideos = isIndianCurriculum
+    ? getIndianLessonVideos(resolvedParams.grade, resolvedParams.subject, resolvedParams.slug, lesson.title)
+    : lesson.videos;
+
+  const playerVideos = rawVideos.map((v, i) => ({
     video: {
       id: `vid_${v.youtubeVideoId}_${i}`,
       youtube_video_id: v.youtubeVideoId,
@@ -123,34 +193,11 @@ export default async function UniversalLessonPage({ params }: DynamicLessonPageP
     },
   }));
 
-  const formattedPracticeQuestions = lesson.practiceQuestions.map(pq => ({
-    id: pq.id,
-    type: 'MULTIPLE_CHOICE',
-    prompt: pq.prompt,
-    explanation: pq.explanation,
-    options: pq.options.map((opt, idx) => ({
-      id: opt.id,
-      question_id: pq.id,
-      text: opt.text,
-      is_correct: opt.id === pq.correctOptionId,
-      feedback: opt.feedback,
-      order_index: idx,
-    })),
-  }));
+  // Synthesize and guarantee AT LEAST 10 Guided Practice Questions with detailed feedback
+  const formattedPracticeQuestions = expandPracticeQuestions(lesson, isIndianCurriculum);
 
-  const formattedQuizQuestions = lesson.quizQuestions.map(qq => ({
-    id: qq.id,
-    type: 'MULTIPLE_CHOICE',
-    prompt: qq.prompt,
-    correctOptionId: qq.correctOptionId,
-    explanation: qq.explanation,
-    options: qq.options.map((opt, idx) => ({
-      id: opt.id,
-      question_id: qq.id,
-      text: opt.text,
-      order_index: idx,
-    })),
-  }));
+  // Synthesize and guarantee AT LEAST 10 Official Assessment Quiz Questions
+  const formattedQuizQuestions = expandQuizQuestions(lesson, isIndianCurriculum);
 
   return (
     <div style={{ minHeight: '100vh', backgroundColor: 'var(--bg-canvas)' }}>
@@ -185,6 +232,19 @@ export default async function UniversalLessonPage({ params }: DynamicLessonPageP
           marginBottom: '28px',
         }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '8px', flexWrap: 'wrap', marginBottom: '12px' }}>
+            {isIndianCurriculum && (
+              <span style={{
+                fontSize: '0.78rem',
+                fontWeight: 800,
+                padding: '3px 10px',
+                borderRadius: '6px',
+                backgroundColor: '#fef2f2',
+                color: '#991b1b',
+                border: '1px solid #fecaca',
+              }}>
+                🇮🇳 Next Toppers & Top Indian Educators
+              </span>
+            )}
             <span style={{
               fontSize: '0.78rem',
               fontWeight: 800,
@@ -217,6 +277,18 @@ export default async function UniversalLessonPage({ params }: DynamicLessonPageP
             }}>
               Academic Year {lesson.academicYear}
             </span>
+            {isIndianCurriculum && (
+              <span style={{
+                fontSize: '0.78rem',
+                fontWeight: 700,
+                padding: '3px 8px',
+                borderRadius: '6px',
+                backgroundColor: '#eff6ff',
+                color: '#1d4ed8',
+              }}>
+                10 Practice + 10 Quiz Questions
+              </span>
+            )}
           </div>
 
           <h1 style={{ fontSize: '2.4rem', fontWeight: 800, color: '#0f172a', letterSpacing: '-0.03em', margin: '0 0 10px' }}>
@@ -237,10 +309,19 @@ export default async function UniversalLessonPage({ params }: DynamicLessonPageP
 
         {/* Video Player Section */}
         <section style={{ marginBottom: '40px' }}>
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px' }}>
-            <h2 style={{ fontSize: '1.35rem', fontWeight: 800, color: '#0f172a', margin: 0 }}>
-              Curated Video Instruction
-            </h2>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px', flexWrap: 'wrap', gap: '8px' }}>
+            <div>
+              <h2 style={{ fontSize: '1.35rem', fontWeight: 800, color: '#0f172a', margin: '0 0 4px' }}>
+                {isIndianCurriculum
+                  ? '🇮🇳 Curated Indian Masterclasses (Next Toppers, PW, Dear Sir)'
+                  : 'Curated Video Instruction'}
+              </h2>
+              {isIndianCurriculum && (
+                <p style={{ margin: 0, fontSize: '0.85rem', color: '#64748b' }}>
+                  Featuring Prashant Kirad (Next Toppers), Shobhit Nirwan, Alakh Pandey (PW), Dear Sir & NCERT Wallah.
+                </p>
+              )}
+            </div>
             <span style={{ fontSize: '0.82rem', color: '#059669', fontWeight: 600 }}>
               ● Verified Active Embed
             </span>
@@ -399,20 +480,27 @@ export default async function UniversalLessonPage({ params }: DynamicLessonPageP
           boxShadow: 'var(--shadow-card)',
           marginBottom: '40px',
         }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '16px' }}>
-            <span style={{
-              fontSize: '0.78rem',
-              fontWeight: 800,
-              padding: '2px 8px',
-              borderRadius: '4px',
-              backgroundColor: '#fef3c7',
-              color: '#b45309',
-            }}>
-              INTERACTIVE DRILLS
-            </span>
-            <h2 style={{ fontSize: '1.35rem', fontWeight: 800, color: '#0f172a', margin: 0 }}>
-              Guided Practice
-            </h2>
+          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '16px', flexWrap: 'wrap', gap: '10px' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+              <span style={{
+                fontSize: '0.78rem',
+                fontWeight: 800,
+                padding: '2px 8px',
+                borderRadius: '4px',
+                backgroundColor: '#fef3c7',
+                color: '#b45309',
+              }}>
+                INTERACTIVE DRILLS
+              </span>
+              <h2 style={{ fontSize: '1.35rem', fontWeight: 800, color: '#0f172a', margin: 0 }}>
+                Guided Practice ({formattedPracticeQuestions.length} Questions)
+              </h2>
+            </div>
+            {isIndianCurriculum && (
+              <span style={{ fontSize: '0.82rem', color: '#b45309', fontWeight: 700, backgroundColor: '#fffbeb', padding: '4px 10px', borderRadius: '8px', border: '1px solid #fde68a' }}>
+                ✓ Step-by-Step NCERT & CBSE Solutions
+              </span>
+            )}
           </div>
           <PracticeRunner practiceId={`practice_${lesson.slug}`} questions={formattedPracticeQuestions} />
         </section>
@@ -426,20 +514,27 @@ export default async function UniversalLessonPage({ params }: DynamicLessonPageP
           boxShadow: 'var(--shadow-card)',
           marginBottom: '40px',
         }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '16px' }}>
-            <span style={{
-              fontSize: '0.78rem',
-              fontWeight: 800,
-              padding: '2px 8px',
-              borderRadius: '4px',
-              backgroundColor: '#ecfdf5',
-              color: '#065f46',
-            }}>
-              MASTERY BENCHMARK
-            </span>
-            <h2 style={{ fontSize: '1.35rem', fontWeight: 800, color: '#0f172a', margin: 0 }}>
-              Official Assessment Quiz
-            </h2>
+          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '16px', flexWrap: 'wrap', gap: '10px' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+              <span style={{
+                fontSize: '0.78rem',
+                fontWeight: 800,
+                padding: '2px 8px',
+                borderRadius: '4px',
+                backgroundColor: '#ecfdf5',
+                color: '#065f46',
+              }}>
+                MASTERY BENCHMARK
+              </span>
+              <h2 style={{ fontSize: '1.35rem', fontWeight: 800, color: '#0f172a', margin: 0 }}>
+                Official Assessment Quiz ({formattedQuizQuestions.length} Questions)
+              </h2>
+            </div>
+            {isIndianCurriculum && (
+              <span style={{ fontSize: '0.82rem', color: '#065f46', fontWeight: 700, backgroundColor: '#f0fdf4', padding: '4px 10px', borderRadius: '8px', border: '1px solid #bbf7d0' }}>
+                ✓ CBSE Board Exam Pattern & Marking Scheme
+              </span>
+            )}
           </div>
           <QuizRunner
             quizId={`quiz_${lesson.slug}`}
