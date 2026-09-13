@@ -289,7 +289,7 @@ export function IndianNCERTSyllabusView({
               }}
             >
               <span>🔥</span>
-              <span>5-Year Solved Papers (2020–2024), MCQs & Notes</span>
+              <span>5-Year Solved Papers, MCQs & Notes (📥 PDF Downloads)</span>
             </button>
           </div>
         )}
@@ -311,6 +311,57 @@ export function IndianNCERTSyllabusView({
       {/* Chapters Section (Visible when activeMainTab is chapters) */}
       {activeMainTab === 'chapters' && (
         <div>
+          {/* Quick Board Downloads Banner */}
+          {boardSuite && (
+            <div
+              style={{
+                backgroundColor: '#fdf4ff',
+                borderRadius: '14px',
+                border: '1.5px solid #f0abfc',
+                padding: '14px 18px',
+                marginBottom: '20px',
+                display: 'flex',
+                justifyContent: 'space-between',
+                alignItems: 'center',
+                flexWrap: 'wrap',
+                gap: '12px',
+              }}
+            >
+              <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                <span style={{ fontSize: '1.4rem' }}>📥</span>
+                <div>
+                  <strong style={{ fontSize: '0.9rem', color: '#86198f', display: 'block' }}>
+                    Official Board Question Papers, Solved Solutions & Institutional Repositories
+                  </strong>
+                  <span style={{ fontSize: '0.8rem', color: '#a21caf' }}>
+                    Download official 2020–2024 board question papers, step-wise solved papers, formula sheets, chapter MCQs, and direct repositories for CBSE, NCERT, ICSE & NIOS (PDF / Offline).
+                  </span>
+                </div>
+              </div>
+              <button
+                type="button"
+                onClick={() => setActiveMainTab('suite')}
+                style={{
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  gap: '6px',
+                  padding: '8px 16px',
+                  borderRadius: '10px',
+                  fontSize: '0.82rem',
+                  fontWeight: 700,
+                  backgroundColor: '#a21caf',
+                  color: '#ffffff',
+                  border: 'none',
+                  cursor: 'pointer',
+                  boxShadow: '0 2px 8px rgba(162, 28, 175, 0.25)',
+                }}
+              >
+                <span>🔥</span>
+                <span>Open Board Download Suite</span>
+              </button>
+            </div>
+          )}
+
           {/* Chapter Search / Filter */}
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px', flexWrap: 'wrap', gap: '12px' }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>

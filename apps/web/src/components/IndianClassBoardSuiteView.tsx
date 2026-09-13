@@ -7,7 +7,18 @@ import {
   ChapterMCQ,
   ChapterSolvedQuestion,
   ChapterStudyNotes,
+  OfficialBoardRepository,
+  getOfficialBoardRepositories,
 } from '@/lib/indian-board-materials';
+import {
+  generatePaperHTML,
+  generateNotesHTML,
+  generateMCQsHTML,
+  generateSolvedQAHTML,
+  generateOfficialRepositoriesDirectoryHTML,
+  openPrintDocument,
+  downloadOfflineFile,
+} from '@/lib/indian-board-download';
 
 interface IndianClassBoardSuiteViewProps {
   suite: SubjectBoardSuite;
@@ -23,9 +34,11 @@ export function IndianClassBoardSuiteView({
   subjectName,
   activeMedium,
 }: IndianClassBoardSuiteViewProps) {
-  const [activeTab, setActiveTab] = useState<'papers' | 'mcqs' | 'notes' | 'solved-qa'>('papers');
+  const [activeTab, setActiveTab] = useState<'papers' | 'mcqs' | 'notes' | 'solved-qa' | 'official-repos'>('papers');
   const [selectedYear, setSelectedYear] = useState<number>(2024);
   const [mcqFilter, setMcqFilter] = useState<'all' | 'mcq' | 'assertion-reason' | 'case-based'>('all');
+  const [repoFilter, setRepoFilter] = useState<string>('all');
+  const officialRepositories = getOfficialBoardRepositories();
   
   // MCQ interactive state
   const [userAnswers, setUserAnswers] = useState<Record<string, number>>({});
@@ -102,6 +115,14 @@ export function IndianClassBoardSuiteView({
           <p style={{ fontSize: '0.9rem', color: '#64748b', margin: '4px 0 0 0' }}>
             Official CBSE marking schemes (2020–2024), chapter-wise Assertion-Reasoning & MCQs, and examiner notes.
           </p>
+          <div style={{ display: 'flex', gap: '8px', alignItems: 'center', marginTop: '8px', flexWrap: 'wrap' }}>
+            <span style={{ fontSize: '0.78rem', color: '#059669', backgroundColor: '#ecfdf5', padding: '3px 8px', borderRadius: '6px', fontWeight: 700, border: '1px solid #a7f3d0' }}>
+              ✓ Printable & Save as PDF
+            </span>
+            <span style={{ fontSize: '0.78rem', color: '#4338ca', backgroundColor: '#eef2ff', padding: '3px 8px', borderRadius: '6px', fontWeight: 700, border: '1px solid #c7d2fe' }}>
+              ✓ 100% Offline Study Support
+            </span>
+          </div>
         </div>
 
         {/* Tab Switcher Pills */}
@@ -193,6 +214,28 @@ export function IndianClassBoardSuiteView({
             <span>💡</span>
             <span>Detailed Solved Q&A</span>
           </button>
+
+          <button
+            type="button"
+            onClick={() => setActiveTab('official-repos')}
+            style={{
+              display: 'inline-flex',
+              alignItems: 'center',
+              gap: '6px',
+              padding: '8px 16px',
+              borderRadius: '12px',
+              fontSize: '0.85rem',
+              fontWeight: 700,
+              cursor: 'pointer',
+              border: activeTab === 'official-repos' ? '2px solid #0284c7' : '1px solid #cbd5e1',
+              backgroundColor: activeTab === 'official-repos' ? '#0284c7' : '#ffffff',
+              color: activeTab === 'official-repos' ? '#ffffff' : '#334155',
+              transition: 'all 0.15s ease',
+            }}
+          >
+            <span>🏛️</span>
+            <span>Official Repositories (CBSE, NCERT, ICSE, NIOS)</span>
+          </button>
         </div>
       </div>
 
@@ -241,7 +284,7 @@ export function IndianClassBoardSuiteView({
               marginBottom: '24px',
             }}
           >
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', flexWrap: 'wrap', gap: '12px', marginBottom: '16px' }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', flexWrap: 'wrap', gap: '16px', marginBottom: '16px' }}>
               <div>
                 <span style={{ fontSize: '0.75rem', fontWeight: 800, padding: '3px 8px', borderRadius: '6px', backgroundColor: '#e0e7ff', color: '#3730a3' }}>
                   {selectedPaper.set}
@@ -249,13 +292,94 @@ export function IndianClassBoardSuiteView({
                 <h3 style={{ fontSize: '1.25rem', fontWeight: 800, color: '#0f172a', margin: '8px 0 4px 0' }}>
                   {selectedPaper.title}
                 </h3>
-                <div style={{ display: 'flex', gap: '12px', fontSize: '0.82rem', color: '#64748b' }}>
+                <div style={{ display: 'flex', gap: '12px', fontSize: '0.82rem', color: '#64748b', flexWrap: 'wrap' }}>
                   <span>⏱ Maximum Time: {selectedPaper.timeHours} Hours</span>
                   <span>•</span>
                   <span>🎯 Maximum Marks: {selectedPaper.maxMarks} Marks</span>
                   <span>•</span>
                   <span>📑 {selectedPaper.solvedQuestions.length} Exemplar Questions with Marking Scheme</span>
                 </div>
+              </div>
+
+              {/* Download Action Buttons */}
+              <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap', alignItems: 'center' }}>
+                <button
+                  type="button"
+                  onClick={() => {
+                    const html = generatePaperHTML(selectedPaper, classLabel, subjectName, suite.boardCode, true, activeMedium);
+                    openPrintDocument(html, `${classLabel}_${subjectName}_${selectedPaper.year}_Solved_Paper`);
+                  }}
+                  style={{
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    gap: '6px',
+                    padding: '8px 16px',
+                    borderRadius: '10px',
+                    fontSize: '0.85rem',
+                    fontWeight: 700,
+                    backgroundColor: '#4338ca',
+                    color: '#ffffff',
+                    border: 'none',
+                    cursor: 'pointer',
+                    boxShadow: '0 4px 12px rgba(67, 56, 202, 0.25)',
+                    transition: 'all 0.15s ease',
+                  }}
+                  title="Download and print full solved paper with CBSE marking scheme"
+                >
+                  <span>📥</span>
+                  <span>Download Solved Paper (PDF)</span>
+                </button>
+
+                <button
+                  type="button"
+                  onClick={() => {
+                    const html = generatePaperHTML(selectedPaper, classLabel, subjectName, suite.boardCode, false, activeMedium);
+                    openPrintDocument(html, `${classLabel}_${subjectName}_${selectedPaper.year}_Question_Paper`);
+                  }}
+                  style={{
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    gap: '6px',
+                    padding: '8px 14px',
+                    borderRadius: '10px',
+                    fontSize: '0.85rem',
+                    fontWeight: 700,
+                    backgroundColor: '#ffffff',
+                    color: '#4338ca',
+                    border: '1.5px solid #c7d2fe',
+                    cursor: 'pointer',
+                    transition: 'all 0.15s ease',
+                  }}
+                  title="Download blank examination question paper for timed mock exam"
+                >
+                  <span>📄</span>
+                  <span>Question Paper Only (PDF)</span>
+                </button>
+
+                <button
+                  type="button"
+                  onClick={() => {
+                    const html = generatePaperHTML(selectedPaper, classLabel, subjectName, suite.boardCode, true, activeMedium);
+                    downloadOfflineFile(`${classLabel}_${subjectName}_${selectedPaper.year}_Solved_Paper.html`, html, 'text/html');
+                  }}
+                  style={{
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    gap: '4px',
+                    padding: '8px 12px',
+                    borderRadius: '10px',
+                    fontSize: '0.82rem',
+                    fontWeight: 600,
+                    backgroundColor: '#f1f5f9',
+                    color: '#475569',
+                    border: '1px solid #cbd5e1',
+                    cursor: 'pointer',
+                  }}
+                  title="Save offline HTML file directly to device"
+                >
+                  <span>💾</span>
+                  <span>Offline HTML</span>
+                </button>
               </div>
             </div>
 
@@ -406,75 +530,132 @@ export function IndianClassBoardSuiteView({
       {/* ========================================================================= */}
       {activeTab === 'mcqs' && (
         <div>
-          {/* MCQ Type Filter Buttons */}
-          <div style={{ display: 'flex', gap: '8px', marginBottom: '20px', flexWrap: 'wrap', alignItems: 'center' }}>
-            <span style={{ fontSize: '0.85rem', fontWeight: 700, color: '#475569' }}>
-              Filter Question Type:
-            </span>
-            <button
-              type="button"
-              onClick={() => setMcqFilter('all')}
-              style={{
-                padding: '5px 12px',
-                borderRadius: '8px',
-                fontSize: '0.82rem',
-                fontWeight: 700,
-                cursor: 'pointer',
-                backgroundColor: mcqFilter === 'all' ? '#4f46e5' : '#f1f5f9',
-                color: mcqFilter === 'all' ? '#ffffff' : '#334155',
-                border: 'none',
-              }}
-            >
-              All Types ({suite.chapterMCQs.length})
-            </button>
-            <button
-              type="button"
-              onClick={() => setMcqFilter('mcq')}
-              style={{
-                padding: '5px 12px',
-                borderRadius: '8px',
-                fontSize: '0.82rem',
-                fontWeight: 700,
-                cursor: 'pointer',
-                backgroundColor: mcqFilter === 'mcq' ? '#4f46e5' : '#f1f5f9',
-                color: mcqFilter === 'mcq' ? '#ffffff' : '#334155',
-                border: 'none',
-              }}
-            >
-              Multiple Choice (1 Mark)
-            </button>
-            <button
-              type="button"
-              onClick={() => setMcqFilter('assertion-reason')}
-              style={{
-                padding: '5px 12px',
-                borderRadius: '8px',
-                fontSize: '0.82rem',
-                fontWeight: 700,
-                cursor: 'pointer',
-                backgroundColor: mcqFilter === 'assertion-reason' ? '#4f46e5' : '#f1f5f9',
-                color: mcqFilter === 'assertion-reason' ? '#ffffff' : '#334155',
-                border: 'none',
-              }}
-            >
-              Assertion-Reason (A/R)
-            </button>
-            <button
-              type="button"
-              onClick={() => setMcqFilter('case-based')}
-              style={{
-                padding: '5px 12px',
-                borderRadius: '8px',
-                fontSize: '0.82rem',
-                fontWeight: 700,
-                cursor: 'pointer',
-                backgroundColor: mcqFilter === 'case-based' ? '#4f46e5' : '#f1f5f9',
-                color: mcqFilter === 'case-based' ? '#ffffff' : '#334155',
-                border: 'none',
-              }}
-            >
-              Case-Based Questions
-            </button>
+          {/* MCQ Type Filter Buttons & Download Bar */}
+          <div style={{ display: 'flex', gap: '8px', marginBottom: '20px', flexWrap: 'wrap', alignItems: 'center', justifyContent: 'space-between' }}>
+            <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap', alignItems: 'center' }}>
+              <span style={{ fontSize: '0.85rem', fontWeight: 700, color: '#475569' }}>
+                Filter Question Type:
+              </span>
+              <button
+                type="button"
+                onClick={() => setMcqFilter('all')}
+                style={{
+                  padding: '5px 12px',
+                  borderRadius: '8px',
+                  fontSize: '0.82rem',
+                  fontWeight: 700,
+                  cursor: 'pointer',
+                  backgroundColor: mcqFilter === 'all' ? '#4f46e5' : '#f1f5f9',
+                  color: mcqFilter === 'all' ? '#ffffff' : '#334155',
+                  border: 'none',
+                }}
+              >
+                All Types ({suite.chapterMCQs.length})
+              </button>
+              <button
+                type="button"
+                onClick={() => setMcqFilter('mcq')}
+                style={{
+                  padding: '5px 12px',
+                  borderRadius: '8px',
+                  fontSize: '0.82rem',
+                  fontWeight: 700,
+                  cursor: 'pointer',
+                  backgroundColor: mcqFilter === 'mcq' ? '#4f46e5' : '#f1f5f9',
+                  color: mcqFilter === 'mcq' ? '#ffffff' : '#334155',
+                  border: 'none',
+                }}
+              >
+                Multiple Choice (1 Mark)
+              </button>
+              <button
+                type="button"
+                onClick={() => setMcqFilter('assertion-reason')}
+                style={{
+                  padding: '5px 12px',
+                  borderRadius: '8px',
+                  fontSize: '0.82rem',
+                  fontWeight: 700,
+                  cursor: 'pointer',
+                  backgroundColor: mcqFilter === 'assertion-reason' ? '#4f46e5' : '#f1f5f9',
+                  color: mcqFilter === 'assertion-reason' ? '#ffffff' : '#334155',
+                  border: 'none',
+                }}
+              >
+                Assertion-Reason (A/R)
+              </button>
+              <button
+                type="button"
+                onClick={() => setMcqFilter('case-based')}
+                style={{
+                  padding: '5px 12px',
+                  borderRadius: '8px',
+                  fontSize: '0.82rem',
+                  fontWeight: 700,
+                  cursor: 'pointer',
+                  backgroundColor: mcqFilter === 'case-based' ? '#4f46e5' : '#f1f5f9',
+                  color: mcqFilter === 'case-based' ? '#ffffff' : '#334155',
+                  border: 'none',
+                }}
+              >
+                Case-Based Questions
+              </button>
+            </div>
+
+            {/* MCQ Bank Download Actions */}
+            <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap', alignItems: 'center' }}>
+              <button
+                type="button"
+                onClick={() => {
+                  const html = generateMCQsHTML(suite.chapterMCQs, classLabel, subjectName, suite.boardCode, activeMedium);
+                  openPrintDocument(html, `${classLabel}_${subjectName}_MCQ_Bank_Answer_Key`);
+                }}
+                style={{
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  gap: '6px',
+                  padding: '7px 14px',
+                  borderRadius: '8px',
+                  fontSize: '0.82rem',
+                  fontWeight: 700,
+                  backgroundColor: '#059669',
+                  color: '#ffffff',
+                  border: 'none',
+                  cursor: 'pointer',
+                  boxShadow: '0 2px 8px rgba(5, 150, 105, 0.25)',
+                  transition: 'all 0.15s ease',
+                }}
+                title="Download printable MCQ Question Bank with Answer Keys & Explanations"
+              >
+                <span>📥</span>
+                <span>Download MCQ Bank & Answer Key (PDF)</span>
+              </button>
+
+              <button
+                type="button"
+                onClick={() => {
+                  const html = generateMCQsHTML(suite.chapterMCQs, classLabel, subjectName, suite.boardCode, activeMedium);
+                  downloadOfflineFile(`${classLabel}_${subjectName}_MCQ_Bank.html`, html, 'text/html');
+                }}
+                style={{
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  gap: '4px',
+                  padding: '7px 10px',
+                  borderRadius: '8px',
+                  fontSize: '0.82rem',
+                  fontWeight: 600,
+                  backgroundColor: '#f1f5f9',
+                  color: '#475569',
+                  border: '1px solid #cbd5e1',
+                  cursor: 'pointer',
+                }}
+                title="Save offline HTML file"
+              >
+                <span>💾</span>
+                <span>Offline HTML</span>
+              </button>
+            </div>
           </div>
 
           <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
@@ -632,6 +813,83 @@ export function IndianClassBoardSuiteView({
       {/* ========================================================================= */}
       {activeTab === 'notes' && (
         <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
+          {/* Download Action Banner for Revision Notes */}
+          <div
+            style={{
+              display: 'flex',
+              justifyContent: 'space-between',
+              alignItems: 'center',
+              backgroundColor: '#eef2ff',
+              borderRadius: '16px',
+              padding: '16px 20px',
+              border: '1.5px solid #c7d2fe',
+              flexWrap: 'wrap',
+              gap: '12px',
+            }}
+          >
+            <div>
+              <strong style={{ fontSize: '0.95rem', color: '#312e81', display: 'block' }}>
+                Complete Chapter Formula Sheets & Revision Notes
+              </strong>
+              <span style={{ fontSize: '0.82rem', color: '#4338ca' }}>
+                Print-ready A4 formula sheets, core scientific/mathematical laws, and examiner scoring tips.
+              </span>
+            </div>
+            <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
+              <button
+                type="button"
+                onClick={() => {
+                  const html = generateNotesHTML(suite.chapterNotes, classLabel, subjectName, suite.boardCode, activeMedium);
+                  openPrintDocument(html, `${classLabel}_${subjectName}_Formula_Sheets_Revision_Notes`);
+                }}
+                style={{
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  gap: '6px',
+                  padding: '8px 16px',
+                  borderRadius: '10px',
+                  fontSize: '0.84rem',
+                  fontWeight: 700,
+                  backgroundColor: '#4338ca',
+                  color: '#ffffff',
+                  border: 'none',
+                  cursor: 'pointer',
+                  boxShadow: '0 4px 12px rgba(67, 56, 202, 0.25)',
+                  transition: 'all 0.15s ease',
+                }}
+                title="Download printable formula sheets and revision notes to PDF"
+              >
+                <span>📥</span>
+                <span>Download Formula Sheet & Notes (PDF)</span>
+              </button>
+
+              <button
+                type="button"
+                onClick={() => {
+                  const html = generateNotesHTML(suite.chapterNotes, classLabel, subjectName, suite.boardCode, activeMedium);
+                  downloadOfflineFile(`${classLabel}_${subjectName}_Formula_Sheets_Revision_Notes.html`, html, 'text/html');
+                }}
+                style={{
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  gap: '4px',
+                  padding: '8px 12px',
+                  borderRadius: '10px',
+                  fontSize: '0.82rem',
+                  fontWeight: 600,
+                  backgroundColor: '#ffffff',
+                  color: '#475569',
+                  border: '1px solid #cbd5e1',
+                  cursor: 'pointer',
+                }}
+                title="Save offline HTML file"
+              >
+                <span>💾</span>
+                <span>Offline HTML</span>
+              </button>
+            </div>
+          </div>
+
           {suite.chapterNotes.map((note) => (
             <div
               key={note.chapterNumber}
@@ -713,6 +971,83 @@ export function IndianClassBoardSuiteView({
       {/* ========================================================================= */}
       {activeTab === 'solved-qa' && (
         <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+          {/* Download Action Banner for Solved Q&A */}
+          <div
+            style={{
+              display: 'flex',
+              justifyContent: 'space-between',
+              alignItems: 'center',
+              backgroundColor: '#ecfdf5',
+              borderRadius: '16px',
+              padding: '16px 20px',
+              border: '1.5px solid #a7f3d0',
+              flexWrap: 'wrap',
+              gap: '12px',
+            }}
+          >
+            <div>
+              <strong style={{ fontSize: '0.95rem', color: '#065f46', display: 'block' }}>
+                High-Yield Solved Board Questions with Step-Wise Marking
+              </strong>
+              <span style={{ fontSize: '0.82rem', color: '#047857' }}>
+                Frequently repeated 1, 2, 3, and 5-mark board exam questions with complete model step allocations.
+              </span>
+            </div>
+            <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
+              <button
+                type="button"
+                onClick={() => {
+                  const html = generateSolvedQAHTML(suite.chapterSolvedQuestions, classLabel, subjectName, suite.boardCode, activeMedium);
+                  openPrintDocument(html, `${classLabel}_${subjectName}_Solved_Board_Questions`);
+                }}
+                style={{
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  gap: '6px',
+                  padding: '8px 16px',
+                  borderRadius: '10px',
+                  fontSize: '0.84rem',
+                  fontWeight: 700,
+                  backgroundColor: '#059669',
+                  color: '#ffffff',
+                  border: 'none',
+                  cursor: 'pointer',
+                  boxShadow: '0 4px 12px rgba(5, 150, 105, 0.25)',
+                  transition: 'all 0.15s ease',
+                }}
+                title="Download printable solved board questions with step-wise marking schemes to PDF"
+              >
+                <span>📥</span>
+                <span>Download Solved Questions (PDF)</span>
+              </button>
+
+              <button
+                type="button"
+                onClick={() => {
+                  const html = generateSolvedQAHTML(suite.chapterSolvedQuestions, classLabel, subjectName, suite.boardCode, activeMedium);
+                  downloadOfflineFile(`${classLabel}_${subjectName}_Solved_Board_Questions.html`, html, 'text/html');
+                }}
+                style={{
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  gap: '4px',
+                  padding: '8px 12px',
+                  borderRadius: '10px',
+                  fontSize: '0.82rem',
+                  fontWeight: 600,
+                  backgroundColor: '#ffffff',
+                  color: '#475569',
+                  border: '1px solid #cbd5e1',
+                  cursor: 'pointer',
+                }}
+                title="Save offline HTML file"
+              >
+                <span>💾</span>
+                <span>Offline HTML</span>
+              </button>
+            </div>
+          </div>
+
           {suite.chapterSolvedQuestions.map((q) => (
             <div
               key={q.id}
@@ -798,6 +1133,301 @@ export function IndianClassBoardSuiteView({
               )}
             </div>
           ))}
+        </div>
+      )}
+
+      {/* ========================================================================= */}
+      {/* TAB 5: OFFICIAL BOARD & INSTITUTIONAL REPOSITORIES                         */}
+      {/* ========================================================================= */}
+      {activeTab === 'official-repos' && (
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
+          {/* Header Action Banner */}
+          <div
+            style={{
+              display: 'flex',
+              justifyContent: 'space-between',
+              alignItems: 'center',
+              backgroundColor: '#f0f9ff',
+              borderRadius: '16px',
+              padding: '16px 20px',
+              border: '1.5px solid #bae6fd',
+              flexWrap: 'wrap',
+              gap: '12px',
+            }}
+          >
+            <div>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '4px' }}>
+                <span style={{ fontSize: '1.2rem' }}>🏛️</span>
+                <strong style={{ fontSize: '0.98rem', color: '#0369a1' }}>
+                  Official Statutory Boards & National Educational Repositories
+                </strong>
+                <span style={{ fontSize: '0.75rem', fontWeight: 800, padding: '2px 8px', borderRadius: '6px', backgroundColor: '#e0f2fe', color: '#0284c7' }}>
+                  100% FREE & VERIFIED
+                </span>
+              </div>
+              <span style={{ fontSize: '0.83rem', color: '#0284c7' }}>
+                Direct access to question papers, sample papers, marking schemes, and textbooks published by CBSE, NCERT, CISCE (ICSE/ISC), NIOS, KVS, and DIKSHA.
+              </span>
+            </div>
+            <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
+              <button
+                type="button"
+                onClick={() => {
+                  const html = generateOfficialRepositoriesDirectoryHTML(officialRepositories, classLabel, subjectName);
+                  openPrintDocument(html, `${classLabel}_${subjectName}_Official_Board_Repositories_Directory`);
+                }}
+                style={{
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  gap: '6px',
+                  padding: '8px 16px',
+                  borderRadius: '10px',
+                  fontSize: '0.84rem',
+                  fontWeight: 700,
+                  backgroundColor: '#0284c7',
+                  color: '#ffffff',
+                  border: 'none',
+                  cursor: 'pointer',
+                  boxShadow: '0 4px 12px rgba(2, 132, 199, 0.25)',
+                  transition: 'all 0.15s ease',
+                }}
+                title="Download printable directory of official board repositories to PDF"
+              >
+                <span>📥</span>
+                <span>Download Official Directory (PDF)</span>
+              </button>
+
+              <button
+                type="button"
+                onClick={() => {
+                  const html = generateOfficialRepositoriesDirectoryHTML(officialRepositories, classLabel, subjectName);
+                  downloadOfflineFile(`${classLabel}_${subjectName}_Official_Repositories_Directory.html`, html, 'text/html');
+                }}
+                style={{
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  gap: '4px',
+                  padding: '8px 12px',
+                  borderRadius: '10px',
+                  fontSize: '0.82rem',
+                  fontWeight: 600,
+                  backgroundColor: '#ffffff',
+                  color: '#475569',
+                  border: '1px solid #cbd5e1',
+                  cursor: 'pointer',
+                }}
+                title="Save offline HTML directory"
+              >
+                <span>💾</span>
+                <span>Offline HTML</span>
+              </button>
+            </div>
+          </div>
+
+          {/* Board Filter Buttons */}
+          <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap', alignItems: 'center' }}>
+            <span style={{ fontSize: '0.85rem', fontWeight: 700, color: '#475569' }}>
+              Filter by Organization:
+            </span>
+            <button
+              type="button"
+              onClick={() => setRepoFilter('all')}
+              style={{
+                padding: '6px 14px',
+                borderRadius: '8px',
+                fontSize: '0.82rem',
+                fontWeight: 700,
+                cursor: 'pointer',
+                backgroundColor: repoFilter === 'all' ? '#0284c7' : '#f1f5f9',
+                color: repoFilter === 'all' ? '#ffffff' : '#334155',
+                border: 'none',
+              }}
+            >
+              All Boards ({officialRepositories.length})
+            </button>
+            {officialRepositories.map((repo) => (
+              <button
+                key={repo.id}
+                type="button"
+                onClick={() => setRepoFilter(repo.id)}
+                style={{
+                  padding: '6px 14px',
+                  borderRadius: '8px',
+                  fontSize: '0.82rem',
+                  fontWeight: 700,
+                  cursor: 'pointer',
+                  backgroundColor: repoFilter === repo.id ? '#0284c7' : '#f1f5f9',
+                  color: repoFilter === repo.id ? '#ffffff' : '#334155',
+                  border: 'none',
+                }}
+              >
+                {repo.logoIcon} {repo.shortName}
+              </button>
+            ))}
+          </div>
+
+          {/* Repositories Cards */}
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
+            {officialRepositories
+              .filter((repo) => repoFilter === 'all' || repo.id === repoFilter)
+              .map((repo) => (
+                <div
+                  key={repo.id}
+                  style={{
+                    backgroundColor: '#ffffff',
+                    borderRadius: '16px',
+                    border: '1.5px solid #e2e8f0',
+                    padding: '24px',
+                    boxShadow: '0 4px 12px rgba(0,0,0,0.03)',
+                  }}
+                >
+                  <div
+                    style={{
+                      display: 'flex',
+                      justifyContent: 'space-between',
+                      alignItems: 'flex-start',
+                      flexWrap: 'wrap',
+                      gap: '12px',
+                      borderBottom: '1px solid #f1f5f9',
+                      paddingBottom: '16px',
+                      marginBottom: '16px',
+                    }}
+                  >
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+                      <span style={{ fontSize: '2rem' }}>{repo.logoIcon}</span>
+                      <div>
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '8px', flexWrap: 'wrap' }}>
+                          <h3 style={{ fontSize: '1.25rem', fontWeight: 800, color: '#0f172a', margin: 0 }}>
+                            {repo.name}
+                          </h3>
+                          <span
+                            style={{
+                              fontSize: '0.72rem',
+                              fontWeight: 800,
+                              padding: '2px 8px',
+                              borderRadius: '6px',
+                              backgroundColor: '#ecfdf5',
+                              color: '#065f46',
+                              textTransform: 'uppercase',
+                              border: '1px solid #a7f3d0',
+                            }}
+                          >
+                            {repo.badge}
+                          </span>
+                        </div>
+                        <p style={{ fontSize: '0.85rem', color: '#64748b', margin: '4px 0 0 0' }}>
+                          {repo.description}
+                        </p>
+                      </div>
+                    </div>
+
+                    <a
+                      href={repo.officialWebsite}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      style={{
+                        display: 'inline-flex',
+                        alignItems: 'center',
+                        gap: '6px',
+                        padding: '6px 12px',
+                        borderRadius: '8px',
+                        fontSize: '0.8rem',
+                        fontWeight: 700,
+                        backgroundColor: '#f8fafc',
+                        color: '#2563eb',
+                        border: '1px solid #cbd5e1',
+                        textDecoration: 'none',
+                      }}
+                    >
+                      <span>🌐 Visit {repo.shortName} Portal</span>
+                      <span>↗</span>
+                    </a>
+                  </div>
+
+                  {/* Resource Links Grid */}
+                  <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: '12px' }}>
+                    {repo.freeResources.map((res, rIdx) => (
+                      <div
+                        key={rIdx}
+                        style={{
+                          backgroundColor: '#f8fafc',
+                          borderRadius: '12px',
+                          border: '1px solid #e2e8f0',
+                          padding: '16px',
+                          display: 'flex',
+                          flexDirection: 'column',
+                          justifyContent: 'space-between',
+                        }}
+                      >
+                        <div>
+                          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', gap: '8px', marginBottom: '6px' }}>
+                            <span
+                              style={{
+                                fontSize: '0.72rem',
+                                fontWeight: 800,
+                                padding: '2px 6px',
+                                borderRadius: '4px',
+                                backgroundColor: '#e0e7ff',
+                                color: '#3730a3',
+                                textTransform: 'uppercase',
+                              }}
+                            >
+                              {res.category}
+                            </span>
+                            <span
+                              style={{
+                                fontSize: '0.72rem',
+                                fontWeight: 700,
+                                padding: '2px 6px',
+                                borderRadius: '4px',
+                                backgroundColor: '#dbeafe',
+                                color: '#1d4ed8',
+                              }}
+                            >
+                              {res.format}
+                            </span>
+                          </div>
+
+                          <h4 style={{ fontSize: '0.95rem', fontWeight: 800, color: '#0f172a', margin: '0 0 4px 0' }}>
+                            {res.title}
+                          </h4>
+                          <p style={{ fontSize: '0.8rem', color: '#64748b', margin: '0 0 10px 0', lineHeight: 1.4 }}>
+                            {res.description}
+                          </p>
+                        </div>
+
+                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderTop: '1px solid #edf2f7', paddingTop: '10px', marginTop: '6px' }}>
+                          <span style={{ fontSize: '0.75rem', fontWeight: 700, color: '#475569' }}>
+                            Target: {res.classesCovered}
+                          </span>
+                          <a
+                            href={res.directDownloadUrl}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            style={{
+                              display: 'inline-flex',
+                              alignItems: 'center',
+                              gap: '4px',
+                              padding: '6px 12px',
+                              borderRadius: '8px',
+                              fontSize: '0.8rem',
+                              fontWeight: 700,
+                              backgroundColor: '#0284c7',
+                              color: '#ffffff',
+                              textDecoration: 'none',
+                              boxShadow: '0 2px 6px rgba(2, 132, 199, 0.2)',
+                            }}
+                          >
+                            <span>Download / View</span>
+                            <span>↗</span>
+                          </a>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              ))}
+          </div>
         </div>
       )}
     </div>

@@ -1034,3 +1034,271 @@ export function isIndianUltraImportantClass(classSlugOrNumber: string | number):
   const str = classSlugOrNumber.toLowerCase();
   return str === 'grade-10' || str === 'grade-12' || str === 'class-10' || str === 'class-12' || str === '10' || str === '12';
 }
+
+// =============================================================================
+// OFFICIAL BOARD & INSTITUTIONAL REPOSITORIES (CBSE, NCERT, ICSE, NIOS, KVS, ETC.)
+// =============================================================================
+
+export interface OfficialResourceLink {
+  title: string;
+  category: 'Sample Papers & Marking Scheme' | 'Question Banks' | 'Textbooks & Exemplars' | 'Previous Year Papers' | 'Open Courseware';
+  classesCovered: string; // e.g. "Class 10 & 12", "Classes 1 to 12"
+  directDownloadUrl: string;
+  format: 'PDF' | 'Official Archive' | 'Portal';
+  isFree: boolean;
+  description: string;
+}
+
+export interface OfficialBoardRepository {
+  id: string;
+  name: string;
+  shortName: string;
+  badge: string;
+  logoIcon: string;
+  officialWebsite: string;
+  description: string;
+  freeResources: OfficialResourceLink[];
+}
+
+export const OFFICIAL_INDIAN_BOARD_REPOSITORIES: OfficialBoardRepository[] = [
+  {
+    id: 'cbse',
+    name: 'CBSE Academic (Central Board of Secondary Education)',
+    shortName: 'CBSE',
+    badge: 'Government of India Apex Board',
+    logoIcon: '🏛️',
+    officialWebsite: 'https://cbseacademic.nic.in',
+    description: 'Official academic portal of the Central Board of Secondary Education providing free question papers, sample question papers (SQP) with marking schemes (MS), and question banks for Classes 10 and 12.',
+    freeResources: [
+      {
+        title: 'CBSE Class 10 & 12 Sample Question Papers & Marking Scheme (SQP/MS)',
+        category: 'Sample Papers & Marking Scheme',
+        classesCovered: 'Class 10 & 12',
+        directDownloadUrl: 'https://cbseacademic.nic.in/SQP_CLASSX_2023-24.html',
+        format: 'PDF',
+        isFree: true,
+        description: 'Official blueprints, step-by-step marking rubrics, and model solutions released by CBSE examiners.'
+      },
+      {
+        title: 'CBSE Competency-Based Question Bank (Science, Math, SST, English)',
+        category: 'Question Banks',
+        classesCovered: 'Class 10 & 12',
+        directDownloadUrl: 'https://cbseacademic.nic.in/question_bank.html',
+        format: 'PDF',
+        isFree: true,
+        description: 'Official competency questions, case study problems, and assertion-reasoning questions with answers.'
+      },
+      {
+        title: 'CBSE Previous Years Board Examination Question Papers Archive',
+        category: 'Previous Year Papers',
+        classesCovered: 'Class 10 & 12 (All Streams)',
+        directDownloadUrl: 'https://www.cbse.gov.in/cbsenew/question-paper.html',
+        format: 'Official Archive',
+        isFree: true,
+        description: 'Past 10 years official question papers for All India, Delhi, and Foreign exam sets.'
+      },
+      {
+        title: 'CBSE Model Answers by Top Scorers (Examiner Evaluated)',
+        category: 'Previous Year Papers',
+        classesCovered: 'Class 10 & 12',
+        directDownloadUrl: 'https://www.cbse.gov.in/cbsenew/model-answer.html',
+        format: 'PDF',
+        isFree: true,
+        description: 'Original handwritten answer scripts of high scorers showing ideal presentation and step-marking.'
+      }
+    ]
+  },
+  {
+    id: 'ncert',
+    name: 'NCERT Official (National Council of Educational Research and Training)',
+    shortName: 'NCERT',
+    badge: 'National Curriculum Apex Body',
+    logoIcon: '📚',
+    officialWebsite: 'https://ncert.nic.in',
+    description: 'Autonomous apex body under the Ministry of Education, Government of India, publishing national textbooks, exemplar problems, and model curriculum papers.',
+    freeResources: [
+      {
+        title: 'NCERT Rationalised Textbooks Complete PDF Download (Classes 1 to 12)',
+        category: 'Textbooks & Exemplars',
+        classesCovered: 'Classes 1 to 12 (English & Hindi)',
+        directDownloadUrl: 'https://ncert.nic.in/textbook.php',
+        format: 'PDF',
+        isFree: true,
+        description: '100% free official textbook PDFs for all subjects in both English Medium and Hindi Medium.'
+      },
+      {
+        title: 'NCERT Exemplar Problems & Complete Model Solutions',
+        category: 'Textbooks & Exemplars',
+        classesCovered: 'Classes 6 to 12 (Science & Mathematics)',
+        directDownloadUrl: 'https://ncert.nic.in/exemplar-problems.php',
+        format: 'PDF',
+        isFree: true,
+        description: 'High-yield conceptual and multi-step problems that frequently appear verbatim in CBSE board exams.'
+      },
+      {
+        title: 'NCERT Model Question Papers for Secondary & Higher Secondary',
+        category: 'Sample Papers & Marking Scheme',
+        classesCovered: 'Classes 9, 10, 11 & 12',
+        directDownloadUrl: 'https://ncert.nic.in/model-question-papers.php',
+        format: 'PDF',
+        isFree: true,
+        description: 'National model question papers aligned with the National Education Policy (NEP 2020) framework.'
+      },
+      {
+        title: 'ePathshala National Open Learning Repository (MoE & NCERT)',
+        category: 'Open Courseware',
+        classesCovered: 'Classes 1 to 12',
+        directDownloadUrl: 'https://epathshala.nic.in/',
+        format: 'Portal',
+        isFree: true,
+        description: 'Interactive educational e-books, audio, videos, and periodicals for students and teachers.'
+      }
+    ]
+  },
+  {
+    id: 'cisce',
+    name: 'CISCE (Council for the Indian School Certificate Examinations - ICSE & ISC)',
+    shortName: 'ICSE / ISC',
+    badge: 'National School Certificate Council',
+    logoIcon: '🎯',
+    officialWebsite: 'https://cisce.org',
+    description: 'National-level school examination board conducting the ICSE (Class 10) and ISC (Class 12) examinations across India and overseas.',
+    freeResources: [
+      {
+        title: 'ICSE Class 10 Specimen Question Papers (All Subjects)',
+        category: 'Sample Papers & Marking Scheme',
+        classesCovered: 'Class 10 (ICSE)',
+        directDownloadUrl: 'https://cisce.org/specimen-question-papers-icse-class-x/',
+        format: 'PDF',
+        isFree: true,
+        description: 'Official specimen papers showing latest question pattern, internal choice, and mark distributions.'
+      },
+      {
+        title: 'ISC Class 12 Specimen Question Papers (Science, Commerce, Arts)',
+        category: 'Sample Papers & Marking Scheme',
+        classesCovered: 'Class 12 (ISC)',
+        directDownloadUrl: 'https://cisce.org/specimen-question-papers-isc-class-xii/',
+        format: 'PDF',
+        isFree: true,
+        description: 'Specimen papers for Class 12 board preparation across Science, Commerce, and Humanities streams.'
+      },
+      {
+        title: 'CISCE Analysis of Pupil Performance (Examiner Comments & Solved Analysis)',
+        category: 'Previous Year Papers',
+        classesCovered: 'Class 10 & 12',
+        directDownloadUrl: 'https://cisce.org/analysis-of-pupil-performance/',
+        format: 'PDF',
+        isFree: true,
+        description: 'Detailed examiner analysis reports detailing common student errors, expected answers, and marks.'
+      },
+      {
+        title: 'ICSE & ISC Previous Years Examination Papers Archive',
+        category: 'Previous Year Papers',
+        classesCovered: 'Class 10 & 12',
+        directDownloadUrl: 'https://cisce.org/previous-years-question-papers/',
+        format: 'Official Archive',
+        isFree: true,
+        description: 'Official past question papers archive for all major subjects.'
+      }
+    ]
+  },
+  {
+    id: 'nios',
+    name: 'NIOS (National Institute of Open Schooling)',
+    shortName: 'NIOS',
+    badge: 'Ministry of Education Open Board',
+    logoIcon: '🎓',
+    officialWebsite: 'https://www.nios.ac.in',
+    description: 'World\'s largest open schooling organization under the Ministry of Education, providing secondary (Class 10) and senior secondary (Class 12) certifications.',
+    freeResources: [
+      {
+        title: 'NIOS Secondary (Class 10) Previous Years Question Papers',
+        category: 'Previous Year Papers',
+        classesCovered: 'Class 10 (Secondary)',
+        directDownloadUrl: 'https://www.nios.ac.in/student-information-section/question-paper-of-previous-year-examination-secondary.aspx',
+        format: 'PDF',
+        isFree: true,
+        description: 'Official board question papers from both April-May and October-November exam blocks.'
+      },
+      {
+        title: 'NIOS Senior Secondary (Class 12) Previous Years Question Papers',
+        category: 'Previous Year Papers',
+        classesCovered: 'Class 12 (Senior Secondary)',
+        directDownloadUrl: 'https://www.nios.ac.in/student-information-section/question-paper-of-previous-year-examination-sr-secondary.aspx',
+        format: 'PDF',
+        isFree: true,
+        description: 'Official past papers for Physics, Chemistry, Math, Biology, Commerce, and Arts subjects.'
+      },
+      {
+        title: 'NIOS Sample Question Papers & Marking Blueprint',
+        category: 'Sample Papers & Marking Scheme',
+        classesCovered: 'Class 10 & 12',
+        directDownloadUrl: 'https://www.nios.ac.in/student-information-section/sample-question-papers.aspx',
+        format: 'PDF',
+        isFree: true,
+        description: 'Model question papers with section blueprints and marking distribution.'
+      },
+      {
+        title: 'NIOS Tutor Marked Assignments (TMA) & Free Self-Learning Material',
+        category: 'Open Courseware',
+        classesCovered: 'Class 10 & 12',
+        directDownloadUrl: 'https://www.nios.ac.in/student-information-section/tutor-marked-assignment.aspx',
+        format: 'PDF',
+        isFree: true,
+        description: 'Compulsory assignments carrying 20% weightage, plus free self-instructional study guides.'
+      }
+    ]
+  },
+  {
+    id: 'institutional',
+    name: 'Premier Free Institutional Repositories (KVS, NVS, DIKSHA, NDLI)',
+    shortName: 'KVS, NVS & DIKSHA',
+    badge: 'National Public & Govt Platforms',
+    logoIcon: '🏫',
+    officialWebsite: 'https://kvsangathan.nic.in',
+    description: 'Premier national organizations and Ministry of Education repositories offering free pre-board papers, question banks, and learning items.',
+    freeResources: [
+      {
+        title: 'Kendriya Vidyalaya Sangathan (KVS) Pre-Board Solved Papers & Question Banks',
+        category: 'Sample Papers & Marking Scheme',
+        classesCovered: 'Class 10 & 12',
+        directDownloadUrl: 'https://kvsangathan.nic.in/',
+        format: 'PDF',
+        isFree: true,
+        description: 'Standardized national pre-board mock examinations authored by KVS subject specialists.'
+      },
+      {
+        title: 'DIKSHA National Teacher & Student Digital Infrastructure (Ministry of Education)',
+        category: 'Open Courseware',
+        classesCovered: 'Classes 1 to 12 (All Indian Languages)',
+        directDownloadUrl: 'https://diksha.gov.in/explore',
+        format: 'Portal',
+        isFree: true,
+        description: 'Over 1 million curriculum-aligned practice questions, worksheets, and interactive items.'
+      },
+      {
+        title: 'National Digital Library of India (NDLI - Sponsored by MoE & IIT Kharagpur)',
+        category: 'Previous Year Papers',
+        classesCovered: 'School & Competitive Exam Level',
+        directDownloadUrl: 'https://ndl.iitkgp.ac.in/',
+        format: 'Portal',
+        isFree: true,
+        description: 'Single-window free access to past question papers, academic journals, and reference textbooks.'
+      },
+      {
+        title: 'Navodaya Vidyalaya Samiti (NVS) Board Prep Question Banks',
+        category: 'Question Banks',
+        classesCovered: 'Class 10 & 12',
+        directDownloadUrl: 'https://navodaya.gov.in/',
+        format: 'PDF',
+        isFree: true,
+        description: 'Curated practice questions developed across Jawahar Navodaya Vidyalayas.'
+      }
+    ]
+  }
+];
+
+export function getOfficialBoardRepositories(): OfficialBoardRepository[] {
+  return OFFICIAL_INDIAN_BOARD_REPOSITORIES;
+}
+
