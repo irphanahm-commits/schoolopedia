@@ -1,10 +1,19 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import Link from 'next/link';
 import { IndianSubjectCurriculum, IndianNCERTChapter } from '@/lib/indian-ncert-curriculum';
 import { useVideoPlayer, VideoModalItem } from '@/lib/VideoContext';
 import { getIndianBoardStudySuite } from '@/lib/indian-board-materials';
 import { IndianClassBoardSuiteView } from '@/components/IndianClassBoardSuiteView';
+import { CourseProgressOverview } from '@/components/CourseProgressOverview';
+import {
+  markVideoWatched,
+  toggleLessonCompleted,
+  loadLearningState,
+  subscribeToLearningProgress,
+  LearningState,
+} from '@/lib/learning-tracker';
 
 interface IndianNCERTSyllabusViewProps {
   curriculum: IndianSubjectCurriculum;
@@ -15,12 +24,32 @@ interface IndianNCERTSyllabusViewProps {
 export function IndianNCERTSyllabusView({
   curriculum,
   jurisdictionName = 'Central Board of Secondary Education (CBSE)',
+  jurisdictionSlug = 'cbse',
 }: IndianNCERTSyllabusViewProps) {
   const { playVideo } = useVideoPlayer();
   const [activeMedium, setActiveMedium] = useState<'english' | 'hindi'>('english');
   const [searchQuery, setSearchQuery] = useState('');
   const [activeChapterVideoOverride, setActiveChapterVideoOverride] = useState<Record<number, 'english' | 'hindi'>>({});
   const [activeMainTab, setActiveMainTab] = useState<'chapters' | 'suite'>('chapters');
+  const [learningState, setLearningState] = useState<LearningState | null>(null);
+
+  const jurSlug = jurisdictionSlug || 'cbse';
+  const courseKey = `in:${jurSlug}:${curriculum.classSlug}:${curriculum.subjectSlug}`;
+  const courseBaseUrl = `/learn/in/${jurSlug}/${curriculum.classSlug}/${curriculum.subjectSlug}`;
+
+  const allLessonsForTracker = curriculum.chapters.map((ch) => ({
+    slug: ch.slug,
+    title: ch.titleEnglish,
+    url: `${courseBaseUrl}/${ch.slug}`,
+  }));
+
+  useEffect(() => {
+    setLearningState(loadLearningState());
+    const unsubscribe = subscribeToLearningProgress(() => {
+      setLearningState(loadLearningState());
+    });
+    return unsubscribe;
+  }, []);
 
   const boardSuite = getIndianBoardStudySuite(curriculum.classSlug, curriculum.subjectSlug);
 
@@ -44,6 +73,14 @@ export function IndianNCERTSyllabusView({
     const videoData = mediumToPlay === 'hindi' ? chapter.hindiVideo : chapter.englishVideo;
     const isHindi = mediumToPlay === 'hindi';
 
+    // Auto-record masterclass watch event in student learning record
+    markVideoWatched(courseKey, chapter.slug, {
+      courseTitle: `${curriculum.classLabel} ${curriculum.subjectNameEnglish}`,
+      courseUrl: courseBaseUrl,
+      lessonTitle: chapter.titleEnglish,
+      lessonUrl: `${courseBaseUrl}/${chapter.slug}`,
+    });
+
     const item: VideoModalItem = {
       youtubeVideoId: videoData.youtubeVideoId,
       title: videoData.title,
@@ -52,7 +89,7 @@ export function IndianNCERTSyllabusView({
       gradeLabel: curriculum.classLabel, // Strictly "Class X"
       subjectLabel: isHindi ? curriculum.subjectNameHindi : curriculum.subjectNameEnglish,
       standardCode: `${chapter.ncertCode} • ${jurisdictionName}`,
-      lessonUrl: '#',
+      lessonUrl: `${courseBaseUrl}/${chapter.slug}`,
       summary: isHindi ? chapter.summaryHindi : chapter.summaryEnglish,
     };
 
@@ -362,6 +399,14 @@ export function IndianNCERTSyllabusView({
             </div>
           )}
 
+          {/* Real-time Student Learning Progress & Continue Learning Header */}
+          <CourseProgressOverview
+            courseKey={courseKey}
+            courseTitle={`${curriculum.classLabel} ${curriculum.subjectNameEnglish}`}
+            courseUrl={courseBaseUrl}
+            allLessons={allLessonsForTracker}
+          />
+
           {/* Chapter Search / Filter */}
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px', flexWrap: 'wrap', gap: '12px' }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
@@ -425,15 +470,20 @@ export function IndianNCERTSyllabusView({
           const summary = activeMedium === 'hindi' ? chapter.summaryHindi : chapter.summaryEnglish;
           const keyTopics = activeMedium === 'hindi' ? chapter.keyTopicsHindi : chapter.keyTopicsEnglish;
 
+          const chapterRecord = learningState?.courses[courseKey]?.lessons[chapter.slug];
+          const isCompleted = chapterRecord?.status === 'completed';
+          const isStudying = chapterRecord?.status === 'in_progress';
+          const isWatched = Boolean(chapterRecord?.videoWatched);
+
           return (
             <div
               key={chapter.slug}
               style={{
                 backgroundColor: '#ffffff',
                 borderRadius: '20px',
-                border: '1px solid #e2e8f0',
+                border: isCompleted ? '1.5px solid #a7f3d0' : '1px solid #e2e8f0',
                 padding: '24px',
-                boxShadow: '0 4px 14px rgba(15, 23, 42, 0.04)',
+                boxShadow: isCompleted ? '0 4px 14px rgba(16, 185, 129, 0.08)' : '0 4px 14px rgba(15, 23, 42, 0.04)',
                 transition: 'transform 0.15s ease, box-shadow 0.15s ease',
               }}
             >
@@ -478,6 +528,52 @@ export function IndianNCERTSyllabusView({
                     >
                       Official NCERT
                     </span>
+
+                    {/* Learning Record Status Badges */}
+                    {isCompleted ? (
+                      <span
+                        style={{
+                          fontSize: '0.72rem',
+                          fontWeight: 800,
+                          padding: '3px 8px',
+                          borderRadius: '6px',
+                          backgroundColor: '#ecfdf5',
+                          color: '#065f46',
+                          border: '1px solid #a7f3d0',
+                        }}
+                      >
+                        ✓ COMPLETED
+                      </span>
+                    ) : isStudying ? (
+                      <span
+                        style={{
+                          fontSize: '0.72rem',
+                          fontWeight: 800,
+                          padding: '3px 8px',
+                          borderRadius: '6px',
+                          backgroundColor: '#eef2ff',
+                          color: '#4338ca',
+                          border: '1px solid #c7d2fe',
+                        }}
+                      >
+                        ▶ IN PROGRESS
+                      </span>
+                    ) : null}
+
+                    {isWatched && (
+                      <span
+                        style={{
+                          fontSize: '0.72rem',
+                          fontWeight: 700,
+                          padding: '3px 8px',
+                          borderRadius: '6px',
+                          backgroundColor: '#f1f5f9',
+                          color: '#334155',
+                        }}
+                      >
+                        🎥 Masterclass Watched
+                      </span>
+                    )}
                   </div>
 
                   <h4 style={{ fontSize: '1.28rem', fontWeight: 800, color: '#0f172a', margin: '0 0 4px 0', lineHeight: 1.35 }}>
@@ -516,9 +612,61 @@ export function IndianNCERTSyllabusView({
                     </div>
                   </div>
 
+                  {/* Primary Study Actions & Track Controls */}
+                  <div style={{ display: 'flex', gap: '10px', marginTop: '16px', flexWrap: 'wrap', alignItems: 'center' }}>
+                    <Link
+                      href={`${courseBaseUrl}/${chapter.slug}`}
+                      style={{
+                        fontSize: '0.82rem',
+                        fontWeight: 800,
+                        padding: '7px 16px',
+                        borderRadius: '10px',
+                        backgroundColor: '#4f46e5',
+                        color: '#ffffff',
+                        textDecoration: 'none',
+                        boxShadow: '0 2px 8px rgba(79, 70, 229, 0.25)',
+                        display: 'inline-flex',
+                        alignItems: 'center',
+                        gap: '6px',
+                      }}
+                      id={`btn-study-chapter-${chapter.chapterNumber}`}
+                    >
+                      <span>📖 Study Full Lesson &amp; 10+ MCQs</span>
+                      <span>→</span>
+                    </Link>
+
+                    <button
+                      type="button"
+                      onClick={() => {
+                        toggleLessonCompleted(courseKey, chapter.slug, {
+                          courseTitle: `${curriculum.classLabel} ${curriculum.subjectNameEnglish}`,
+                          courseUrl: courseBaseUrl,
+                          lessonTitle: chapter.titleEnglish,
+                          lessonUrl: `${courseBaseUrl}/${chapter.slug}`,
+                        });
+                      }}
+                      style={{
+                        fontSize: '0.78rem',
+                        fontWeight: 700,
+                        padding: '6px 14px',
+                        borderRadius: '10px',
+                        border: isCompleted ? '1.5px solid #059669' : '1px solid #cbd5e1',
+                        backgroundColor: isCompleted ? '#ecfdf5' : '#ffffff',
+                        color: isCompleted ? '#059669' : '#475569',
+                        cursor: 'pointer',
+                        display: 'inline-flex',
+                        alignItems: 'center',
+                        gap: '4px',
+                      }}
+                    >
+                      <span>{isCompleted ? '✓' : '○'}</span>
+                      <span>{isCompleted ? 'Completed' : 'Mark as Done'}</span>
+                    </button>
+                  </div>
+
                   {/* Chapter-Level Board Prep Links (Classes 10 & 12) */}
                   {boardSuite && (
-                    <div style={{ display: 'flex', gap: '8px', marginTop: '14px', flexWrap: 'wrap', alignItems: 'center' }}>
+                    <div style={{ display: 'flex', gap: '8px', marginTop: '12px', flexWrap: 'wrap', alignItems: 'center' }}>
                       <span style={{ fontSize: '0.74rem', fontWeight: 800, color: '#4338ca', textTransform: 'uppercase' }}>
                         Board Prep:
                       </span>
@@ -568,7 +716,7 @@ export function IndianNCERTSyllabusView({
                           cursor: 'pointer',
                         }}
                       >
-                        💡 Solved Q&A
+                        💡 Solved Q&amp;A
                       </button>
                     </div>
                   )}

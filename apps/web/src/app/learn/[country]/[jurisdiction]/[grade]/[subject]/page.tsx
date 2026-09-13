@@ -8,6 +8,7 @@ import { IndianMarathonShowcase } from '@/components/IndianMarathonShowcase';
 import { IndianTopicVideoPlayButton } from '@/components/IndianTopicVideoPlayButton';
 import { IndianNCERTSyllabusView } from '@/components/IndianNCERTSyllabusView';
 import { IndianAEODirectAnswerBox } from '@/components/IndianAEODirectAnswerBox';
+import { CourseProgressOverview } from '@/components/CourseProgressOverview';
 import { getIndianMarathonsForCourse, getIndianAlternativeForTopic } from '@/lib/indian-syllabus-data';
 import { getIndianNCERTSubjectCurriculum } from '@/lib/indian-ncert-curriculum';
 import { getIndianStructuredData, getIndianClassKeywords, INDIAN_NCERT_BOOKS_REGISTRY } from '@/lib/indian-seo-metadata';
@@ -331,7 +332,19 @@ export default async function CourseSyllabusPage({ params }: CourseSyllabusProps
         {/* Standard Units & Topics Outline (for international frameworks or when NCERT is not applicable) */}
         {(!isIndia || !indianCurriculum) && (
           <div style={{ display: 'flex', flexDirection: 'column', gap: '32px' }}>
-          {syllabus ? (
+            {syllabus && (
+              <CourseProgressOverview
+                courseKey={`${resolvedParams.country}:${resolvedParams.jurisdiction}:${resolvedParams.grade}:${resolvedParams.subject}`}
+                courseTitle={displayTitle}
+                courseUrl={`/learn/${resolvedParams.country}/${resolvedParams.jurisdiction}/${resolvedParams.grade}/${resolvedParams.subject}`}
+                allLessons={syllabus.units.flatMap(u => u.topics.map(t => ({
+                  slug: t.slug,
+                  title: t.title,
+                  url: `/learn/${resolvedParams.country}/${resolvedParams.jurisdiction}/${resolvedParams.grade}/${resolvedParams.subject}/${t.slug}`,
+                })))}
+              />
+            )}
+            {syllabus ? (
             syllabus.units.map(unit => (
               <div
                 key={unit.unitNumber}

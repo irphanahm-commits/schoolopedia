@@ -4,6 +4,7 @@ import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { SearchModal } from './SearchModal';
+import { MyLearningRecordModal } from './MyLearningRecordModal';
 
 interface HeaderProps {
   onOpenSearch?: () => void;
@@ -13,6 +14,7 @@ export function Header({ onOpenSearch }: HeaderProps) {
   const router = useRouter();
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isRecordOpen, setIsRecordOpen] = useState(false);
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
@@ -52,27 +54,32 @@ export function Header({ onOpenSearch }: HeaderProps) {
       >
         {/* Brand Logo */}
         <div style={{ display: 'flex', alignItems: 'center', gap: '24px' }}>
-          <Link href="/" style={{ display: 'flex', alignItems: 'center', gap: '10px' }} id="nav-brand-logo">
+          <Link href="/" style={{ display: 'flex', alignItems: 'center', gap: '12px' }} id="nav-brand-logo">
             <div
               style={{
-                width: '36px',
-                height: '36px',
+                width: '38px',
+                height: '38px',
                 borderRadius: '10px',
-                background: 'linear-gradient(135deg, #4f46e5 0%, #3b82f6 100%)',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
-                boxShadow: '0 4px 12px rgba(79, 70, 229, 0.3)',
                 flexShrink: 0,
+                overflow: 'hidden',
+                boxShadow: '0 3px 10px rgba(79, 70, 229, 0.25)',
+                backgroundColor: '#ffffff',
+                border: '1px solid #e2e8f0',
               }}
             >
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#ffffff" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
-                <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
-                <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
-              </svg>
+              <img
+                src="/schoolopedia-logo.svg"
+                alt="Schoolopedia Logo"
+                width={38}
+                height={38}
+                style={{ width: '100%', height: '100%', objectFit: 'contain' }}
+              />
             </div>
             <div>
-              <span style={{ fontSize: '1.2rem', fontWeight: 800, letterSpacing: '-0.03em', color: '#0f172a' }}>
+              <span style={{ fontSize: '1.24rem', fontWeight: 900, letterSpacing: '-0.03em', color: '#0f172a' }}>
                 Schoolopedia
               </span>
             </div>
@@ -176,6 +183,30 @@ export function Header({ onOpenSearch }: HeaderProps) {
             <span>🌐</span>
             <span>All 78 Curricula</span>
           </Link>
+
+          {/* My Learning Record Button */}
+          <button
+            type="button"
+            onClick={() => setIsRecordOpen(true)}
+            id="header-my-record-btn"
+            style={{
+              display: 'inline-flex',
+              alignItems: 'center',
+              gap: '6px',
+              backgroundColor: '#ecfdf5',
+              border: '1px solid #a7f3d0',
+              color: '#065f46',
+              borderRadius: '9999px',
+              padding: '6px 14px',
+              fontSize: '0.82rem',
+              fontWeight: 700,
+              cursor: 'pointer',
+              transition: 'all 0.2s ease',
+            }}
+          >
+            <span>📚</span>
+            <span>My Record</span>
+          </button>
 
           {/* Search Trigger */}
           <button
@@ -499,34 +530,45 @@ export function Header({ onOpenSearch }: HeaderProps) {
               <span>Browse All 78 Curricula Authorities</span>
             </Link>
 
-            {/* Active Learner Pill on Mobile */}
-            <div
+            {/* Active Learner & My Record on Mobile */}
+            <button
+              type="button"
+              onClick={() => {
+                setIsMobileMenuOpen(false);
+                setIsRecordOpen(true);
+              }}
               style={{
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'space-between',
-                padding: '10px 14px',
-                borderRadius: '10px',
-                backgroundColor: '#F8FAFC',
-                border: '1px solid var(--border-subtle)',
+                padding: '12px 14px',
+                borderRadius: '12px',
+                backgroundColor: '#ECFDF5',
+                border: '1px solid #A7F3D0',
+                cursor: 'pointer',
+                width: '100%',
               }}
+              id="mobile-my-record-btn"
             >
               <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                <span style={{ fontSize: '1.1rem' }}>🎓</span>
-                <span style={{ fontSize: '0.85rem', fontWeight: 700, color: '#0F172A' }}>
-                  Student Mode
+                <span style={{ fontSize: '1.2rem' }}>📚</span>
+                <span style={{ fontSize: '0.92rem', fontWeight: 800, color: '#065F46' }}>
+                  My Learning Record
                 </span>
               </div>
-              <span style={{ fontSize: '0.75rem', color: '#10B981', fontWeight: 700 }}>
-                ● Active Learner
+              <span style={{ fontSize: '0.78rem', color: '#059669', fontWeight: 700 }}>
+                View Progress →
               </span>
-            </div>
+            </button>
           </div>
         </div>
       )}
 
       {/* Embedded Search Modal */}
       <SearchModal isOpen={isSearchOpen} onClose={() => setIsSearchOpen(false)} />
+
+      {/* Embedded My Learning Record Modal */}
+      <MyLearningRecordModal isOpen={isRecordOpen} onClose={() => setIsRecordOpen(false)} />
     </>
   );
 }

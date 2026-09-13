@@ -9,6 +9,9 @@ import { LESSONS_CATALOGUE, LessonData, getJurisdiction, TIER1_JURISDICTIONS, ST
 import { getLessonOrTopic, getCourseSyllabus } from '@/lib/syllabus-data';
 import { getIndianLessonVideos } from '@/lib/indian-lesson-videos';
 import { expandPracticeQuestions, expandQuizQuestions } from '@/lib/lesson-question-expander';
+import { getCourseLessonSequence } from '@/lib/course-navigation';
+import { LessonTrackerBar } from '@/components/LessonTrackerBar';
+import { LessonSequenceNav } from '@/components/LessonSequenceNav';
 
 interface DynamicLessonPageProps {
   params: Promise<{
@@ -199,6 +202,15 @@ export default async function UniversalLessonPage({ params }: DynamicLessonPageP
   // Synthesize and guarantee AT LEAST 10 Official Assessment Quiz Questions
   const formattedQuizQuestions = expandQuizQuestions(lesson, isIndianCurriculum);
 
+  // Compute sequential course navigation (next lesson, previous lesson, course progress)
+  const courseSequence = getCourseLessonSequence(
+    resolvedParams.country,
+    resolvedParams.jurisdiction,
+    resolvedParams.grade,
+    resolvedParams.subject,
+    resolvedParams.slug
+  );
+
   return (
     <div style={{ minHeight: '100vh', backgroundColor: 'var(--bg-canvas)' }}>
       <div style={{ padding: '32px 24px 64px', maxWidth: '1100px', margin: '0 auto', width: '100%' }}>
@@ -269,6 +281,17 @@ export default async function UniversalLessonPage({ params }: DynamicLessonPageP
             </span>
             <span style={{
               fontSize: '0.78rem',
+              fontWeight: 700,
+              padding: '3px 10px',
+              borderRadius: '6px',
+              backgroundColor: '#f8fafc',
+              color: '#475569',
+              border: '1px solid #e2e8f0',
+            }}>
+              ⏱ ~{(lesson as any).estimatedMinutes || 45} mins
+            </span>
+            <span style={{
+              fontSize: '0.78rem',
               fontWeight: 600,
               padding: '3px 8px',
               borderRadius: '6px',
@@ -305,6 +328,21 @@ export default async function UniversalLessonPage({ params }: DynamicLessonPageP
               <span>{lesson.whyItMatters}</span>
             </div>
           </div>
+
+          {/* Interactive Study Progress Tracker Bar */}
+          <LessonTrackerBar
+            courseKey={courseSequence.courseKey}
+            courseTitle={courseSequence.courseTitle}
+            courseUrl={courseSequence.courseUrl}
+            lessonSlug={resolvedParams.slug}
+            lessonTitle={lesson.title}
+            lessonUrl={`/learn/${resolvedParams.country}/${resolvedParams.jurisdiction}/${resolvedParams.grade}/${resolvedParams.subject}/${resolvedParams.slug}`}
+            lessonNumberText={
+              courseSequence.totalLessons > 0
+                ? `Lesson ${courseSequence.currentIndex} of ${courseSequence.totalLessons} • ${courseSequence.courseTitle}`
+                : undefined
+            }
+          />
         </div>
 
         {/* Video Player Section */}
@@ -328,6 +366,9 @@ export default async function UniversalLessonPage({ params }: DynamicLessonPageP
           </div>
           <VideoPlayer videos={playerVideos} />
         </section>
+
+        {/* Course Lesson Progression & Up Next Navigation (Top) */}
+        <LessonSequenceNav sequence={courseSequence} />
 
         {/* Worked Example Section */}
         <section style={{
@@ -601,6 +642,9 @@ export default async function UniversalLessonPage({ params }: DynamicLessonPageP
             </Link>
           </div>
         </section>
+
+        {/* Bottom Course Lesson Progression Stepper */}
+        <LessonSequenceNav sequence={courseSequence} />
       </div>
     </div>
   );

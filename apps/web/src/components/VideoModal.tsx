@@ -3,6 +3,7 @@
 import React, { useEffect, useRef } from 'react';
 import Link from 'next/link';
 import { useVideoPlayer, VideoModalItem } from '@/lib/VideoContext';
+import { markVideoWatched } from '@/lib/learning-tracker';
 
 export type { VideoModalItem };
 
@@ -60,6 +61,32 @@ export function VideoModal({ video: propVideo, onClose: propOnClose }: VideoModa
       document.body.style.overflow = 'unset';
     };
   }, [isModalOpen]);
+
+  // Auto-record video watch event in student learning record
+  useEffect(() => {
+    if (isModalOpen && activeVideo && activeVideo.lessonUrl && activeVideo.lessonUrl !== '#') {
+      try {
+        const parts = activeVideo.lessonUrl.split('/').filter(Boolean);
+        // E.g. /learn/in/cbse/grade-10/science/chemical-reactions -> parts = ['learn', 'in', 'cbse', 'grade-10', 'science', 'chemical-reactions']
+        if (parts.length >= 6) {
+          const country = parts[1];
+          const jurisdiction = parts[2];
+          const grade = parts[3];
+          const subject = parts[4];
+          const slug = parts[5];
+          const courseKey = `${country}:${jurisdiction}:${grade}:${subject}`;
+          markVideoWatched(courseKey, slug, {
+            courseTitle: `${activeVideo.gradeLabel} ${activeVideo.subjectLabel}`,
+            courseUrl: `/${parts.slice(0, 5).join('/')}`,
+            lessonTitle: activeVideo.title,
+            lessonUrl: activeVideo.lessonUrl,
+          });
+        }
+      } catch (e) {
+        // Safe fallback
+      }
+    }
+  }, [isModalOpen, activeVideo]);
 
   if (!isModalOpen || !activeVideo) return null;
 

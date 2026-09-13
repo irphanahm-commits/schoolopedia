@@ -33,6 +33,19 @@ export const metadata: Metadata = {
   alternates: {
     canonical: '/',
   },
+  icons: {
+    icon: [
+      { url: '/favicon.svg', type: 'image/svg+xml' },
+      { url: '/favicon.ico', sizes: 'any' },
+      { url: '/icon-192.png', sizes: '192x192', type: 'image/png' },
+      { url: '/icon-512.png', sizes: '512x512', type: 'image/png' },
+    ],
+    shortcut: '/favicon.svg',
+    apple: [
+      { url: '/apple-touch-icon.png', sizes: '180x180', type: 'image/png' },
+    ],
+  },
+  manifest: '/manifest.json',
   openGraph: {
     title: 'Schoolopedia — The Curriculum-Aware Education Encyclopedia',
     description: 'Learn what you need today. Discover what you can become tomorrow. Aligned with all 78 Tier 1 education jurisdictions. 100% Free Forever.',
@@ -45,13 +58,21 @@ export const metadata: Metadata = {
         url: 'https://schoolopedia.com/og-image.png',
         width: 1200,
         height: 630,
-        alt: 'Schoolopedia — The Education Encyclopedia',
+        alt: 'Schoolopedia — The Curriculum-Aware Education Encyclopedia',
+        type: 'image/png',
+      },
+      {
+        url: 'https://schoolopedia.com/og-square.png',
+        width: 600,
+        height: 600,
+        alt: 'Schoolopedia Emblem Logo',
+        type: 'image/png',
       },
     ],
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Schoolopedia — The Education Encyclopedia',
+    title: 'Schoolopedia — The Curriculum-Aware Education Encyclopedia',
     description: 'The curriculum-aware education encyclopedia for 78 Tier 1 jurisdictions. 100% Free Forever.',
     images: ['https://schoolopedia.com/og-image.png'],
   },
@@ -77,6 +98,7 @@ export const viewport: Viewport = {
   width: 'device-width',
   initialScale: 1,
   maximumScale: 5,
+  themeColor: '#4f46e5',
 };
 
 export default function RootLayout({
@@ -89,7 +111,8 @@ export default function RootLayout({
     '@type': 'WebSite',
     name: 'Schoolopedia',
     url: 'https://schoolopedia.com',
-    description: 'A curriculum-aware education encyclopedia covering 78 Tier 1 jurisdictions in the US, UK, Canada, Australia, and New Zealand.',
+    description: 'A curriculum-aware education encyclopedia covering 78 Tier 1 jurisdictions in the US, UK, India, Canada, Australia, and New Zealand.',
+    image: 'https://schoolopedia.com/og-image.png',
     potentialAction: {
       '@type': 'SearchAction',
       target: 'https://schoolopedia.com/learn?q={search_term_string}',
@@ -102,10 +125,11 @@ export default function RootLayout({
     '@type': 'EducationalOrganization',
     name: 'Schoolopedia',
     url: 'https://schoolopedia.com',
-    logo: 'https://schoolopedia.com/icon.svg',
+    logo: 'https://schoolopedia.com/schoolopedia-logo.svg',
+    image: 'https://schoolopedia.com/og-image.png',
     description: 'Open curriculum encyclopedia and mastery navigation platform for global K-12 and tertiary learners.',
     isAccessibleForFree: true,
-    areaServed: ['US', 'GB', 'CA', 'AU', 'NZ'],
+    areaServed: ['US', 'GB', 'IN', 'CA', 'AU', 'NZ'],
   };
 
   return (

@@ -18,23 +18,28 @@ export function Footer() {
         gap: '40px',
       }}>
         <div>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '16px' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '16px' }}>
             <div style={{
-              width: '32px',
-              height: '32px',
-              borderRadius: '8px',
-              background: 'linear-gradient(135deg, #4f46e5 0%, #3b82f6 100%)',
+              width: '36px',
+              height: '36px',
+              borderRadius: '10px',
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
-              boxShadow: '0 2px 6px rgba(79, 70, 229, 0.25)',
+              boxShadow: '0 2px 8px rgba(79, 70, 229, 0.25)',
+              backgroundColor: '#ffffff',
+              border: '1px solid #e2e8f0',
+              overflow: 'hidden',
             }}>
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#ffffff" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
-                <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
-                <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
-              </svg>
+              <img
+                src="/schoolopedia-logo.svg"
+                alt="Schoolopedia Logo"
+                width={36}
+                height={36}
+                style={{ width: '100%', height: '100%', objectFit: 'contain' }}
+              />
             </div>
-            <span style={{ fontSize: '1.25rem', fontWeight: 800, color: '#0f172a' }}>
+            <span style={{ fontSize: '1.25rem', fontWeight: 900, color: '#0f172a' }}>
               Schoolopedia
             </span>
           </div>
