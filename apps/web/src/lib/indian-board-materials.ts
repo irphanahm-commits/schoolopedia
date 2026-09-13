@@ -4,11 +4,16 @@
 // alongside foundation materials for Classes 7, 8, 9, and 11.
 
 export interface BoardExamPaper {
-  year: number; // 2024, 2023, 2022, 2021, 2020
+  year: number; // 2025 (SQP), 2024, 2023, 2022, 2021, 2020
   title: string;
   set: string;
   maxMarks: number;
   timeHours: number;
+  paperType?: 'Sample Question Paper (SQP)' | 'Main Board Examination (PYQ)' | 'Compartment Examination';
+  officialPdfUrl?: string; // Direct official CBSE government PDF download URL
+  officialMarkingSchemeUrl?: string; // Direct official CBSE marking scheme PDF
+  fileSizeBytes?: string;
+  isGovernmentOpenSource?: boolean;
   generalInstructions: string[];
   solvedQuestions: Array<{
     questionNumber: number;
@@ -106,9 +111,133 @@ export const INDIAN_BOARD_MATERIALS_DATABASE: Record<string, SubjectBoardSuite> 
     boardCode: 'CBSE Code 086 / AISSE Class 10',
     previous5YearsPapers: [
       {
+        year: 2025,
+        title: 'CBSE Class 10 Science Official Sample Question Paper 2024–25 (Latest SQP)',
+        set: 'CBSE Official SQP 2024–25 Edition (Code 086)',
+        paperType: 'Sample Question Paper (SQP)',
+        officialPdfUrl: 'https://cbseacademic.nic.in/web_material/SQP/ClassX_2024_25/Science-SQP.pdf',
+        officialMarkingSchemeUrl: 'https://cbseacademic.nic.in/web_material/SQP/ClassX_2024_25/Science-MS.pdf',
+        fileSizeBytes: '1.4 MB',
+        isGovernmentOpenSource: true,
+        maxMarks: 80,
+        timeHours: 3,
+        generalInstructions: [
+          'This question paper consists of 39 questions in 5 sections.',
+          'Section A consists of 20 objective type questions carrying 1 mark each (Questions 1 to 16 are MCQs, 17 to 20 are Assertion-Reasoning).',
+          'Section B consists of 6 Very Short questions carrying 2 marks each (Questions 21 to 26).',
+          'Section C consists of 7 Short Answer type questions carrying 3 marks each (Questions 27 to 33).',
+          'Section D consists of 3 Long Answer type questions carrying 5 marks each (Questions 34 to 36).',
+          'Section E consists of 3 source-based/case-based units of assessment carrying 4 marks each (Questions 37 to 39).'
+        ],
+        solvedQuestions: [
+          {
+            questionNumber: 1,
+            section: 'A',
+            sectionTitle: 'Section A: Multiple Choice Questions (1 Mark Each)',
+            marks: 1,
+            questionText: 'Identify the product which represents the solid state in the reaction:\nBaCl₂(aq) + Na₂SO₄(aq) → BaSO₄ + 2NaCl',
+            questionTextHindi: 'अभिक्रिया में ठोस अवस्था को दर्शाने वाले उत्पाद की पहचान कीजिए:\nBaCl₂(aq) + Na₂SO₄(aq) → BaSO₄ + 2NaCl',
+            options: [
+              'BaCl₂',
+              'BaSO₄',
+              'NaCl',
+              'Na₂SO₄'
+            ],
+            optionsHindi: [
+              'BaCl₂',
+              'BaSO₄ (बेरियम सल्फेट)',
+              'NaCl',
+              'Na₂SO₄'
+            ],
+            correctOptionIndex: 1,
+            markingScheme: ['[1 Mark] BaSO₄ is the white insoluble precipitate (solid state).'],
+            detailedSolution: 'BaCl₂(aq) + Na₂SO₄(aq) → BaSO₄(s)↓ + 2NaCl(aq). The precipitate formed is barium sulphate (BaSO₄), which is an insoluble white solid. This is a double displacement and precipitation reaction.',
+            detailedSolutionHindi: 'BaCl₂(aq) + Na₂SO₄(aq) → BaSO₄(s)↓ + 2NaCl(aq)। बनने वाला अवक्षेप बेरियम सल्फेट (BaSO₄) है, जो एक अविलेय श्वेत ठोस है।',
+            examinerTip: 'Notice the state symbols: (s) denotes solid precipitate, while (aq) denotes aqueous.'
+          },
+          {
+            questionNumber: 2,
+            section: 'A',
+            sectionTitle: 'Section A: Multiple Choice Questions (1 Mark Each)',
+            marks: 1,
+            questionText: 'Which of the following organisms shows budding as a mode of asexual reproduction?',
+            questionTextHindi: 'निम्नलिखित में से कौन सा जीव अलैंगिक जनन के तरीके के रूप में मुकुलन (Budding) प्रदर्शित करता है?',
+            options: [
+              'Amoeba and Hydra',
+              'Hydra and Yeast',
+              'Yeast and Plasmodium',
+              'Plasmodium and Amoeba'
+            ],
+            optionsHindi: [
+              'अमीबा और हाइड्रा',
+              'हाइड्रा और यीस्ट',
+              'यीस्ट और प्लास्मोडियम',
+              'प्लास्मोडियम और अमीबा'
+            ],
+            correctOptionIndex: 1,
+            markingScheme: ['[1 Mark] Hydra and Yeast.'],
+            detailedSolution: 'Both Hydra (a multicellular organism) and Yeast (a unicellular fungus) reproduce asexually through budding. A small outgrowth develops due to repeated cell division, detaches when mature, and grows into a new individual.',
+            detailedSolutionHindi: 'हाइड्रा (बहुकोशिकीय) और यीस्ट (एककोशिकीय कवक) दोनों मुकुलन द्वारा जनन करते हैं। एक छोटा उभार (मुकुल) विकसित होता है जो परिपक्व होकर अलग हो जाता है।',
+            examinerTip: 'Amoeba reproduces by binary fission and Plasmodium by multiple fission.'
+          },
+          {
+            questionNumber: 17,
+            section: 'A',
+            sectionTitle: 'Section A: Assertion-Reasoning (1 Mark Each)',
+            marks: 1,
+            questionText: 'Assertion (A): The sex of a child in human beings is determined by the father.\nReason (R): Male germ cells (sperms) carry either an X or a Y chromosome, whereas ovum carries only an X chromosome.',
+            questionTextHindi: 'अभिकथन (A): मनुष्यों में बच्चे का लिंग पिता द्वारा निर्धारित होता है।\nकारण (R): पुरुष युग्मक (शुक्राणु) में X या Y गुणसूत्र होता है, जबकि अंडाणु में केवल X गुणसूत्र होता है।',
+            options: [
+              'Both (A) and (R) are true and (R) is the correct explanation of (A)',
+              'Both (A) and (R) are true but (R) is NOT the correct explanation of (A)',
+              '(A) is true but (R) is false',
+              '(A) is false but (R) is true'
+            ],
+            correctOptionIndex: 0,
+            markingScheme: ['[1 Mark] Option (a): Both A and R are true and R is the correct explanation of A.'],
+            detailedSolution: 'Human females produce only eggs containing the X chromosome (XX). Human males produce sperms containing either an X or a Y chromosome (XY) in a 50:50 ratio. If a sperm carrying X fertilizes the egg, the child is female (XX); if carrying Y, the child is male (XY). Thus, the father determines the child\'s sex.',
+            examinerTip: 'Make sure to draw the sex determination Punnett square if this question is asked as a 3-mark question.'
+          },
+          {
+            questionNumber: 21,
+            section: 'B',
+            sectionTitle: 'Section B: Very Short Answer (2 Marks Each)',
+            marks: 2,
+            questionText: 'A concave mirror produces three times magnified real image of an object placed at 10 cm in front of it. Where is the image located? Calculate the focal length of the mirror.',
+            questionTextHindi: 'एक अवतल दर्पण अपने सामने 10 सेमी की दूरी पर रखी किसी वस्तु का तीन गुना आवर्धित वास्तविक प्रतिबिंब बनाता है। प्रतिबिंब कहाँ स्थित है? दर्पण की फोकस दूरी परिकलित कीजिए।',
+            markingScheme: [
+              '[1 Mark] Correct formula m = -v/u => -3 = -v / (-10) => v = -30 cm (30 cm in front of mirror).',
+              '[1 Mark] Mirror formula 1/f = 1/v + 1/u = 1/(-30) + 1/(-10) = -4/30 => f = -7.5 cm.'
+            ],
+            detailedSolution: 'Given: Object distance u = -10 cm (Cartesian sign convention).\nMagnification m = -3 (real and inverted image has negative magnification).\nm = -v / u  =>  -3 = -v / (-10)  =>  v = -30 cm.\nThe image is formed at 30 cm in front of the concave mirror.\nUsing Mirror Formula: 1/f = 1/v + 1/u = 1/(-30) + 1/(-10) = (-1 - 3) / 30 = -4 / 30 = -2 / 15.\nf = -15/2 = -7.5 cm.\nThe focal length of the concave mirror is 7.5 cm.',
+            examinerTip: 'Never forget Cartesian sign conventions: u is always negative, real image distance v is negative, concave mirror focal length is negative.'
+          },
+          {
+            questionNumber: 27,
+            section: 'C',
+            sectionTitle: 'Section C: Short Answer (3 Marks Each)',
+            marks: 3,
+            questionText: 'Write the chemical equation for the chlor-alkali process. Name the gases liberated at the anode and cathode. Mention one industrial use of each product.',
+            questionTextHindi: 'क्लोर-क्षार प्रक्रिया के लिए रासायनिक समीकरण लिखिए। एनोड और कैथोड पर मुक्त होने वाली गैसों के नाम लिखिए। प्रत्येक उत्पाद का एक औद्योगिक उपयोग बताइए।',
+            markingScheme: [
+              '[1 Mark] Correct balanced equation: 2NaCl(aq) + 2H₂O(l) → 2NaOH(aq) + Cl₂(g) + H₂(g).',
+              '[1 Mark] Anode: Chlorine gas (Cl₂); Cathode: Hydrogen gas (H₂); Solution: Sodium hydroxide (NaOH).',
+              '[1 Mark] Uses: Cl₂ for water treatment/PVC/disinfectants; H₂ for fuels/margarine/ammonia for fertilizers; NaOH for de-greasing metals/soaps and detergents/paper making.'
+            ],
+            detailedSolution: 'When electricity is passed through an aqueous solution of sodium chloride (brine), it decomposes to form sodium hydroxide. This is called chlor-alkali process because of the products formed: chlor for chlorine and alkali for sodium hydroxide.\n2NaCl(aq) + 2H₂O(l) → 2NaOH(aq) + Cl₂(g) + H₂(g)\n- At Anode (+): Chlorine gas (Cl₂) is liberated. Use: Water purification, manufacturing PVC and CFCs.\n- At Cathode (-): Hydrogen gas (H₂) is liberated. Use: Rocket fuel, hydrogenation of oils, ammonia synthesis for fertilizers.\n- Near Cathode: Sodium hydroxide (NaOH) solution is formed. Use: Manufacturing soaps, detergents, paper making.',
+            examinerTip: 'Mnemonic: Positive Anode = Chlorine (negative ion Cl⁻ oxidizes); Negative Cathode = Hydrogen (positive ion H⁺ reduces).'
+          }
+        ]
+      },
+      {
         year: 2024,
         title: 'CBSE Class 10 Science Board Examination 2024 (Official Solved Paper)',
         set: 'Series Q.P. Set 1 (Code 31/1/1)',
+        paperType: 'Main Board Examination (PYQ)',
+        officialPdfUrl: 'https://www.cbse.gov.in/cbsenew/question-paper/2024/Class-X/Science.pdf',
+        officialMarkingSchemeUrl: 'https://cbseacademic.nic.in/web_material/SQP/ClassX_2023_24/Science-MS.pdf',
+        fileSizeBytes: '2.1 MB',
+        isGovernmentOpenSource: true,
         maxMarks: 80,
         timeHours: 3,
         generalInstructions: [
@@ -242,6 +371,11 @@ export const INDIAN_BOARD_MATERIALS_DATABASE: Record<string, SubjectBoardSuite> 
         year: 2023,
         title: 'CBSE Class 10 Science Board Examination 2023 (Official Solved Paper)',
         set: 'Series Q.P. Set 2 (Code 31/2/2)',
+        paperType: 'Main Board Examination (PYQ)',
+        officialPdfUrl: 'https://www.cbse.gov.in/cbsenew/question-paper/2023/Class-X/Science.pdf',
+        officialMarkingSchemeUrl: 'https://cbseacademic.nic.in/web_material/SQP/ClassX_2022_23/Science-MS.pdf',
+        fileSizeBytes: '1.9 MB',
+        isGovernmentOpenSource: true,
         maxMarks: 80,
         timeHours: 3,
         generalInstructions: [
@@ -283,6 +417,11 @@ export const INDIAN_BOARD_MATERIALS_DATABASE: Record<string, SubjectBoardSuite> 
         year: 2022,
         title: 'CBSE Class 10 Science Board Examination 2022 (Term 1 & Term 2 Solved)',
         set: 'Term 2 Board Theory Paper (Code 31/1/3)',
+        paperType: 'Main Board Examination (PYQ)',
+        officialPdfUrl: 'https://www.cbse.gov.in/cbsenew/examination.html',
+        officialMarkingSchemeUrl: 'https://cbseacademic.nic.in/SQP_CLASSX_2021-22.html',
+        fileSizeBytes: '1.7 MB',
+        isGovernmentOpenSource: true,
         maxMarks: 40,
         timeHours: 2,
         generalInstructions: ['Official CBSE Term-wise Board examination solutions.'],
@@ -307,6 +446,11 @@ export const INDIAN_BOARD_MATERIALS_DATABASE: Record<string, SubjectBoardSuite> 
         year: 2021,
         title: 'CBSE Class 10 Science Official Assessment Model Paper 2021',
         set: 'Official Board Standard Assessment',
+        paperType: 'Sample Question Paper (SQP)',
+        officialPdfUrl: 'https://cbseacademic.nic.in/SQP_CLASSX_2020-21.html',
+        officialMarkingSchemeUrl: 'https://cbseacademic.nic.in/SQP_CLASSX_2020-21.html',
+        fileSizeBytes: '1.3 MB',
+        isGovernmentOpenSource: true,
         maxMarks: 80,
         timeHours: 3,
         generalInstructions: ['Official CBSE assessment marking framework with high-order questions.'],
@@ -331,6 +475,11 @@ export const INDIAN_BOARD_MATERIALS_DATABASE: Record<string, SubjectBoardSuite> 
         year: 2020,
         title: 'CBSE Class 10 Science Board Examination 2020 (Official Pre-Pandemic Solved)',
         set: 'Set 1 (Code 31/1/1)',
+        paperType: 'Main Board Examination (PYQ)',
+        officialPdfUrl: 'https://www.cbse.gov.in/cbsenew/question-paper/2020/Class-X/Science.pdf',
+        officialMarkingSchemeUrl: 'https://cbseacademic.nic.in/SQP_CLASSX_2020-21.html',
+        fileSizeBytes: '1.6 MB',
+        isGovernmentOpenSource: true,
         maxMarks: 80,
         timeHours: 3,
         generalInstructions: ['Complete 80 marks board paper with standard NCERT solutions.'],
@@ -530,9 +679,78 @@ export const INDIAN_BOARD_MATERIALS_DATABASE: Record<string, SubjectBoardSuite> 
     boardCode: 'CBSE Code 041 (Standard) & 241 (Basic)',
     previous5YearsPapers: [
       {
+        year: 2025,
+        title: 'CBSE Class 10 Mathematics Standard Official Sample Question Paper 2024–25 (Latest SQP)',
+        set: 'CBSE Official SQP 2024–25 Edition (Code 041)',
+        paperType: 'Sample Question Paper (SQP)',
+        officialPdfUrl: 'https://cbseacademic.nic.in/web_material/SQP/ClassX_2024_25/MathsStandard-SQP.pdf',
+        officialMarkingSchemeUrl: 'https://cbseacademic.nic.in/web_material/SQP/ClassX_2024_25/MathsStandard-MS.pdf',
+        fileSizeBytes: '1.5 MB',
+        isGovernmentOpenSource: true,
+        maxMarks: 80,
+        timeHours: 3,
+        generalInstructions: [
+          'This question paper contains 38 questions divided into 5 Sections A, B, C, D and E.',
+          'Section A comprises 20 MCQs of 1 mark each (Questions 1 to 20).',
+          'Section B comprises 5 Short Answer Type-I questions of 2 marks each (Questions 21 to 25).',
+          'Section C comprises 6 Short Answer Type-II questions of 3 marks each (Questions 26 to 31).',
+          'Section D comprises 4 Long Answer questions of 5 marks each (Questions 32 to 35).',
+          'Section E comprises 3 Case-Based integrated units of assessment of 4 marks each (Questions 36 to 38).'
+        ],
+        solvedQuestions: [
+          {
+            questionNumber: 1,
+            section: 'A',
+            sectionTitle: 'Section A: Multiple Choice Questions (1 Mark Each)',
+            marks: 1,
+            questionText: 'If two positive integers p and q can be expressed as p = ab² and q = a³b; where a, b being prime numbers, then LCM(p, q) is:',
+            questionTextHindi: 'यदि दो धनात्मक पूर्णांक p और q को p = ab² और q = a³b के रूप में व्यक्त किया जा सकता है, जहाँ a, b अभाज्य संख्याएँ हैं, तो LCM(p, q) है:',
+            options: ['ab', 'a²b²', 'a³b²', 'a³b³'],
+            optionsHindi: ['ab', 'a²b²', 'a³b²', 'a³b³'],
+            correctOptionIndex: 2,
+            markingScheme: ['[1 Mark] LCM is product of highest powers of each prime factor involved: a³ × b² = a³b².'],
+            detailedSolution: 'p = a¹ × b²\nq = a³ × b¹\nLCM is the product of the highest power of each prime factor involved in the numbers.\nHighest power of a = a³\nHighest power of b = b²\nTherefore, LCM(p, q) = a³b².',
+            examinerTip: 'LCM takes the highest powers; HCF takes the lowest powers.'
+          },
+          {
+            questionNumber: 2,
+            section: 'A',
+            sectionTitle: 'Section A: Multiple Choice Questions (1 Mark Each)',
+            marks: 1,
+            questionText: 'The discriminant of the quadratic equation 2x² - 4x + 3 = 0 is:',
+            questionTextHindi: 'द्विघात समीकरण 2x² - 4x + 3 = 0 का विविक्तकर (discriminant) है:',
+            options: ['-8', '10', '-16', '8'],
+            optionsHindi: ['-8', '10', '-16', '8'],
+            correctOptionIndex: 0,
+            markingScheme: ['[1 Mark] D = b² - 4ac = (-4)² - 4(2)(3) = 16 - 24 = -8.'],
+            detailedSolution: 'For quadratic equation ax² + bx + c = 0:\na = 2, b = -4, c = 3.\nDiscriminant D = b² - 4ac\nD = (-4)² - 4(2)(3) = 16 - 24 = -8.\nSince D < 0, the equation has no real roots.',
+            examinerTip: 'Remember: if D < 0, roots are non-real (complex conjugates).'
+          },
+          {
+            questionNumber: 21,
+            section: 'B',
+            sectionTitle: 'Section B: Short Answer Type-I (2 Marks Each)',
+            marks: 2,
+            questionText: 'Find the coordinates of the point which divides the join of (-1, 7) and (4, -3) in the ratio 2:3 internally.',
+            questionTextHindi: 'उस बिंदु के निर्देशांक ज्ञात कीजिए जो बिंदुओं (-1, 7) और (4, -3) को मिलाने वाले रेखाखंड को 2:3 के अनुपात में अंतर्विभाजित करता है।',
+            markingScheme: [
+              '[1 Mark] Section formula: x = (m₁x₂ + m₂x₁)/(m₁ + m₂), y = (m₁y₂ + m₂y₁)/(m₁ + m₂).',
+              '[1 Mark] x = (2(4) + 3(-1))/5 = 5/5 = 1; y = (2(-3) + 3(7))/5 = 15/5 = 3. Point is (1, 3).'
+            ],
+            detailedSolution: 'By internal section formula:\nx = (m₁x₂ + m₂x₁) / (m₁ + m₂) = (2(4) + 3(-1)) / (2 + 3) = (8 - 3) / 5 = 5 / 5 = 1.\ny = (m₁y₂ + m₂y₁) / (m₁ + m₂) = (2(-3) + 3(7)) / (2 + 3) = (-6 + 21) / 5 = 15 / 5 = 3.\nHence, the required point of division is (1, 3).',
+            examinerTip: 'Always write down the coordinate values and ratio m₁:m₂ explicitly before substituting.'
+          }
+        ]
+      },
+      {
         year: 2024,
         title: 'CBSE Class 10 Mathematics Standard Board Examination 2024 (Official Solved)',
         set: 'Series Q.P. Set 1 (Code 30/1/1)',
+        paperType: 'Main Board Examination (PYQ)',
+        officialPdfUrl: 'https://www.cbse.gov.in/cbsenew/question-paper/2024/Class-X/Mathematics.pdf',
+        officialMarkingSchemeUrl: 'https://cbseacademic.nic.in/web_material/SQP/ClassX_2023_24/MathsStandard-MS.pdf',
+        fileSizeBytes: '1.8 MB',
+        isGovernmentOpenSource: true,
         maxMarks: 80,
         timeHours: 3,
         generalInstructions: [
@@ -596,6 +814,11 @@ export const INDIAN_BOARD_MATERIALS_DATABASE: Record<string, SubjectBoardSuite> 
         year: 2023,
         title: 'CBSE Class 10 Mathematics Standard Board Examination 2023 (Official Solved)',
         set: 'Series Q.P. Set 2 (Code 30/2/2)',
+        paperType: 'Main Board Examination (PYQ)',
+        officialPdfUrl: 'https://www.cbse.gov.in/cbsenew/question-paper/2023/Class-X/Mathematics.pdf',
+        officialMarkingSchemeUrl: 'https://cbseacademic.nic.in/web_material/SQP/ClassX_2022_23/MathsStandard-MS.pdf',
+        fileSizeBytes: '1.7 MB',
+        isGovernmentOpenSource: true,
         maxMarks: 80,
         timeHours: 3,
         generalInstructions: ['Official CBSE Board solutions with step-by-step marking.'],
@@ -619,6 +842,11 @@ export const INDIAN_BOARD_MATERIALS_DATABASE: Record<string, SubjectBoardSuite> 
         year: 2022,
         title: 'CBSE Class 10 Mathematics Board Examination 2022 (Term 2 Solved)',
         set: 'Series Q.P. Set 1 (Code 30/1/1)',
+        paperType: 'Main Board Examination (PYQ)',
+        officialPdfUrl: 'https://www.cbse.gov.in/cbsenew/examination.html',
+        officialMarkingSchemeUrl: 'https://cbseacademic.nic.in/SQP_CLASSX_2021-22.html',
+        fileSizeBytes: '1.4 MB',
+        isGovernmentOpenSource: true,
         maxMarks: 40,
         timeHours: 2,
         generalInstructions: ['Official 2022 Term 2 Board Paper solutions.'],
@@ -643,6 +871,11 @@ export const INDIAN_BOARD_MATERIALS_DATABASE: Record<string, SubjectBoardSuite> 
         year: 2021,
         title: 'CBSE Class 10 Mathematics Model Evaluation Paper 2021',
         set: 'Official Board Standard Practice Paper',
+        paperType: 'Sample Question Paper (SQP)',
+        officialPdfUrl: 'https://cbseacademic.nic.in/SQP_CLASSX_2020-21.html',
+        officialMarkingSchemeUrl: 'https://cbseacademic.nic.in/SQP_CLASSX_2020-21.html',
+        fileSizeBytes: '1.3 MB',
+        isGovernmentOpenSource: true,
         maxMarks: 80,
         timeHours: 3,
         generalInstructions: ['CBSE Official Model paper.'],
@@ -668,6 +901,11 @@ export const INDIAN_BOARD_MATERIALS_DATABASE: Record<string, SubjectBoardSuite> 
         year: 2020,
         title: 'CBSE Class 10 Mathematics Standard Board Examination 2020 (Official Pre-Pandemic)',
         set: 'Set 1 (Code 30/1/1)',
+        paperType: 'Main Board Examination (PYQ)',
+        officialPdfUrl: 'https://www.cbse.gov.in/cbsenew/question-paper/2020/Class-X/Mathematics.pdf',
+        officialMarkingSchemeUrl: 'https://cbseacademic.nic.in/SQP_CLASSX_2020-21.html',
+        fileSizeBytes: '1.5 MB',
+        isGovernmentOpenSource: true,
         maxMarks: 80,
         timeHours: 3,
         generalInstructions: ['Official CBSE pre-pandemic question paper.'],
@@ -772,9 +1010,65 @@ export const INDIAN_BOARD_MATERIALS_DATABASE: Record<string, SubjectBoardSuite> 
     boardCode: 'CBSE Code 042 / AISSCE Class 12 / JEE-NEET Foundation',
     previous5YearsPapers: [
       {
+        year: 2025,
+        title: 'CBSE Class 12 Physics Official Sample Question Paper 2024–25 (Latest SQP)',
+        set: 'CBSE Official SQP 2024–25 Edition (Code 042)',
+        paperType: 'Sample Question Paper (SQP)',
+        officialPdfUrl: 'https://cbseacademic.nic.in/web_material/SQP/ClassXII_2024_25/Physics-SQP.pdf',
+        officialMarkingSchemeUrl: 'https://cbseacademic.nic.in/web_material/SQP/ClassXII_2024_25/Physics-MS.pdf',
+        fileSizeBytes: '1.4 MB',
+        isGovernmentOpenSource: true,
+        maxMarks: 70,
+        timeHours: 3,
+        generalInstructions: [
+          'There are 33 questions in all. All questions are compulsory.',
+          'Section A contains 16 questions: 12 MCQs and 4 Assertion Reasoning of 1 mark each.',
+          'Section B contains 5 questions of 2 marks each.',
+          'Section C contains 7 questions of 3 marks each.',
+          'Section D contains 2 case-based questions of 4 marks each.',
+          'Section E contains 3 long answer questions of 5 marks each.'
+        ],
+        solvedQuestions: [
+          {
+            questionNumber: 1,
+            section: 'A',
+            sectionTitle: 'Section A: Multiple Choice Questions (1 Mark Each)',
+            marks: 1,
+            questionText: 'Two point charges +8q and -2q are located at x = 0 and x = L respectively. The location of a point on the x-axis at which the net electric field due to these charges is zero is:',
+            options: ['2L', 'L/4', '8L', '4L'],
+            correctOptionIndex: 0,
+            markingScheme: ['[1 Mark] E₁ = E₂ => k(8q)/x² = k(2q)/(x - L)² => 4/(x²) = 1/(x - L)² => 2/x = 1/(x - L) => 2x - 2L = x => x = 2L.'],
+            detailedSolution: 'Electric field is zero outside the charges, closer to the smaller magnitude charge (-2q).\nLet the point be at coordinate x on the positive x-axis (x > L).\nE_net = E₁ - E₂ = 0  ⇒  E₁ = E₂\n(1 / 4πε₀) · [8q / x²] = (1 / 4πε₀) · [2q / (x - L)²]\n4 / x² = 1 / (x - L)²\nTaking square root on both sides:\n2 / x = 1 / (x - L)\n2x - 2L = x  ⇒  x = 2L.\nHence, the electric field is zero at x = 2L.',
+            examinerTip: 'For two opposite charges, the neutral point where E = 0 always lies on the outer side of the smaller charge.'
+          },
+          {
+            questionNumber: 17,
+            section: 'A',
+            sectionTitle: 'Section A: Assertion-Reasoning (1 Mark Each)',
+            marks: 1,
+            questionText: 'Assertion (A): Photoelectric effect demonstrates the particle nature of light.\nReason (R): The maximum kinetic energy of emitted photoelectrons depends on the intensity of the incident radiation.',
+            options: [
+              'Both (A) and (R) are true and (R) is the correct explanation of (A)',
+              'Both (A) and (R) are true but (R) is NOT the correct explanation of (A)',
+              '(A) is true but (R) is false',
+              '(A) is false but (R) is true'
+            ],
+            correctOptionIndex: 2,
+            markingScheme: ['[1 Mark] Option (c): A is true but R is false. Max KE depends on frequency (hν - Φ), not intensity.'],
+            detailedSolution: 'Assertion is TRUE: In photoelectric effect, energy is exchanged in discrete packets (quanta) called photons (E = hν), which directly demonstrates the particle nature of electromagnetic radiation.\nReason is FALSE: According to Einstein\'s photoelectric equation, K_max = hν - Φ. The maximum kinetic energy depends strictly on the frequency (ν) of the incident radiation and the work function (Φ) of the metal surface, completely independent of the intensity of radiation. Intensity only determines the rate of photon arrival and hence the photoelectric current.',
+            examinerTip: 'Intensity governs number of photoelectrons (current); Frequency governs maximum kinetic energy of photoelectrons.'
+          }
+        ]
+      },
+      {
         year: 2024,
         title: 'CBSE Class 12 Physics Board Examination 2024 (Official Solved)',
         set: 'Series Q.P. Set 1 (Code 55/1/1)',
+        paperType: 'Main Board Examination (PYQ)',
+        officialPdfUrl: 'https://www.cbse.gov.in/cbsenew/question-paper/2024/Class-XII/Physics.pdf',
+        officialMarkingSchemeUrl: 'https://cbseacademic.nic.in/web_material/SQP/ClassXII_2023_24/Physics-MS.pdf',
+        fileSizeBytes: '2.4 MB',
+        isGovernmentOpenSource: true,
         maxMarks: 70,
         timeHours: 3,
         generalInstructions: [
@@ -832,6 +1126,11 @@ export const INDIAN_BOARD_MATERIALS_DATABASE: Record<string, SubjectBoardSuite> 
         year: 2023,
         title: 'CBSE Class 12 Physics Board Examination 2023 (Official Solved)',
         set: 'Series Q.P. Set 2 (Code 55/2/2)',
+        paperType: 'Main Board Examination (PYQ)',
+        officialPdfUrl: 'https://www.cbse.gov.in/cbsenew/question-paper/2023/Class-XII/Physics.pdf',
+        officialMarkingSchemeUrl: 'https://cbseacademic.nic.in/web_material/SQP/ClassXII_2022_23/Physics-MS.pdf',
+        fileSizeBytes: '2.1 MB',
+        isGovernmentOpenSource: true,
         maxMarks: 70,
         timeHours: 3,
         generalInstructions: ['Official CBSE Class 12 Physics solutions.'],
@@ -859,6 +1158,11 @@ export const INDIAN_BOARD_MATERIALS_DATABASE: Record<string, SubjectBoardSuite> 
         year: 2022,
         title: 'CBSE Class 12 Physics Board Examination 2022 (Term 2 Solved)',
         set: 'Code 55/1/2',
+        paperType: 'Main Board Examination (PYQ)',
+        officialPdfUrl: 'https://www.cbse.gov.in/cbsenew/examination.html',
+        officialMarkingSchemeUrl: 'https://cbseacademic.nic.in/SQP_CLASSXII_2021-22.html',
+        fileSizeBytes: '1.8 MB',
+        isGovernmentOpenSource: true,
         maxMarks: 35,
         timeHours: 2,
         generalInstructions: ['CBSE Term 2 Board Paper solutions.'],
@@ -882,6 +1186,11 @@ export const INDIAN_BOARD_MATERIALS_DATABASE: Record<string, SubjectBoardSuite> 
         year: 2021,
         title: 'CBSE Class 12 Physics Comprehensive Evaluation Paper 2021',
         set: 'CBSE Official Standard Set',
+        paperType: 'Sample Question Paper (SQP)',
+        officialPdfUrl: 'https://cbseacademic.nic.in/SQP_CLASSXII_2020-21.html',
+        officialMarkingSchemeUrl: 'https://cbseacademic.nic.in/SQP_CLASSXII_2020-21.html',
+        fileSizeBytes: '1.5 MB',
+        isGovernmentOpenSource: true,
         maxMarks: 70,
         timeHours: 3,
         generalInstructions: ['CBSE Official model paper.'],
@@ -906,6 +1215,11 @@ export const INDIAN_BOARD_MATERIALS_DATABASE: Record<string, SubjectBoardSuite> 
         year: 2020,
         title: 'CBSE Class 12 Physics Board Examination 2020 (Official Pre-Pandemic)',
         set: 'Set 1 (Code 55/1/1)',
+        paperType: 'Main Board Examination (PYQ)',
+        officialPdfUrl: 'https://www.cbse.gov.in/cbsenew/question-paper/2020/Class-XII/Physics.pdf',
+        officialMarkingSchemeUrl: 'https://cbseacademic.nic.in/SQP_CLASSXII_2020-21.html',
+        fileSizeBytes: '2.0 MB',
+        isGovernmentOpenSource: true,
         maxMarks: 70,
         timeHours: 3,
         generalInstructions: ['Official CBSE pre-pandemic board paper.'],

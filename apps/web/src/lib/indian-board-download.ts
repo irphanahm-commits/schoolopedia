@@ -12,15 +12,39 @@ import {
 } from './indian-board-materials';
 
 export function openPrintDocument(htmlContent: string, documentTitle: string) {
-  const printWindow = window.open('', '_blank', 'width=900,height=800,menubar=no,toolbar=no,location=no,status=no');
-  if (printWindow) {
-    printWindow.document.open();
-    printWindow.document.write(htmlContent);
-    printWindow.document.close();
-  } else {
-    // Fallback if popup is blocked: download as offline HTML file
-    downloadOfflineFile(`${documentTitle.replace(/[^a-zA-Z0-9_-]/g, '_')}.html`, htmlContent, 'text/html');
+  try {
+    const printWindow = window.open('', '_blank', 'width=950,height=850,menubar=no,toolbar=no,location=no,status=no');
+    if (printWindow) {
+      const htmlWithPrintScript = htmlContent.replace(
+        '</body>',
+        `<script>
+          window.addEventListener('DOMContentLoaded', function() {
+            setTimeout(function() {
+              try {
+                window.focus();
+                window.print();
+              } catch (e) {
+                console.warn('Auto-print triggered:', e);
+              }
+            }, 600);
+          });
+        </script></body>`
+      );
+      printWindow.document.open();
+      printWindow.document.write(htmlWithPrintScript);
+      printWindow.document.close();
+      return;
+    }
+  } catch {
+    // Popup blocked
   }
+
+  // Guaranteed fallback if popup is blocked: directly download offline file
+  downloadOfflineFile(`${documentTitle.replace(/[^a-zA-Z0-9_-]/g, '_')}.html`, htmlContent, 'text/html');
+}
+
+export function downloadPaperDocument(htmlContent: string, documentTitle: string) {
+  downloadOfflineFile(`${documentTitle.replace(/[^a-zA-Z0-9_-]/g, '_')}.html`, htmlContent, 'text/html');
 }
 
 export function downloadOfflineFile(filename: string, content: string, mimeType = 'text/html') {

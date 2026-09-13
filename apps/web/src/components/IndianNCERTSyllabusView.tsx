@@ -289,7 +289,7 @@ export function IndianNCERTSyllabusView({
               }}
             >
               <span>🔥</span>
-              <span>5-Year Solved Papers, MCQs & Notes (📥 PDF Downloads)</span>
+              <span>Official Sample Papers, PYQs & 5-Year Solved Suite (📥 Free Open Source)</span>
             </button>
           </div>
         )}

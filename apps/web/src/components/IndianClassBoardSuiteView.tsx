@@ -18,7 +18,12 @@ import {
   generateOfficialRepositoriesDirectoryHTML,
   openPrintDocument,
   downloadOfflineFile,
+  downloadPaperDocument,
 } from '@/lib/indian-board-download';
+import {
+  getOfficialPapersForCourse,
+  OfficialPaperItem,
+} from '@/lib/official-cbse-papers-registry';
 
 interface IndianClassBoardSuiteViewProps {
   suite: SubjectBoardSuite;
@@ -34,11 +39,13 @@ export function IndianClassBoardSuiteView({
   subjectName,
   activeMedium,
 }: IndianClassBoardSuiteViewProps) {
-  const [activeTab, setActiveTab] = useState<'papers' | 'mcqs' | 'notes' | 'solved-qa' | 'official-repos'>('papers');
-  const [selectedYear, setSelectedYear] = useState<number>(2024);
+  const [activeTab, setActiveTab] = useState<'papers' | 'official-sample-papers' | 'mcqs' | 'notes' | 'solved-qa' | 'official-repos'>('papers');
+  const [selectedYear, setSelectedYear] = useState<number>(2025);
   const [mcqFilter, setMcqFilter] = useState<'all' | 'mcq' | 'assertion-reason' | 'case-based'>('all');
+  const [officialPaperTypeFilter, setOfficialPaperTypeFilter] = useState<'all' | 'SQP' | 'PYQ' | 'COMPETENCY_BANK'>('all');
   const [repoFilter, setRepoFilter] = useState<string>('all');
   const officialRepositories = getOfficialBoardRepositories();
+  const courseOfficialPapers = getOfficialPapersForCourse(suite.classNumber, suite.subjectSlug);
   
   // MCQ interactive state
   const [userAnswers, setUserAnswers] = useState<Record<string, number>>({});
@@ -147,6 +154,40 @@ export function IndianClassBoardSuiteView({
           >
             <span>🏆</span>
             <span>5-Year Solved Papers ({suite.previous5YearsPapers.length})</span>
+          </button>
+
+          <button
+            type="button"
+            onClick={() => setActiveTab('official-sample-papers')}
+            style={{
+              display: 'inline-flex',
+              alignItems: 'center',
+              gap: '6px',
+              padding: '8px 16px',
+              borderRadius: '12px',
+              fontSize: '0.85rem',
+              fontWeight: 700,
+              cursor: 'pointer',
+              border: activeTab === 'official-sample-papers' ? '2px solid #059669' : '1px solid #cbd5e1',
+              backgroundColor: activeTab === 'official-sample-papers' ? '#059669' : '#ffffff',
+              color: activeTab === 'official-sample-papers' ? '#ffffff' : '#334155',
+              transition: 'all 0.15s ease',
+            }}
+          >
+            <span>📜</span>
+            <span>Official Sample Papers & PYQs (Free Open Source)</span>
+            <span
+              style={{
+                fontSize: '0.72rem',
+                backgroundColor: activeTab === 'official-sample-papers' ? 'rgba(255,255,255,0.25)' : '#dcfce7',
+                color: activeTab === 'official-sample-papers' ? '#ffffff' : '#166534',
+                padding: '2px 8px',
+                borderRadius: '8px',
+                fontWeight: 800,
+              }}
+            >
+              {courseOfficialPapers.length > 0 ? `${courseOfficialPapers.length} Papers` : 'Govt OER'}
+            </span>
           </button>
 
           <button
@@ -303,11 +344,79 @@ export function IndianClassBoardSuiteView({
 
               {/* Download Action Buttons */}
               <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap', alignItems: 'center' }}>
+                {/* 1. Direct Government CBSE Official PDF Download Link */}
+                {selectedPaper.officialPdfUrl && (
+                  <a
+                    href={selectedPaper.officialPdfUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    download
+                    style={{
+                      display: 'inline-flex',
+                      alignItems: 'center',
+                      gap: '6px',
+                      padding: '8px 16px',
+                      borderRadius: '10px',
+                      fontSize: '0.85rem',
+                      fontWeight: 800,
+                      backgroundColor: '#059669',
+                      color: '#ffffff',
+                      textDecoration: 'none',
+                      boxShadow: '0 4px 12px rgba(5, 150, 105, 0.25)',
+                      transition: 'all 0.15s ease',
+                    }}
+                    title="Directly download official CBSE examination question paper PDF from official government portal"
+                  >
+                    <span>⚡</span>
+                    <span>Direct Download Official CBSE PDF</span>
+                    <span
+                      style={{
+                        fontSize: '0.68rem',
+                        backgroundColor: 'rgba(255,255,255,0.22)',
+                        padding: '1px 6px',
+                        borderRadius: '4px',
+                        fontWeight: 700,
+                      }}
+                    >
+                      Govt Open Source
+                    </span>
+                  </a>
+                )}
+
+                {/* 2. Official CBSE Marking Scheme PDF */}
+                {selectedPaper.officialMarkingSchemeUrl && (
+                  <a
+                    href={selectedPaper.officialMarkingSchemeUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    download
+                    style={{
+                      display: 'inline-flex',
+                      alignItems: 'center',
+                      gap: '6px',
+                      padding: '8px 14px',
+                      borderRadius: '10px',
+                      fontSize: '0.85rem',
+                      fontWeight: 700,
+                      backgroundColor: '#f0fdf4',
+                      color: '#166534',
+                      border: '1.5px solid #86efac',
+                      textDecoration: 'none',
+                      transition: 'all 0.15s ease',
+                    }}
+                    title="Download official step-by-step marking scheme published by CBSE Academic Directorate"
+                  >
+                    <span>📑</span>
+                    <span>Official Marking Scheme (PDF)</span>
+                  </a>
+                )}
+
+                {/* 3. Direct Solved Paper Download (Reliable Client-Side File Download) */}
                 <button
                   type="button"
                   onClick={() => {
                     const html = generatePaperHTML(selectedPaper, classLabel, subjectName, suite.boardCode, true, activeMedium);
-                    openPrintDocument(html, `${classLabel}_${subjectName}_${selectedPaper.year}_Solved_Paper`);
+                    downloadPaperDocument(html, `${classLabel}_${subjectName}_${selectedPaper.year}_Solved_Paper`);
                   }}
                   style={{
                     display: 'inline-flex',
@@ -324,17 +433,18 @@ export function IndianClassBoardSuiteView({
                     boxShadow: '0 4px 12px rgba(67, 56, 202, 0.25)',
                     transition: 'all 0.15s ease',
                   }}
-                  title="Download and print full solved paper with CBSE marking scheme"
+                  title="Directly save complete solved paper file to your Downloads folder (no popup blockers)"
                 >
                   <span>📥</span>
-                  <span>Download Solved Paper (PDF)</span>
+                  <span>Download Solved Paper (.html / PDF)</span>
                 </button>
 
+                {/* 4. Print / Browser PDF Preview */}
                 <button
                   type="button"
                   onClick={() => {
-                    const html = generatePaperHTML(selectedPaper, classLabel, subjectName, suite.boardCode, false, activeMedium);
-                    openPrintDocument(html, `${classLabel}_${subjectName}_${selectedPaper.year}_Question_Paper`);
+                    const html = generatePaperHTML(selectedPaper, classLabel, subjectName, suite.boardCode, true, activeMedium);
+                    openPrintDocument(html, `${classLabel}_${subjectName}_${selectedPaper.year}_Solved_Paper`);
                   }}
                   style={{
                     display: 'inline-flex',
@@ -350,17 +460,18 @@ export function IndianClassBoardSuiteView({
                     cursor: 'pointer',
                     transition: 'all 0.15s ease',
                   }}
-                  title="Download blank examination question paper for timed mock exam"
+                  title="Open in printable layout / browser Save as PDF dialog"
                 >
-                  <span>📄</span>
-                  <span>Question Paper Only (PDF)</span>
+                  <span>🖨️</span>
+                  <span>Print Preview / PDF</span>
                 </button>
 
+                {/* 5. Blank Mock Paper */}
                 <button
                   type="button"
                   onClick={() => {
-                    const html = generatePaperHTML(selectedPaper, classLabel, subjectName, suite.boardCode, true, activeMedium);
-                    downloadOfflineFile(`${classLabel}_${subjectName}_${selectedPaper.year}_Solved_Paper.html`, html, 'text/html');
+                    const html = generatePaperHTML(selectedPaper, classLabel, subjectName, suite.boardCode, false, activeMedium);
+                    downloadPaperDocument(html, `${classLabel}_${subjectName}_${selectedPaper.year}_Question_Paper`);
                   }}
                   style={{
                     display: 'inline-flex',
@@ -375,10 +486,10 @@ export function IndianClassBoardSuiteView({
                     border: '1px solid #cbd5e1',
                     cursor: 'pointer',
                   }}
-                  title="Save offline HTML file directly to device"
+                  title="Download blank unanswered paper for timed mock exam practice"
                 >
-                  <span>💾</span>
-                  <span>Offline HTML</span>
+                  <span>📝</span>
+                  <span>Blank Mock Paper</span>
                 </button>
               </div>
             </div>
@@ -526,7 +637,528 @@ export function IndianClassBoardSuiteView({
       )}
 
       {/* ========================================================================= */}
-      {/* TAB 2: CHAPTER-WISE MCQS & ASSERTION-REASONING                            */}
+      {/* TAB 2: OFFICIAL CBSE SAMPLE PAPERS (SQP) & PREVIOUS YEARS PAPERS (PYQ)    */}
+      {/* ========================================================================= */}
+      {activeTab === 'official-sample-papers' && (
+        <div>
+          {/* Government OER Trust & Open Access Banner */}
+          <div
+            style={{
+              background: 'linear-gradient(135deg, #ecfdf5 0%, #f0fdf4 100%)',
+              borderRadius: '16px',
+              border: '1.5px solid #86efac',
+              padding: '24px',
+              marginBottom: '24px',
+              boxShadow: '0 4px 16px rgba(5, 150, 105, 0.08)',
+            }}
+          >
+            <div style={{ display: 'flex', alignItems: 'center', gap: '8px', flexWrap: 'wrap', marginBottom: '8px' }}>
+              <span
+                style={{
+                  fontSize: '0.78rem',
+                  fontWeight: 800,
+                  padding: '4px 10px',
+                  borderRadius: '6px',
+                  backgroundColor: '#059669',
+                  color: '#ffffff',
+                  textTransform: 'uppercase',
+                  letterSpacing: '0.04em',
+                }}
+              >
+                🏛️ GOVT OF INDIA & CBSE OPEN ACCESS OER
+              </span>
+              <span
+                style={{
+                  fontSize: '0.78rem',
+                  fontWeight: 700,
+                  padding: '4px 10px',
+                  borderRadius: '6px',
+                  backgroundColor: '#ffffff',
+                  color: '#166534',
+                  border: '1px solid #86efac',
+                }}
+              >
+                100% Free Public Educational Material
+              </span>
+              <span
+                style={{
+                  fontSize: '0.78rem',
+                  fontWeight: 700,
+                  padding: '4px 10px',
+                  borderRadius: '6px',
+                  backgroundColor: '#dbeafe',
+                  color: '#1e40af',
+                }}
+              >
+                Direct Government PDF Links
+              </span>
+            </div>
+
+            <h3 style={{ fontSize: '1.4rem', fontWeight: 800, color: '#064e3b', margin: '0 0 6px 0' }}>
+              {classLabel} {subjectName}: Official CBSE Sample Papers & Previous Years Question Papers
+            </h3>
+            <p style={{ fontSize: '0.88rem', color: '#065f46', margin: 0, lineHeight: 1.5, maxWidth: '900px' }}>
+              Authentic government-published Sample Question Papers (SQP), step-wise Marking Schemes (MS), and past 5-year board exam question papers released by the <strong>Central Board of Secondary Education (CBSE)</strong> and <strong>NCERT</strong>. All materials are open source and available online for free without paywalls or logins.
+            </p>
+
+            <div style={{ display: 'flex', gap: '16px', flexWrap: 'wrap', marginTop: '16px', paddingTop: '14px', borderTop: '1px solid #bbf7d0', fontSize: '0.82rem', color: '#166534' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                <span style={{ color: '#059669', fontWeight: 800 }}>✓</span>
+                <span>Direct PDF Downloads from <strong>cbseacademic.nic.in</strong> & <strong>cbse.gov.in</strong></span>
+              </div>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                <span style={{ color: '#059669', fontWeight: 800 }}>✓</span>
+                <span>Complete Step-by-Step Marking Blueprints</span>
+              </div>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                <span style={{ color: '#059669', fontWeight: 800 }}>✓</span>
+                <span>NEP 2020 Competency-Based Assessment Questions</span>
+              </div>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                <span style={{ color: '#059669', fontWeight: 800 }}>✓</span>
+                <span>Zero Popups • 1-Click File Downloads</span>
+              </div>
+            </div>
+          </div>
+
+          {/* Filter Bar */}
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '12px', marginBottom: '20px' }}>
+            <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap', alignItems: 'center' }}>
+              <span style={{ fontSize: '0.85rem', fontWeight: 700, color: '#475569' }}>
+                Filter Category:
+              </span>
+              <button
+                type="button"
+                onClick={() => setOfficialPaperTypeFilter('all')}
+                style={{
+                  padding: '6px 14px',
+                  borderRadius: '8px',
+                  fontSize: '0.82rem',
+                  fontWeight: 700,
+                  cursor: 'pointer',
+                  backgroundColor: officialPaperTypeFilter === 'all' ? '#059669' : '#f1f5f9',
+                  color: officialPaperTypeFilter === 'all' ? '#ffffff' : '#334155',
+                  border: 'none',
+                }}
+              >
+                All Papers ({courseOfficialPapers.length})
+              </button>
+              <button
+                type="button"
+                onClick={() => setOfficialPaperTypeFilter('SQP')}
+                style={{
+                  padding: '6px 14px',
+                  borderRadius: '8px',
+                  fontSize: '0.82rem',
+                  fontWeight: 700,
+                  cursor: 'pointer',
+                  backgroundColor: officialPaperTypeFilter === 'SQP' ? '#059669' : '#f1f5f9',
+                  color: officialPaperTypeFilter === 'SQP' ? '#ffffff' : '#334155',
+                  border: 'none',
+                }}
+              >
+                Official Sample Papers (SQP)
+              </button>
+              <button
+                type="button"
+                onClick={() => setOfficialPaperTypeFilter('PYQ')}
+                style={{
+                  padding: '6px 14px',
+                  borderRadius: '8px',
+                  fontSize: '0.82rem',
+                  fontWeight: 700,
+                  cursor: 'pointer',
+                  backgroundColor: officialPaperTypeFilter === 'PYQ' ? '#059669' : '#f1f5f9',
+                  color: officialPaperTypeFilter === 'PYQ' ? '#ffffff' : '#334155',
+                  border: 'none',
+                }}
+              >
+                Previous Year Papers (PYQ)
+              </button>
+              <button
+                type="button"
+                onClick={() => setOfficialPaperTypeFilter('COMPETENCY_BANK')}
+                style={{
+                  padding: '6px 14px',
+                  borderRadius: '8px',
+                  fontSize: '0.82rem',
+                  fontWeight: 700,
+                  cursor: 'pointer',
+                  backgroundColor: officialPaperTypeFilter === 'COMPETENCY_BANK' ? '#059669' : '#f1f5f9',
+                  color: officialPaperTypeFilter === 'COMPETENCY_BANK' ? '#ffffff' : '#334155',
+                  border: 'none',
+                }}
+              >
+                Competency Question Banks
+              </button>
+            </div>
+
+            <span style={{ fontSize: '0.82rem', color: '#64748b' }}>
+              Showing <strong>{courseOfficialPapers.filter(p => officialPaperTypeFilter === 'all' || p.type === officialPaperTypeFilter).length}</strong> Official Documents
+            </span>
+          </div>
+
+          {/* Official Papers List */}
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '18px', marginBottom: '32px' }}>
+            {courseOfficialPapers
+              .filter((p) => officialPaperTypeFilter === 'all' || p.type === officialPaperTypeFilter)
+              .map((paper) => {
+                const matchingSolvedPaper = suite.previous5YearsPapers.find(
+                  (sp) => String(sp.year) === paper.year || (paper.year.includes('2024') && sp.year === 2024) || (paper.year.includes('2025') && sp.year === 2025)
+                );
+
+                return (
+                  <div
+                    key={paper.id}
+                    style={{
+                      backgroundColor: '#ffffff',
+                      borderRadius: '16px',
+                      border: '1.5px solid #e2e8f0',
+                      padding: '24px',
+                      boxShadow: '0 4px 12px rgba(0,0,0,0.03)',
+                      transition: 'border-color 0.15s ease',
+                    }}
+                  >
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', flexWrap: 'wrap', gap: '12px', marginBottom: '12px' }}>
+                      <div>
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '8px', flexWrap: 'wrap', marginBottom: '6px' }}>
+                          <span
+                            style={{
+                              fontSize: '0.72rem',
+                              fontWeight: 800,
+                              padding: '3px 8px',
+                              borderRadius: '6px',
+                              backgroundColor: paper.type === 'SQP' ? '#ecfdf5' : paper.type === 'PYQ' ? '#eff6ff' : '#fef3c7',
+                              color: paper.type === 'SQP' ? '#065f46' : paper.type === 'PYQ' ? '#1e40af' : '#92400e',
+                              border: paper.type === 'SQP' ? '1px solid #a7f3d0' : paper.type === 'PYQ' ? '1px solid #bfdbfe' : '1px solid #fde68a',
+                              textTransform: 'uppercase',
+                            }}
+                          >
+                            {paper.type === 'SQP' ? '★ Official Sample Paper (SQP)' : paper.type === 'PYQ' ? '🏆 Board Exam Paper (PYQ)' : '🧠 Competency Bank'}
+                          </span>
+                          <span
+                            style={{
+                              fontSize: '0.72rem',
+                              fontWeight: 700,
+                              padding: '3px 8px',
+                              borderRadius: '6px',
+                              backgroundColor: '#f1f5f9',
+                              color: '#334155',
+                            }}
+                          >
+                            Year {paper.year}
+                          </span>
+                          <span
+                            style={{
+                              fontSize: '0.72rem',
+                              fontWeight: 700,
+                              padding: '3px 8px',
+                              borderRadius: '6px',
+                              backgroundColor: '#eef2ff',
+                              color: '#4338ca',
+                            }}
+                          >
+                            CBSE Code {paper.subjectCode}
+                          </span>
+                          <span
+                            style={{
+                              fontSize: '0.72rem',
+                              fontWeight: 700,
+                              padding: '3px 8px',
+                              borderRadius: '6px',
+                              backgroundColor: '#f8fafc',
+                              color: '#64748b',
+                              border: '1px solid #e2e8f0',
+                            }}
+                          >
+                            ⏱ {paper.timeHours} Hours • 🎯 {paper.maxMarks} Marks • 📦 {paper.fileSizeBytes}
+                          </span>
+                        </div>
+
+                        <h4 style={{ fontSize: '1.2rem', fontWeight: 800, color: '#0f172a', margin: '0 0 6px 0' }}>
+                          {paper.title}
+                        </h4>
+
+                        {paper.setSeries && (
+                          <div style={{ fontSize: '0.82rem', fontWeight: 700, color: '#4338ca', marginBottom: '6px' }}>
+                            {paper.setSeries}
+                          </div>
+                        )}
+
+                        <div style={{ fontSize: '0.82rem', color: '#64748b', display: 'flex', gap: '12px', flexWrap: 'wrap' }}>
+                          <span>🏛️ <strong>Authority:</strong> {paper.sourceAuthority}</span>
+                          <span>•</span>
+                          <span>⚖️ <strong>License:</strong> {paper.license}</span>
+                        </div>
+                      </div>
+
+                      {/* Direct 1-Click Action Buttons */}
+                      <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap', alignItems: 'center' }}>
+                        {/* 1. Direct Official Government PDF Link */}
+                        <a
+                          href={paper.officialPdfUrl}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          download
+                          style={{
+                            display: 'inline-flex',
+                            alignItems: 'center',
+                            gap: '6px',
+                            padding: '9px 16px',
+                            borderRadius: '10px',
+                            fontSize: '0.85rem',
+                            fontWeight: 800,
+                            backgroundColor: '#059669',
+                            color: '#ffffff',
+                            textDecoration: 'none',
+                            boxShadow: '0 4px 12px rgba(5, 150, 105, 0.25)',
+                            transition: 'all 0.15s ease',
+                          }}
+                          title="Directly download official CBSE PDF hosted on government server"
+                        >
+                          <span>⚡</span>
+                          <span>Direct Download Official CBSE PDF</span>
+                        </a>
+
+                        {/* 2. Official Marking Scheme */}
+                        {paper.markingSchemePdfUrl && (
+                          <a
+                            href={paper.markingSchemePdfUrl}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            download
+                            style={{
+                              display: 'inline-flex',
+                              alignItems: 'center',
+                              gap: '6px',
+                              padding: '9px 14px',
+                              borderRadius: '10px',
+                              fontSize: '0.85rem',
+                              fontWeight: 700,
+                              backgroundColor: '#f0fdf4',
+                              color: '#166534',
+                              border: '1.5px solid #86efac',
+                              textDecoration: 'none',
+                              transition: 'all 0.15s ease',
+                            }}
+                            title="Official CBSE step-by-step marking scheme published by CBSE Academic Directorate"
+                          >
+                            <span>📑</span>
+                            <span>Marking Scheme (PDF)</span>
+                          </a>
+                        )}
+
+                        {/* 3. Solved Model Package / Offline HTML */}
+                        {matchingSolvedPaper && (
+                          <button
+                            type="button"
+                            onClick={() => {
+                              const html = generatePaperHTML(matchingSolvedPaper, classLabel, subjectName, suite.boardCode, true, activeMedium);
+                              downloadPaperDocument(html, `${classLabel}_${subjectName}_${matchingSolvedPaper.year}_Solved_Model_Paper`);
+                            }}
+                            style={{
+                              display: 'inline-flex',
+                              alignItems: 'center',
+                              gap: '6px',
+                              padding: '9px 14px',
+                              borderRadius: '10px',
+                              fontSize: '0.85rem',
+                              fontWeight: 700,
+                              backgroundColor: '#4338ca',
+                              color: '#ffffff',
+                              border: 'none',
+                              cursor: 'pointer',
+                              boxShadow: '0 4px 12px rgba(67, 56, 202, 0.25)',
+                            }}
+                            title="Directly download full solved solution with examiner tips (no popup blockers)"
+                          >
+                            <span>📥</span>
+                            <span>Download Solved Package (.html)</span>
+                          </button>
+                        )}
+
+                        {/* 4. Alternative Govt Mirror Link if present */}
+                        {paper.alternativeMirrorUrl && (
+                          <a
+                            href={paper.alternativeMirrorUrl}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            style={{
+                              display: 'inline-flex',
+                              alignItems: 'center',
+                              gap: '4px',
+                              padding: '9px 12px',
+                              borderRadius: '10px',
+                              fontSize: '0.82rem',
+                              fontWeight: 600,
+                              backgroundColor: '#f8fafc',
+                              color: '#475569',
+                              border: '1px solid #cbd5e1',
+                              textDecoration: 'none',
+                            }}
+                            title="High-availability secondary government mirror"
+                          >
+                            <span>🔗</span>
+                            <span>Govt Mirror</span>
+                          </a>
+                        )}
+                      </div>
+                    </div>
+
+                    {/* Key Topics Tags */}
+                    {paper.keyTopicsCovered && paper.keyTopicsCovered.length > 0 && (
+                      <div style={{ marginTop: '12px', paddingTop: '12px', borderTop: '1px solid #f1f5f9', display: 'flex', alignItems: 'center', gap: '8px', flexWrap: 'wrap' }}>
+                        <span style={{ fontSize: '0.75rem', fontWeight: 800, color: '#64748b', textTransform: 'uppercase' }}>
+                          Key Syllabus Topics & Competencies:
+                        </span>
+                        {paper.keyTopicsCovered.map((topic, tIdx) => (
+                          <span
+                            key={tIdx}
+                            style={{
+                              fontSize: '0.75rem',
+                              fontWeight: 600,
+                              padding: '2px 8px',
+                              borderRadius: '6px',
+                              backgroundColor: '#f1f5f9',
+                              color: '#334155',
+                              border: '1px solid #e2e8f0',
+                            }}
+                          >
+                            {topic}
+                          </span>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+                );
+              })}
+          </div>
+
+          {/* Direct CBSE & NCERT Government Portals Directory */}
+          <div
+            style={{
+              backgroundColor: '#f8fafc',
+              borderRadius: '16px',
+              border: '1.5px solid #e2e8f0',
+              padding: '24px',
+              marginBottom: '16px',
+            }}
+          >
+            <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '14px' }}>
+              <span style={{ fontSize: '1.5rem' }}>🏛️</span>
+              <div>
+                <h4 style={{ fontSize: '1.1rem', fontWeight: 800, color: '#0f172a', margin: 0 }}>
+                  Direct CBSE & NCERT Official Examination Portals
+                </h4>
+                <p style={{ fontSize: '0.82rem', color: '#64748b', margin: '2px 0 0 0' }}>
+                  Single-click direct access to official government academic repositories for Class 10 & 12 examinations.
+                </p>
+              </div>
+            </div>
+
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '12px' }}>
+              <a
+                href="https://cbseacademic.nic.in/sqp_classx_2024-25.html"
+                target="_blank"
+                rel="noopener noreferrer"
+                style={{
+                  backgroundColor: '#ffffff',
+                  borderRadius: '10px',
+                  border: '1px solid #cbd5e1',
+                  padding: '14px',
+                  textDecoration: 'none',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  gap: '4px',
+                }}
+              >
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                  <strong style={{ fontSize: '0.9rem', color: '#1e40af' }}>CBSE Class 10 SQP 2024–25 Portal</strong>
+                  <span style={{ fontSize: '0.8rem', color: '#2563eb' }}>↗</span>
+                </div>
+                <span style={{ fontSize: '0.78rem', color: '#64748b' }}>
+                  cbseacademic.nic.in • Official sample question papers and marking schemes for all subjects.
+                </span>
+              </a>
+
+              <a
+                href="https://cbseacademic.nic.in/sqp_classxii_2024-25.html"
+                target="_blank"
+                rel="noopener noreferrer"
+                style={{
+                  backgroundColor: '#ffffff',
+                  borderRadius: '10px',
+                  border: '1px solid #cbd5e1',
+                  padding: '14px',
+                  textDecoration: 'none',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  gap: '4px',
+                }}
+              >
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                  <strong style={{ fontSize: '0.9rem', color: '#1e40af' }}>CBSE Class 12 SQP 2024–25 Portal</strong>
+                  <span style={{ fontSize: '0.8rem', color: '#2563eb' }}>↗</span>
+                </div>
+                <span style={{ fontSize: '0.78rem', color: '#64748b' }}>
+                  cbseacademic.nic.in • Official sample question papers across Science, Commerce & Arts.
+                </span>
+              </a>
+
+              <a
+                href="https://www.cbse.gov.in/cbsenew/question-paper.html"
+                target="_blank"
+                rel="noopener noreferrer"
+                style={{
+                  backgroundColor: '#ffffff',
+                  borderRadius: '10px',
+                  border: '1px solid #cbd5e1',
+                  padding: '14px',
+                  textDecoration: 'none',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  gap: '4px',
+                }}
+              >
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                  <strong style={{ fontSize: '0.9rem', color: '#1e40af' }}>CBSE Past Examination Papers Archive</strong>
+                  <span style={{ fontSize: '0.8rem', color: '#2563eb' }}>↗</span>
+                </div>
+                <span style={{ fontSize: '0.78rem', color: '#64748b' }}>
+                  cbse.gov.in • Historical board question papers (2024, 2023, 2022, 2020) for all exam series.
+                </span>
+              </a>
+
+              <a
+                href="https://ncert.nic.in/exemplar-problems.php"
+                target="_blank"
+                rel="noopener noreferrer"
+                style={{
+                  backgroundColor: '#ffffff',
+                  borderRadius: '10px',
+                  border: '1px solid #cbd5e1',
+                  padding: '14px',
+                  textDecoration: 'none',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  gap: '4px',
+                }}
+              >
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                  <strong style={{ fontSize: '0.9rem', color: '#1e40af' }}>NCERT Exemplar Problems Repository</strong>
+                  <span style={{ fontSize: '0.8rem', color: '#2563eb' }}>↗</span>
+                </div>
+                <span style={{ fontSize: '0.78rem', color: '#64748b' }}>
+                  ncert.nic.in • Higher order thinking skills (HOTS) questions and detailed official solutions.
+                </span>
+              </a>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* ========================================================================= */}
+      {/* TAB 3: CHAPTER-WISE MCQS & ASSERTION-REASONING                            */}
       {/* ========================================================================= */}
       {activeTab === 'mcqs' && (
         <div>
