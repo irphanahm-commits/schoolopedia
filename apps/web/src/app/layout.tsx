@@ -5,6 +5,7 @@ import { Footer } from '../components/Footer';
 import { VideoProvider } from '../lib/VideoContext';
 import { VideoModal } from '../components/VideoModal';
 import { FloatingVideoPlayer } from '../components/FloatingVideoPlayer';
+import { CookieConsentBanner } from '../components/CookieConsentBanner';
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://schoolopedia.com'),
@@ -151,6 +152,7 @@ export default function RootLayout({
           <Footer />
           <VideoModal />
           <FloatingVideoPlayer />
+          <CookieConsentBanner />
         </VideoProvider>
       </body>
     </html>
